@@ -1,0 +1,10 @@
+{
+  "name": "Lean 4 + Mathlib",
+  "image": "mcr.microsoft.com/devcontainers/base:jammy",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": { "version": "3.11" }
+  },
+  "postCreateCommand": "curl https://elan.lean-lang.org/elan-init.sh -sSf | sh -s -- -y --default-toolchain none",
+  "remoteEnv": { "PATH": "${containerEnv:PATH}:/home/vscode/.elan/bin" },
+  "customizations": { "vscode": { "extensions": ["leanprover.lean4"] } }
+}
