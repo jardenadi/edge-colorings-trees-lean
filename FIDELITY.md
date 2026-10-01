@@ -124,19 +124,24 @@ tree of height `κ` is cofinal). No additional FACT hypothesis is needed.
 * The sentence in the introduction of Section 4 "The function `C ↦ T(C)` is not injective" is an
   informal remark (it follows from Remark 4.7) and is not stated separately.
 
-## Summary of sorries (Phase 0)
+## Summary of sorries (after Phase 1, first pass: Section 2 only)
 
-* Sections 2–3, paper statements: 8 (`uMap_color`, `uMap_wellDefined_iff`, `additive_isLocallyAdditive`, `uMap_comp`,
-  3.1, 3.2, 3.3, 3.5).
+* Section 2: 0 sorries. Phase 1 proved the 4 approved statements: `uMap_color` (2.5),
+  `uMap_wellDefined_iff` (Note after 2.5), `additive_isLocallyAdditive` (2.7), `uMap_comp` (2.8).
+  Each was proved on the first attempt. `#print axioms`: only `propext`, `Quot.sound`, and
+  `Classical.choice` (the last one in `uMap_color` and `uMap_comp`, through the choice-based `uMap`).
+  No statement or definition was changed. No Mathlib imports were added.
+* Section 3, paper statements: 4 (3.1, 3.2, 3.3, 3.5). Not touched in this pass.
 * Section 4, paper statements: 20 (well-pruned "Clearly", `historyTree_isTree`, `ht_histFun`,
   `mem_succPart_historyTree`, 4.3, 4.4, 4.5, `treeOfColoring_isTree`, `treeOfColoring_downwardClosed`,
   4.7, 4.8, `existsUnique_isTreeColoring`, 4.12, 4.14, 4.15, 4.16, 4.17, 4.18, 4.19, 4.20).
-  Of these, 7 are implicit or "Clearly" claims of the paper (no number).
-* Section 5, paper statements: 3 (5.2, 5.3, 5.4).
-* Total 31. AUX: 0. STUCK: 0.
+  Of these, 7 are implicit or "Clearly" claims of the paper (no number). Phase 0 only (not approved).
+* Section 5, paper statements: 3 (5.2, 5.3, 5.4). Phase 0 only (not approved).
+* Total 27 (paper statements). AUX: 0 (none added). STUCK: 0.
 
 ## Build status
 
-`lake build` succeeds. Warnings: 31 × `declaration uses sorry` (the 31 statements above) and
+`lake build` succeeds. Warnings: 27 × `declaration uses sorry` (the 27 statements above) and
 4 × Mathlib header-linter style warnings ("Copyright too short") on Section2–5.lean
-(no copyright header; harmless). Loading Mathlib in this environment takes several minutes per file (I/O).
+(no copyright header; harmless). Loading full `import Mathlib` in this environment takes about
+15 minutes (I/O); the library files import only specific Mathlib modules, so they build in seconds.

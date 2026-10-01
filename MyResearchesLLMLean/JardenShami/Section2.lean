@@ -103,7 +103,15 @@ additive `C` and `a < b < c`. (With the choice-based encoding of `uMap` this is 
 theorem uMap_color {C : Coloring A D} (hC : IsLocallyAdditive C) {a b c : A}
     (hab : a < b) (hbc : b < c) :
     uMap C a b hab ⟨C.color b c hbc, c, hbc, rfl⟩ = C.color a c (hab.trans hbc) := by
-  sorry
+  -- Any two witnesses `c, c' > b` with the same color `C(b,·)` give the same `C(a,·)`.
+  have key : ∀ (c' : A) (hbc' : b < c'), C.color b c' hbc' = C.color b c hbc →
+      C.color a c' (hab.trans hbc') = C.color a c (hab.trans hbc) := by
+    intro c' hbc' h
+    rcases lt_trichotomy c c' with hcc | rfl | hcc
+    · exact (hC a b c c' hab hbc hcc h.symm).symm
+    · rfl
+    · exact hC a b c' c hab hbc' hcc h
+  exact key _ _ (Classical.choose_spec (⟨C.color b c hbc, c, hbc, rfl⟩ : Dset C b).2).2
 
 /-- **Note after Notation 2.5** (Section 2, unnumbered). `u_{a,b}` is well-defined for each
 `a < b` (i.e. `C(b,c) = C(b,c')` implies `C(a,c) = C(a,c')` for `c, c' > b`) if and only if `C`
@@ -113,14 +121,23 @@ theorem uMap_wellDefined_iff (C : Coloring A D) :
         C.color b c hbc = C.color b c' hbc' →
           C.color a c (hab.trans hbc) = C.color a c' (hab.trans hbc')) ↔
       IsLocallyAdditive C := by
-  sorry
+  constructor
+  · intro hwd a b c d hab hbc hcd h
+    exact hwd a b c d hab hbc (hbc.trans hcd) h
+  · intro hC a b c c' hab hbc hbc' h
+    rcases lt_trichotomy c c' with hcc | rfl | hcc
+    · exact hC a b c c' hab hbc hcc h
+    · rfl
+    · exact (hC a b c' c hab hbc' hcc h.symm).symm
 
 /-! ## Remark 2.7 and Claim 2.8 -/
 
 /-- **Remark 2.7** (Section 2). Every additive coloring is locally-additive. -/
 theorem additive_isLocallyAdditive {C : Coloring A D} (hC : IsAdditive C) :
     IsLocallyAdditive C := by
-  sorry
+  obtain ⟨s, hs⟩ := hC
+  intro a b c d hab hbc hcd h
+  rw [hs a b c hab hbc, hs a b d hab (hbc.trans hcd), h]
 
 /-- **Claim 2.8** (Section 2, `\label{C^* is additive}`). For a locally additive `C` and
 `a < b < c`: `u_{a,b} ∘ u_{b,c} = u_{a,c}` as functions on `D_c`. The composition makes sense
@@ -129,7 +146,10 @@ theorem uMap_comp {C : Coloring A D} (hC : IsLocallyAdditive C) {a b c : A}
     (hab : a < b) (hbc : b < c) :
     ∀ t : Dset C c, ∃ h : uMap C b c hbc t ∈ Dset C b,
       uMap C a b hab ⟨uMap C b c hbc t, h⟩ = uMap C a c (hab.trans hbc) t := by
-  sorry
+  intro t
+  -- `u_{b,c}(t) = C(b,d)` for the chosen witness `d > c` of `t ∈ D_c`.
+  have hbd : b < Classical.choose t.2 := hbc.trans (Classical.choose_spec t.2).fst
+  exact ⟨⟨Classical.choose t.2, hbd, rfl⟩, uMap_color hC hab hbd⟩
 
 end LinearOrder
 
