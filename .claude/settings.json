@@ -1,5 +1,13 @@
 {
   "permissions": {
-    "allow": ["mcp__lean-lsp"]
+    "allow": [
+      "mcp__lean-lsp",
+      "Bash(lake build *)",
+      "Bash(lake env lean *)",
+      "Edit(**/*.lean)"
+    ],
+    "deny": [
+      "Bash(git push *)"
+    ]
   }
 }
