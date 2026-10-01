@@ -22,8 +22,8 @@ Standing assumption of Subsection 7.1 ("For the rest of this subsection"): `μ <
 (`κ = cf(κ)` is `κ.IsRegular`; Mathlib's `IsRegular` includes `ℵ₀ ≤ κ`).
 
 The well-known fact used in the proof of Claim 7.8 ("every `κ`-tree has a well-pruned subtree
-which is a `κ`-tree") is the hypothesis-style `def Fact_wellPrunedSubtree : Prop`; Claim 7.8 and
-Theorem 7.7 take it as an explicit hypothesis.
+which is a `κ`-tree") is the auxiliary lemma `exists_wellPruned_subtree` (AUX, to be proved in
+Phase 1); Claim 7.8 and Theorem 7.7 take no extra hypothesis.
 -/
 
 open Cardinal
@@ -89,14 +89,14 @@ theorem not_starLaArrowKappa_of_succ_eq (κ μ : Cardinal.{w}) (hκ : κ.IsRegul
 
 -- Question 7.6 (open problem: does `μ⁺ → (μ⁺)_{la_μ}` hold?) is not formalized.
 
-/-- FACT: cited, not proved in the paper. **Section 7, proof of Claim 7.8, Case A** ("it a
-well-known fact that every `κ`-tree has a well-pruned subtree which is a `κ`-tree"). Stated for
-regular `κ`, the only case used (Claim 7.8 assumes `κ` regular); for singular `κ` it can fail.
-A subtree is a subset with the induced order. -/
-def Fact_wellPrunedSubtree : Prop :=
-  ∀ κ : Cardinal.{w}, κ.IsRegular →
-    ∀ (T : Type w) [PartialOrder T] [IsTree T], IsKappaTree κ T →
-      ∃ S : Set T, IsKappaTree κ S ∧ WellPruned S
+/-- AUX: not in paper. In the proof of Claim 7.8, Case A, the paper calls this a well-known fact
+("it a well-known fact that every `κ`-tree has a well-pruned subtree which is a `κ`-tree") and
+does not prove it. Stated for regular `κ`, the only case used (Claim 7.8 assumes `κ` regular); for
+singular `κ` it can fail. A subtree is a subset with the induced order. -/
+theorem exists_wellPruned_subtree (κ : Cardinal.{w}) (hκ : κ.IsRegular)
+    (T : Type w) [PartialOrder T] [IsTree T] (hT : IsKappaTree κ T) :
+    ∃ S : Set T, IsKappaTree κ S ∧ WellPruned S := by
+  sorry
 
 /-- **Claim 7.9** (Section 7, `\label{argue}`, inside Case A of the proof of Claim 7.8). Let
 `κ` be regular, `λ < κ` regular, and `T` a well-pruned `κ`-tree whose levels have size `< λ`.
@@ -114,9 +114,8 @@ theorem exists_unique_extension_level (κ lam : Cardinal.{w}) (hκ : κ.IsRegula
 /-- **Claim 7.8** (Section 7, `\label{the exercise of kunen}`; recalled from
 [Large, Proposition 7.9] and proved in the paper "for completeness"). Let `κ` and `λ` be cardinals
 such that `κ` is regular and `λ < κ`. If `T` is a `κ`-tree whose levels have size `< λ`, then
-`T` is not `κ`-Aronszajn.
-The well-known fact used in its proof (`Fact_wellPrunedSubtree`) is an explicit hypothesis. -/
-theorem not_isAronszajn_of_card_lev_lt (hF : Fact_wellPrunedSubtree.{w}) (κ lam : Cardinal.{w})
+`T` is not `κ`-Aronszajn. -/
+theorem not_isAronszajn_of_card_lev_lt (κ lam : Cardinal.{w})
     (hκ : κ.IsRegular) (hlam : lam < κ) (T : Type w) [PartialOrder T] [IsTree T]
     (hT : IsKappaTree κ T) (hlev : ∀ α : Ordinal.{w}, #(Lev T α) < lam) :
     ¬ IsAronszajn κ T := by
@@ -124,9 +123,8 @@ theorem not_isAronszajn_of_card_lev_lt (hF : Fact_wellPrunedSubtree.{w}) (κ lam
 
 /-- **Theorem 7.7** (Section 7, `\label{the only theorem}`). Let `κ` be a regular cardinal and
 `μ` a cardinal with `μ⁺ < κ`. Then `κ → (κ)_{la_μ}` (in the sense of Section 5,
-`LaArrowKappa`).
-`Fact_wellPrunedSubtree` (used through Claim 7.8) is an explicit hypothesis. -/
-theorem laArrowKappa_of_succ_lt (hF : Fact_wellPrunedSubtree.{w}) (κ μ : Cardinal.{w})
+`LaArrowKappa`). -/
+theorem laArrowKappa_of_succ_lt (κ μ : Cardinal.{w})
     (hκ : κ.IsRegular) (h : Order.succ μ < κ) : LaArrowKappa κ μ := by
   sorry
 
