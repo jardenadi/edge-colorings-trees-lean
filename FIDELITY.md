@@ -1,7 +1,8 @@
 # FIDELITY — Jarden & Shami, "A Note on Edge Colorings and Trees" (arXiv:2204.06874)
 
-Scope: **Phase 0, Sections 2–5** (Sections 2–3: first pass, approved; Sections 4–5: second pass).
-Lean files: `MyResearchesLLMLean/JardenShami/Section2.lean` … `Section5.lean`
+Scope: **Phase 0, Sections 2–7** (Sections 2–3: first pass, approved; Sections 4–5: second pass,
+mostly approved; Sections 6–7: third pass, not reviewed yet).
+Lean files: `MyResearchesLLMLean/JardenShami/Section2.lean` … `Section7.lean`
 (all imported from `MyResearchesLLMLean.lean`). All proofs are `sorry`. No axioms, no AUX lemmas.
 
 Numbering (active text only; one shared counter per section):
@@ -19,7 +20,14 @@ Section 4: 4.1 Def (history tree), 4.2 Def (`T^succ`), 4.3 Remark (`remark 3.3`)
 The commented-out `\section{Reconstructing a Tree from its History}` (a `%` line) is not a section;
 it reappears as a subsection of Section 4. Section 5: 5.1 Fact (unlabelled), 5.2 Theorem
 (`theorem 4.2`), 5.3 Lemma (`lemma 6`, `the main lemma`), 5.4 Claim inside the proof of 5.3.
-Some labels (`remark 3.3`, `theorem 4.2`, `claim for theorem 4.21`) are stale and do not match the
+Section 6: 6.1 Def (tree exponent, after [Sh589]), 6.2 Remark (`remark tree exponent leq exponent`),
+6.3 Fact (`fact 6.3`), 6.4 Theorem (`theorem 5.4`), 6.5 Corollary; between 6.2 and 6.3 the definition
+of a weakly compact cardinal is recalled (no number). Section 7: 7.1 Def (`∼`), 7.2 Remark
+(`remark 7.2`), 7.3 Lemma (`lemma number of equivalence classes`), 7.4 Theorem
+(`theorem shelah *-locally-additive`), 7.5 Proposition (`proposition mu^+<kappa can's be omitted`),
+7.6 Question, 7.7 Theorem (`the only theorem`), 7.8 Claim (`the exercise of kunen`, recalled from
+[Large, Proposition 7.9] and proved in the paper), 7.9 Claim (`argue`, inside the proof of 7.8).
+Some labels (`remark 3.3`, `theorem 4.2`, `claim for theorem 4.21`, `theorem 5.4`) are stale and do not match the
 compiled numbers.
 
 ## General encoding choices (apply to all rows)
@@ -86,6 +94,24 @@ compiled numbers.
 | 5.2 | For infinite `μ`: no `μ⁺`-Aronszajn tree iff `μ⁺ → (μ⁺)_{la_μ}`. | `noAronszajn_succ_iff_laArrowKappa` | `ℵ₀ ≤ μ → (NoAronszajn (succ μ) ↔ LaArrowKappa (succ μ) μ)`. | ref1/ref2. | core | None (the paper derives 5.2 from 5.3). | `μ⁺` = `Order.succ μ`. Label `theorem 4.2` is stale. | approved |
 | 5.3 | `κ` regular uncountable, `μ < κ`. TFAE: (1) every tree of height `κ` with levels of size `≤ μ` has a `κ`-sized branch; (2) `κ → (κ)_{la_μ}`. | `branch_iff_laArrowKappa` | `(∀ T, height T = κ.ord → (∀ α, #(Lev T α) ≤ μ) → ∃ b, IsBranch b ∧ #b = κ) ↔ LaArrowKappa κ μ`. | ref1. ref2 packages (1) as `AllBranches`. | core (also applied outside the formalized text) | 5.2; Thm 7.7 (`the only theorem`, Section 7, not formalized). | "`κ`-sized branch" = maximal chain of cardinality `κ`. Proof gaps (statement looks fine): (a) see 5.4; (b) in (1)⇒(2), for consecutive `f(i+1) < f(i+2)` in `H` the color `C(f(i+1), f(i+2))` is not controlled by `b↾f(i+1) ⊆ C(·,f(i+2))`; fix: take `H` among non-consecutive indices. (c) In (¬1)⇒(¬2) the colors of `C(T,e)` are `< levelSup ≤ μ`, so the codomain must be enlarged to `μ`. | approved |
 | 5.4 (in proof of 5.3) | All levels of `T(C)` have size `≤ μ` (`C : [κ]^2 → μ` la). | `card_lev_treeOfColoring_le` | Under the hypotheses of 5.3, for la `C : [κ]^2 → Kappa μ`: `∀ β, #(Lev (T(C)) β) ≤ μ`. | ref2 (`claim_5_4`, with only `κ` regular and `μ < κ`). ref1 does not state it. | stepping stone | 5.3 ((1)⇒(2)). | The proof's "WLOG `δ₀ > β`" needs `μ` infinite (for finite `μ` it discards one of only `μ+1` elements). The statement is still true for finite `μ` (another argument: successor levels have `≤ μ` nodes, then count at limit levels). | |
+| 6 implicit (subtree) | (implicit: "subtree", `Lev_{<α}(T)` in the proof of 6.4, the well-pruned subtree in the proof of 7.8) A subset of a tree, with the induced order, is a tree. | `isTree_subtype` (+ instance) | For `S : Set T`: `IsTree S`. | ref1 (`STree.induced`, an instance with `sorry`). Not in ref2. | core (borderline: an implicit claim, but needed to state `Fact_wellPrunedSubtree`) | Proof of 6.4 (`Lev_{<α}(T)`); statement of `Fact_wellPrunedSubtree`; proof of 7.8. | Placed in Section6.lean, where it is first used. | |
+| 6.1 | For infinite `μ ≤ λ`: `𝔗_{λ,μ}` = trees of height `μ` with `≤ λ` nodes; `Lim(T)` = set of cofinal branches; `λ^{μ,tr} = sup{\|Lim(T)\| : T ∈ 𝔗_{λ,μ}}`. | `Lim`, `treeExp` | `Lim T` = `{b \| IsCofinalBranch b}`. `treeExp λ μ` = `sSup` of `#(Lim T)` over trees `T : Type w` with `height T = μ.ord` and `#T ≤ λ`. | ref1 (same shape, `STree`). ref2: same content (branches as a subtype). | core | 6.2, 6.4, 6.5. | Total in Lean; the paper defines it only for infinite `μ ≤ λ`. Outside that range the Lean value is a by-product (e.g. `0` when `μ > λ`: no such trees). `sSup` of an unbounded set of cardinals is `0`, but this set is bounded by `2^λ`. Trees range over `Type w` (as E3). "Height `μ`" read as `height T = μ.ord`. | |
+| 6.2 | For every two infinite cardinals `λ, μ`: `λ^{μ,tr} ≤ λ^μ`. | `treeExp_le_power` | `ℵ₀ ≤ λ → ℵ₀ ≤ μ → treeExp λ μ ≤ λ ^ μ`. | ref1/ref2 add `μ ≤ λ`. Change: dropped (the paper says "every two infinite cardinals"). | stepping stone | 6.4 ((2)⇒(1)), 6.5. | No proof in the paper (easy: a cofinal branch is determined by a function `μ → T`). For `μ > λ` the Lean statement is trivially true (`treeExp λ μ = 0`). | |
+| Weakly compact (recalled in Section 6) | "Recall, that a weakly compact cardinal is a strongly inaccessible cardinal that satisfies the tree property." | `IsWeaklyCompact` | `κ.IsInaccessible ∧ NoAronszajn κ`. | ref1 `IsWeaklyCompact`, ref2 `WeaklyCompact` (own definitions of strongly inaccessible and tree property). Change: Mathlib's `IsInaccessible` (as in Fact 5.1) and `NoAronszajn` (Section 5). | core | 6.3, 6.5 (statements); proof of 6.5. | A recalled definition, not a fact: no FACT hypothesis. Tree property = no `κ`-Aronszajn tree in `Type w`. | |
+| 6.3 (FACT) | For uncountable `κ`: `κ → (κ)_2` iff `κ` is weakly compact. | `Fact_6_3` (FACT) | `def Fact_6_3 : Prop`: for all `κ > ℵ₀`: `Arrow (bigSubsets κ) (bigSubsets κ) (allColorings 2) ↔ IsWeaklyCompact κ`. | ref1/ref2 state it as a `theorem ... sorry`; changed to a FACT `def ... : Prop` per CLAUDE.md. Arrow form as in ref2 (ref1: its own `PartitionRel`). | core (FACT) | 6.4 ((1)⇒(2)); through 6.4, also 6.5. | `κ → (κ)_2` is Def 2.10 literally (subsets of size `κ`, colorings with 2 colors in `Type w`), not the "namely" form of `LaArrowKappa`; the two are equivalent. No citation given in the paper. | |
+| 6.4 | `κ` uncountable, regular, with the tree property. TFAE: (1) `λ^{μ,tr} < κ` for each `λ, μ < κ`; (2) `κ` strongly inaccessible. | `treeExp_lt_iff_isInaccessible` | Assuming `Fact_6_3`, for `κ > ℵ₀` regular with `NoAronszajn κ`: `(∀ λ μ, ℵ₀ ≤ μ → μ ≤ λ → λ < κ → treeExp λ μ < κ) ↔ κ.IsInaccessible`. | ref1/ref2 (same form of (1)). Change: Fact 6.3 is an explicit hypothesis. Label `theorem 5.4` is stale. | core (borderline: used by 6.5, but the main theorem of Section 6) | 6.5. | (1) restricted to infinite `μ ≤ λ` (the domain of Def 6.1); choice to approve. Proof gaps (statement looks fine): (a) (1)⇒(2) applies (1) to `Lev_{<α}(T)`, a tree of height `α`, an ordinal that need not be an (infinite) cardinal, while Def 6.1 covers only heights that are infinite cardinals; fixable via `cf(α)` (and a direct count for successor `α`). (b) (2)⇒(1) uses `λ^μ < κ` for strong limit `κ` (standard; AUX in Phase 1). | |
+| 6.5 | `κ` uncountable: weakly compact iff (1) regular, (2) tree property, (3) `λ^{μ,tr} < κ` for each `λ, μ < κ`. | `isWeaklyCompact_iff` | Assuming `Fact_6_3`, for `κ > ℵ₀`: `IsWeaklyCompact κ ↔ κ.IsRegular ∧ NoAronszajn κ ∧ (∀ λ μ, ℵ₀ ≤ μ → μ ≤ λ → λ < κ → treeExp λ μ < κ)`. | ref1/ref2 (same; ref2 has a proof from 6.2, 6.4 and an auxiliary `λ^μ < κ`, usable in Phase 1). Change: Fact 6.3 as hypothesis. | core | None. | (3) restricted as in 6.4. | |
+| 7.1 | (Standing assumption of Subsection 7.1: `μ < κ = cf(κ)`, `C : [κ]^2 → μ` *-la.) `β ∼ γ` if `C(β,α) = C(γ,α)` for some `α > β, γ` (`α` witnesses it). | `Sim` | `Sim C β γ := ∃ α, β < α ∧ γ < α ∧ C(β,α) = C(γ,α)`. | ref1 (on `Kappa κ`, `Sym2`); ref2 (any order, curried `C`). Shape of ref2, adapted to `Coloring.color`. | core | 7.2, 7.3, 7.4. | Defined for any coloring of any linear order (the paper: the fixed `C`). The standing assumption is an explicit hypothesis of each of 7.2–7.5. | |
+| 7.2 | If `β ≠ γ`, `α₁` witnesses `β ∼ γ` and `α₁ < α₂`, then `α₂` witnesses it too. Hence `∼` is an equivalence relation. | `sim_witness_mono_and_equivalence` | Under the standing assumption (`κ` regular, `μ < κ`, `C : [κ]^2 → Kappa μ` *-la): witnesses are upward closed for `β ≠ γ`, and `Equivalence (Sim C)`. | ref1 (one theorem, same). ref2: two lemmas with proofs (usable in Phase 1; ref2 assumes `NoMaxOrder`). | stepping stone | 7.3 (counting classes), 7.4. | The paper says "By local additivity"; what is used is *-local additivity (the standing assumption). Harmless slip. | |
+| 7.3 | If `μ⁺ < κ` then there are at most `μ` `∼`-equivalence classes. | `card_simClasses_le` | Under the standing assumption and `succ μ < κ`: `#(range (β ↦ {γ \| β ∼ γ})) ≤ μ`. | ref1 (same encoding of the classes). ref2: quotient by a setoid (needs 7.2 first); has a proof. | stepping stone | 7.4. | Classes counted as the sets `{γ : β ∼ γ}` (no quotient, since that `∼` is an equivalence is only proved in 7.2). `μ < κ` is redundant given `μ⁺ < κ`; kept as part of the standing assumption. | |
+| `κ → (κ)_{*-la_μ}` (Thm 7.4, Prop 7.5) | Every *-la coloring `C : [κ]^2 → μ` admits a homogeneous set of size `κ`. | `StarLaArrowKappa` | `∀ C : [κ]^2 → Kappa μ, *-la C → ∃ H ⊆ κ, #H = κ ∧ H homogeneous`. | ref1 `StarLaArrow`, ref2 `RamseyStarLA`: Def 2.10 `Arrow ... (starLaEq μ)`. CHANGED to the "namely" form of the approved `LaArrowKappa` (Section 5). | core | Statements 7.4, 7.5. | The paper gives no "namely" for `*-la`; chosen by analogy with Section 5. Def 2.10's form also quantifies over all subsets of `κ` of size `κ` (each order-isomorphic to `κ`, so equivalent); "on a regular cardinal" (Notation 2.9) is supplied by the hypothesis `κ.IsRegular` of 7.4, 7.5. Choice to approve. | |
+| 7.4 | `κ → (κ)_{*-la_μ}` whenever `μ⁺ < κ = cf(κ)`. | `starLaArrowKappa_of_succ_lt` | `κ.IsRegular → succ μ < κ → StarLaArrowKappa κ μ`. | ref1/ref2 (Arrow form, see the previous row). | core | None. | None. | |
+| 7.5 | `κ → (κ)_{*-la_μ}` does not hold if `μ⁺ = κ`. | `not_starLaArrowKappa_of_succ_eq` | `κ.IsRegular → succ μ = κ → ¬ StarLaArrowKappa κ μ`. | ref1/ref2 assume `ℵ₀ ≤ μ` instead (equivalent here). Here: the standing assumption `κ = cf(κ)` of Subsection 7.1. | core | None. | **Without the standing assumption the statement is false for `μ ≤ 1`**: for `μ = 0, κ = 1` and `μ = 1, κ = 2` every coloring is *-la and `κ` itself is homogeneous (`[κ]^2` has at most one element). With Mathlib's `IsRegular` (`ℵ₀ ≤ κ`), `μ` is infinite and the paper's proof works. (For finite `μ ≥ 2` it is also true, but excluded by `IsRegular`.) Choice to approve. | |
+| 7.6 | Question (does `μ⁺ → (μ⁺)_{la_μ}` hold?). | none | Not formalized (open question). | — | — | — | — | |
+| Well-pruned subtree (FACT, proof of 7.8) | ("it a well-known fact") Every `κ`-tree has a well-pruned subtree which is a `κ`-tree. | `Fact_wellPrunedSubtree` (FACT) | `def ... : Prop`: for regular `κ` and every `κ`-tree `T` there is `S ⊆ T` (induced order) that is a well-pruned `κ`-tree. | Not in ref1/ref2 (both leave the proof of 7.8 open). | core (FACT) | 7.8 (Case A); through 7.8, also 7.7. | Restricted to regular `κ`, the case used: for singular `κ` it can fail (e.g. `κ = ℵ_ω`: a root with a chain of length `ω_n` above it for each `n`; no node above the root reaches all levels). Alternative: prove it as an AUX lemma in Phase 1 (standard: keep the nodes with `κ` many successors) and drop the hypothesis from 7.8 and 7.7. Choice to approve. | |
+| 7.9 (in proof of 7.8) | `κ` regular, `λ < κ` regular, `T` a well-pruned `κ`-tree with levels of size `< λ`: for each `α < κ` with `cf(α) = λ` there is `q(α) < α` such that for `q(α) < β < α` no `a ∈ Lev_{q(α)}(T)` has two distinct successors in `Lev_β(T)`. | `exists_unique_extension_level` | Same, with `α.cof = λ`. | ref2 `claim_7_9` (same hypotheses). ref1 does not state it. | stepping stone | 7.8 (Case A). | Hypotheses are those of Case A ("`λ` regular", "WLOG well-pruned"). | |
+| 7.8 | (Recalled from [Large, Proposition 7.9], proved in the paper "for completeness".) `κ` regular, `λ < κ`: a `κ`-tree whose levels have size `< λ` is not `κ`-Aronszajn. | `not_isAronszajn_of_card_lev_lt` | Assuming `Fact_wellPrunedSubtree`: `κ.IsRegular → λ < κ → IsKappaTree κ T → (∀ α, #(Lev T α) < λ) → ¬ IsAronszajn κ T`. | ref1/ref2 (same). Change: FACT hypothesis. | core (borderline: used only by 7.7, but a known result that the paper recalls from the literature) | 7.7. | An ordinary statement (cited but proved in the paper), per the user's instruction. Proof gaps (statement looks fine): (a) the split "Case A: `λ` regular / Case B: `λ` singular, hence a limit cardinal" omits finite `λ` (then the levels are finite; true by a König-type argument). (b) Case A uses Fodor's lemma (in Mathlib: `exists_isStationary_preimage_singleton`, so no FACT needed) and, implicitly, that `{α < κ : cf(α) = λ}` is stationary (not in Mathlib; AUX in Phase 1). | |
+| 7.7 | `κ` regular, `μ⁺ < κ`: `κ → (κ)_{la_μ}`. | `laArrowKappa_of_succ_lt` | Assuming `Fact_wellPrunedSubtree`: `κ.IsRegular → succ μ < κ → LaArrowKappa κ μ`. | ref1 `LaArrow`, ref2 `RamseyLA` (Arrow form). Change: `LaArrowKappa` (the approved Section 5 form) and the FACT hypothesis. | core | None. | Proof gap (statement looks fine): the proof applies Lemma 5.3, which needs `κ` uncountable; for `κ = ℵ₀` (so `μ` finite) the statement is Ramsey's theorem `ω → (ω)^2_n`, which the proof does not cover. "Not `κ`-Aronszajn ⇒ a `κ`-sized branch" is routine. | |
 
 ## Cited facts table (FACT hypotheses)
 
@@ -93,6 +119,8 @@ compiled numbers.
 |---|---|---|---|
 | Fact 3.4 (`\label{fact dense}`), cited from [Sh42, Theorem 1.3] | For a dense linear ordering `I` and `F` = subsets of `I` dense in some interval of `I`: `F → (F)_{add_{<ℵ₀}}`. | `Fact_3_4` | Corollary 3.5 (`arrow_laLt_aleph0_denseInSomeInterval`) |
 | Fact 5.1 (Section 5, unlabelled, "Recall two equivalent definitions of a weakly compact cardinal"; no citation given) | For strongly inaccessible `κ`: no `κ`-Aronszajn tree iff for every `λ < κ` every coloring `C : [κ]^2 → λ` admits a homogeneous set of size `κ`. | `Fact_5_1` | None (motivation for Theorem 5.2; no proof in Sections 4–5 uses it) |
+| Fact 6.3 (`\label{fact 6.3}`, Section 6; no citation given) | For uncountable `κ`: `κ → (κ)_2` iff `κ` is weakly compact. | `Fact_6_3` | Theorem 6.4 (`treeExp_lt_iff_isInaccessible`); Corollary 6.5 (`isWeaklyCompact_iff`, through 6.4) |
+| Section 7, proof of Claim 7.8, Case A ("it a well-known fact"; no citation) | Every `κ`-tree has a well-pruned subtree which is a `κ`-tree (stated for regular `κ`, the case used). | `Fact_wellPrunedSubtree` | Claim 7.8 (`not_isAronszajn_of_card_lev_lt`); Theorem 7.7 (`laArrowKappa_of_succ_lt`, through 7.8) |
 
 No well-known unproved facts are used in the proofs of Sections 2–3 beyond elementary cardinal
 arithmetic (`|D*| ≤ 2^μ` for infinite `μ`, finite for finite `μ`), which can be proved in Phase 1.
@@ -101,6 +129,14 @@ Sections 4–5: the proofs use only standard facts that can be proved as AUX lem
 (e.g. `μ⁺` is regular, which is `Cardinal.isRegular_succ` in Mathlib; pigeonhole for a regular `κ`;
 existence of a strictly increasing continuous `f : κ → κ` built by recursion; a `κ`-sized branch of a
 tree of height `κ` is cofinal). No additional FACT hypothesis is needed.
+
+Sections 6–7: besides the two FACT rows above, the proofs use standard facts that are either in
+Mathlib or can be proved as AUX lemmas in Phase 1: Fodor's lemma (proof of 7.8; Mathlib
+`exists_isStationary_preimage_singleton`, so not a FACT); `{α < κ : cf(α) = λ}` is stationary for
+regular `λ < κ` (used implicitly with Fodor in 7.8; not in Mathlib, AUX); `λ^μ < κ` for a strong limit
+`κ` and `λ, μ < κ` (6.4, 6.5; AUX); `|Lim(T)| ≤ λ^μ` (6.2 itself has no proof in the paper).
+The well-pruned subtree fact was made a FACT (not an AUX) because the paper explicitly invokes it as a
+well-known fact without proof; it can be turned into an AUX lemma instead (see its row).
 
 ## Notes on the reference files (Sections 2–3)
 
@@ -124,7 +160,19 @@ tree of height `κ` is cofinal). No additional FACT hypothesis is needed.
 * The sentence in the introduction of Section 4 "The function `C ↦ T(C)` is not injective" is an
   informal remark (it follows from Remark 4.7) and is not stated separately.
 
-## Summary of sorries (after Phase 1, first pass: Section 2 only)
+## Notes on the reference files (Sections 6–7)
+
+* Both refs state Fact 6.3 as a `theorem ... sorry` (changed to a FACT), define weakly compact with
+  their own strongly-inaccessible and tree-property predicates (here Mathlib's `IsInaccessible` and
+  `NoAronszajn`), and use the Def 2.10 `Arrow` form for `κ → (κ)_{*-la_μ}` and `κ → (κ)_{la_μ}`
+  (here the "namely" forms `StarLaArrowKappa`, `LaArrowKappa`).
+* Both refs add `μ ≤ λ` to Remark 6.2 (dropped here, see row 6.2).
+* ref1 does not state Claim 7.9; ref2 does (same hypotheses as here). Neither formalizes the
+  well-pruned subtree fact. ref1 attributes Claim 7.8 to Kanamori; the paper cites [Large, Prop. 7.9].
+* ref2 has proofs of Remark 7.2, Lemma 7.3 (via a quotient) and Corollary 6.5 (from 6.2, 6.4 and an
+  auxiliary `λ^μ < κ`), usable as starting material in Phase 1.
+
+## Summary of sorries (after Phase 1, first pass: Section 2 only; Phase 0 for Sections 6–7)
 
 * Section 2: 0 sorries. Phase 1 proved the 4 approved statements: `uMap_color` (2.5),
   `uMap_wellDefined_iff` (Note after 2.5), `additive_isLocallyAdditive` (2.7), `uMap_comp` (2.8).
@@ -135,13 +183,17 @@ tree of height `κ` is cofinal). No additional FACT hypothesis is needed.
 * Section 4, paper statements: 20 (well-pruned "Clearly", `historyTree_isTree`, `ht_histFun`,
   `mem_succPart_historyTree`, 4.3, 4.4, 4.5, `treeOfColoring_isTree`, `treeOfColoring_downwardClosed`,
   4.7, 4.8, `existsUnique_isTreeColoring`, 4.12, 4.14, 4.15, 4.16, 4.17, 4.18, 4.19, 4.20).
-  Of these, 7 are implicit or "Clearly" claims of the paper (no number). Phase 0 only (not approved).
-* Section 5, paper statements: 3 (5.2, 5.3, 5.4). Phase 0 only (not approved).
-* Total 27 (paper statements). AUX: 0 (none added). STUCK: 0.
+  Of these, 7 are implicit or "Clearly" claims of the paper (no number). Not proved yet (approved
+  except 4.3 and 4.16–4.19).
+* Section 5, paper statements: 3 (5.2, 5.3, 5.4). Not proved yet (approved except 5.4).
+* Section 6, paper statements: 4 (`isTree_subtype` (implicit), 6.2, 6.4, 6.5). Phase 0 only (not approved).
+* Section 7, paper statements: 7 (7.2, 7.3, 7.4, 7.5, 7.7, 7.8, 7.9). Phase 0 only (not approved).
+* Total 38 (paper statements). AUX: 0 (none added). STUCK: 0.
+* FACT hypotheses: 4 (`Fact_3_4`, `Fact_5_1`, `Fact_6_3`, `Fact_wellPrunedSubtree`).
 
 ## Build status
 
-`lake build` succeeds. Warnings: 27 × `declaration uses sorry` (the 27 statements above) and
-4 × Mathlib header-linter style warnings ("Copyright too short") on Section2–5.lean
+`lake build` succeeds. Warnings: 38 × `declaration uses sorry` (the 38 statements above) and
+6 × Mathlib header-linter style warnings ("Copyright too short") on Section2–7.lean
 (no copyright header; harmless). Loading full `import Mathlib` in this environment takes about
 15 minutes (I/O); the library files import only specific Mathlib modules, so they build in seconds.
