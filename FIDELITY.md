@@ -1,8 +1,8 @@
 # FIDELITY — Jarden & Shami, "A Note on Edge Colorings and Trees" (arXiv:2204.06874)
 
-Scope of this pass: **Phase 0, Sections 2 and 3 only** (first experiment).
-Lean files: `MyResearchesLLMLean/JardenShami/Section2.lean`, `MyResearchesLLMLean/JardenShami/Section3.lean`
-(both imported from `MyResearchesLLMLean.lean`). All proofs are `sorry`. No axioms, no AUX lemmas.
+Scope: **Phase 0, Sections 2–5** (Sections 2–3: first pass, approved; Sections 4–5: second pass).
+Lean files: `MyResearchesLLMLean/JardenShami/Section2.lean` … `Section5.lean`
+(all imported from `MyResearchesLLMLean.lean`). All proofs are `sorry`. No axioms, no AUX lemmas.
 
 Numbering (active text only; one shared counter per section):
 Section 2: 2.1 Def (coloring), 2.2 Def (homogeneous), 2.3 Def (additive, `definition additive`),
@@ -10,6 +10,17 @@ Section 2: 2.1 Def (coloring), 2.2 Def (homogeneous), 2.3 Def (additive, `defini
 2.6 Def (la / *-la on a cardinal), 2.7 Remark, 2.8 Claim (`C^* is additive`), 2.9 Notation (classes),
 2.10 Def (arrow). Section 3: 3.1 Theorem, 3.2 Corollary, 3.3 Corollary, 3.4 Fact (`fact dense`),
 3.5 Corollary (unlabelled).
+Section 4: 4.1 Def (history tree), 4.2 Def (`T^succ`), 4.3 Remark (`remark 3.3`), 4.4 Proposition
+(`proposition without leaves`), 4.5 Corollary (`corollary reconstruction a tree from its history`),
+4.6 Def (`definition T(C)`), 4.7 Remark, 4.8 Remark, 4.9 Question, 4.10 Def (`definition enumeration`),
+4.11 Def (`definition C(T,e)`), 4.12 Claim (`claim C(T,e) is locally additive`), 4.13 Def (covers),
+4.14 Remark, 4.15 Theorem (`T isomorphic to T(C(T,e))`), 4.16–4.19 Claims inside the proof of 4.15
+(`claim for theorem 4.21`, `claim result of claim for theorem 4.21`, two unlabelled), 4.20 Corollary.
+The commented-out `\section{Reconstructing a Tree from its History}` (a `%` line) is not a section;
+it reappears as a subsection of Section 4. Section 5: 5.1 Fact (unlabelled), 5.2 Theorem
+(`theorem 4.2`), 5.3 Lemma (`lemma 6`, `the main lemma`), 5.4 Claim inside the proof of 5.3.
+Some labels (`remark 3.3`, `theorem 4.2`, `claim for theorem 4.21`) are stale and do not match the
+compiled numbers.
 
 ## General encoding choices (apply to all rows)
 
@@ -46,15 +57,50 @@ Section 2: 2.1 Def (coloring), 2.2 Def (homogeneous), 2.3 Def (additive, `defini
 | 3.3 | `F → (F)_{add_{<ℵ₀}}` ⟹ `F → (F)_{la_{<ℵ₀}}`. | `arrow_laLt_aleph0_of_arrow_addLt_aleph0` | Same. | ref1 (sorry); ref2 derives it from 3.2 with `μ = ℵ₀`. | No proof in the paper; does NOT follow from the statement of 3.1 (which needs `κ ≥ ℵ₀` colors while the hypothesis gives only finitely many). Follows from the proof of 3.1 or from 3.2 with `ℵ₀` strong limit. Reported as an incomplete derivation, statement itself is fine. | approved |
 | 3.4 | (Shelah) `I` dense linear order, `F` = subsets of `I` dense in some interval: `F → (F)_{add_{<ℵ₀}}`. | `denseInSomeInterval`, `Fact_3_4` (FACT) | `denseInSomeInterval I` = `{S \| ∃ a<b, ∀ x<y in (a,b), ∃ s ∈ S, x<s<y}`. `Fact_3_4 I : Prop` = `Arrow F F (addLt ℵ₀)` for that `F`. | ref1/ref2 state it as a `theorem ... sorry`; changed to a FACT hypothesis (`def ... : Prop`) per CLAUDE.md. Interval: refs use "order-convex set with two points"; here an open interval `(a,b)`, `a<b`. | "Dense in an interval" interpreted without requiring `S ⊆ (a,b)`; for the arrow principles the two versions (and the refs' convex-set version) are equivalent when `I` is dense. "Dense linear ordering" = `[DenselyOrdered I]`; Mathlib allows `I` empty or a singleton, then `F = ∅` and everything is trivial. | approved |
 | 3.5 | Same `I`, `F`: `F → (F)_{la_{<ℵ₀}}`. | `arrow_laLt_aleph0_denseInSomeInterval` | Assuming `Fact_3_4 I`: `Arrow F F (laLt ℵ₀)`. | ref1/ref2 (ref2 proves it from 3.3 and the fact). Change: the fact is an explicit hypothesis. | The paper's sentence before 3.5 cites Theorem 3.1, but the proof uses Cor 3.3 (correct: 3.1 alone does not suffice, see 3.3). | approved |
+| 4 prelim | (Section 4 opening, "Recall") Tree: partial order, `{s : s <_T t}` well-ordered. Branch, cofinal branch (order type = `ht(T)`), `Lev_α(T)`, `Lev_{<α}(T)`, `ht(t,T)`, `ht(T)` = first `α` with `Lev_α(T) = ∅`, leaf = maximal element, well-pruned (`Lev_0` has one element; every `x` has successors on every level `α` with `ht(x) < α < ht(T)`). | `IsTree`, `Tree.ht`, `Tree.Lev`, `Tree.LevLt`, `Tree.height`, `Tree.IsBranch`, `Tree.IsCofinalBranch`, `Tree.IsLeaf`, `Tree.WellPruned` | `IsTree T`: for every `t`, `(Set.Iio t, <)` is a well-order. `ht t` = order type of `Iio t`. `Lev T α = {t : ht t = α}`, `height T = sInf {α : Lev T α = ∅}`. Branch = maximal chain (`IsMaxChain`); cofinal branch = branch that is well-ordered with order type `height T`. Leaf = `IsMax`. `WellPruned`: exactly one node of height 0, and `ht x < α < height T → ∃ y ∈ Lev T α, x < y`. | Shape of ref2 (`IsTree` as a `Prop` mixin over `PartialOrder`), names and definitions of ref1 (ref1 uses a class `STree extends PartialOrder`). `WellPruned` takes ref2's `∃ y ∈ Lev T α` (ref1 equivalent). | "`Lev_0(T)` has only one element" read as "exactly one". `LevLt` is defined but not used in Sections 4–5. | |
+| 4 prelim, "Clearly" | (unnumbered) Every well-pruned tree of limit ordinal height has no leaves. | `Tree.wellPruned_noLeaves_of_isSuccLimit` | `WellPruned T → Order.IsSuccLimit (height T) → ∀ t, ¬ IsLeaf t`. | ref1/ref2 (same). | "Limit ordinal" is `Order.IsSuccLimit` (excludes 0). | |
+| κ-tree (not defined in paper) | Used from Def 4.10 on ("Let `T` be a `κ`-tree"); standard meaning: height `κ`, all levels of size `< κ`. | `IsKappaTree` | `height T = κ.ord ∧ ∀ α < κ.ord, #(Lev T α) < κ`. | ref1. ref2 requires `#(Lev T α) < κ` for all `α` (equivalent for `κ > 0`, since levels above the height are empty). | The paper does not define `κ`-tree; the standard definition is used. Trees `T : Type w` live in the universe of `κ`. | |
+| 4.1 | History tree: `f_t : ht(t,T) → T`, `f_t(α)` = the unique `t' <_T t` in `Lev_α(T)`; `F_T = ({f_t : t ∈ T}, ⊆)`. | `histFun`, `HistoryTree`, `historyTree_isTree` | `histFun t = {(α, t') : t' < t ∧ ht t' = α}` (the graph of `f_t`); `HistoryTree T = range histFun`, ordered by `⊆`. `historyTree_isTree`: `F_T` is a tree (implicit in "is the tree"). | ref1 (graph encoding). ref2 uses partial functions `Ordinal → Option T`. | `F_T` lives in `Type (w+1)` (pairs with ordinals); harmless for isomorphism statements. The implicit claim "`F_T` is a tree" is stated with `sorry` and used as an instance. | |
+| 4.2 + "Clearly" | `T^succ` = subtree induced by `{t : ht(t,T) successor}`. Clearly `(F_T)^succ = ({f_t : t ∈ T^succ}, ⊆)`, as `ht(f_t,F_T) = ht(t,T)`. | `succPart`, `ht_histFun`, `mem_succPart_historyTree` | `succPart T = {t : ∃ β, ht t = succ β}` (with the induced order). `ht_histFun`: height of `f_t` in `F_T` = `lift (ht t)`. `mem_succPart_historyTree`: `g ∈ (F_T)^succ ↔ ∃ t ∈ T^succ, g = f_t`. | ref1 (same three items). ref2 defines `HistoryTreeSucc` directly as `{f_t : t ∈ T^succ}` (that is, it builds in the "Clearly"). | None. | |
+| 4.3 | If `g : F_T → F_S` is an isomorphism then `g ↾ (F_T)^succ` is an isomorphism onto `(F_S)^succ`. | `historyTree_iso_restrict_succPart` | For `g : F_T ≃o F_S` there is `g' : (F_T)^succ ≃o (F_S)^succ` with `g' x = g x`. | ref1/ref2 (same). | Label is `remark 3.3` (stale label; number is 4.3). | |
+| 4.4 | A tree without leaves is isomorphic to `(F_T)^succ`. | `nonempty_iso_succPart_historyTree` | `(∀ t, ¬ IsLeaf t) → Nonempty (T ≃o (F_T)^succ)`. | ref1/ref2. | None. | |
+| 4.5 | Trees `T, S` without leaves: `T ≅ S` iff `F_T ≅ F_S`. | `nonempty_iso_iff_historyTree` | Same, with `≃o`. | ref1/ref2. | `T, S` in the same universe. | |
+| 4.6 | For `C : [κ]^2 → μ`: `T(C) = {C(·,δ) ↾ β : β ≤ δ < κ}`, a downward closed subtree of `(^{<κ}μ, ⊆)`. | `fiberRestr`, `treeOfColoring`, `treeOfColoring_isTree`, `treeOfColoring_downwardClosed` | `fiberRestr C δ β` = graph `{(α, C(α,δ)) : α < β}`; `treeOfColoring C` = set of these for `β ≤ δ` in `Kappa κ`, ordered by `⊆`. Implicit claims: it is a tree, and it is closed under restriction to `{α : α < γ}`. | ref1 (graphs), but with domain `Kappa κ` instead of ordinals (as in ref2). Colors: any `D` (paper: `μ`). | The two implicit claims of "downward-closed subtree" are stated as theorems (`sorry`). | |
+| 4.7 | For `f : κ → 2`, `C_f(α,β) = f(α)`. The class of all `C_f` is la and *-la; every `T(C_f)` is isomorphic to `(κ, ∈)`. | `colorMinOf`, `colorMinOf_spec` | `colorMinOf f {α,β} = f(min)`. For every `f`: `C_f` is la, *-la, and `T(C_f) ≃o Kappa κ`. | ref1 (2 = `Kappa 2`); ref2 (2 = `Fin 2`, extra unneeded hypothesis `ℵ₀ ≤ κ`). Here 2 = `Fin 2`, no extra hypothesis. | "The class is la" read as "each member is la". | |
+| 4.8 | For `f : κ → 2` not eventually constant, `C_f(α,β) = f(β)`: la, *-la, and `T(C_f) = ^{<κ}{0} ∪ ^{<κ}{1}`. | `colorMaxOf`, `colorMaxOf_spec` | `colorMaxOf f {α,β} = f(max)`. If `¬ ∃ α₀ i, ∀ β ≥ α₀, f β = i` then la, *-la, and `T(C_f)` = set of graphs of the constant functions `{α : α < β} → {i}`, `β < κ`, `i < 2`. | ref1 (same form). ref2 phrases "not eventually constant" as "both values occur above every `β`" (equivalent). | None. | |
+| 4.9 | Question (characterize the classes of `C ↦ T(C)`). | none | Not formalized (open question). | — | — | |
+| 4.10 | Enumeration of a `κ`-tree: for each `α < κ` a bijective enumeration `⟨t^i_α : i < μ_α⟩` of `Lev_α(T)`. | `Enumeration` | `e.t α i` = `t^i_α`; for `α < κ`, `i ↦ t^i_α` is a bijection from `{i : i < #(Lev T α).ord}` onto `Lev T α`. | ref1. ref2: `Option`-valued enumeration with the same content. | `μ_α` is taken to be the cardinal `#Lev_α(T)` (as an initial ordinal). The paper does not say `μ_α` is a cardinal (an enumeration by a larger ordinal of the same size would also be "bijective"), but the notation suggests it. | |
+| 4.11 | `μ = sup μ_α`; `C(T,e) : [κ]^2 → μ`, `C(T,e)(α,δ) = i` iff `α < δ` and `i < μ` is the unique ordinal with `t^i_α ≤_T t^0_δ`. | `levelSup`, `IsTreeColoring`, `existsUnique_isTreeColoring` | `levelSup κ T = ⨆_{α<κ} #(Lev T α)`. `IsTreeColoring e C` ("`C = C(T,e)`"), for `C : [κ]^2 → Kappa μ`: for `α < δ`, `C(α,δ) < μ_α` and `t^{C(α,δ)}_α ≤ t^0_δ`. `existsUnique_isTreeColoring`: for a `κ`-tree, exactly one such `C` exists. | Change vs ref1/ref2: both define an `Ordinal`-valued coloring by choice (plus a lemma that values are `< μ`). Here the codomain is literally `μ` (`Kappa μ`), and the definition is a predicate, because a direct definition would need a default color when the defining condition fails. All statements about `C(T,e)` take `C` with `IsTreeColoring e C`. | The predicate omits "unique" (it follows in a tree, from the bijectivity of `e`). `i < μ_α` is required so that `t^i_α` is defined. Choice to approve. | |
+| 4.12 | `C(T,e)` is locally additive. | `isLocallyAdditive_of_isTreeColoring` | `IsKappaTree κ T → IsTreeColoring e C → IsLocallyAdditive C`. | ref1/ref2. | None. | |
+| 4.13 | `e` covers `T`: every `t` satisfies `t <_T t^0_δ` for some `δ < κ`. | `Enumeration.Covers` | `∀ t, ∃ δ < κ.ord, t < e.t δ 0`. | ref1. | None. | |
+| 4.14 | For every cardinal `κ` and well-pruned `κ`-tree `T` there is an enumeration covering `T`. | `exists_covers` | `ℵ₀ ≤ κ → IsKappaTree κ T → WellPruned T → ∃ e, e.Covers`. | ref1/ref2 add `κ.IsRegular`. CHANGED w.r.t. the paper: hypothesis `ℵ₀ ≤ κ` added. | **Statement as written is false**: for finite `κ ≥ 1` a node on the top level is not below any `t^0_δ` (e.g. `κ = 1`, the one-point tree). The paper's proof assumes `κ` regular ("Since `κ` is regular"). For infinite `κ` the statement holds (greedy choice of distinct `δ_γ > ht(f(γ))`), so I chose the weaker `ℵ₀ ≤ κ`. Alternative: `κ.IsRegular` (as in the proof and in both refs). Choice to approve. | |
+| 4.15 | If `e` covers the `κ`-tree `T`, then `T(C(T,e))` is isomorphic to the history tree of `T`. | `nonempty_iso_treeOfColoring_historyTree` | `IsKappaTree κ T → e.Covers → IsTreeColoring e C → Nonempty (T(C) ≃o F_T)`. | ref1/ref2. | None. | |
+| 4.16 (in proof of 4.15) | `α < β ≤ δ`, `i < μ`, `s = t^i_α`: "`(C(·,δ)↾β)(α)` iff `f_{t_β^{C(β,δ)}}(α) = t^i_α`". | `Enumeration.node`, `treeColoring_eq_iff_mem_histFun` | `node β δ` = `t_β^{C(β,δ)}` (with `C(δ,δ) = 0`). For `α < β ≤ δ` and `i < μ_α`: `C(α,δ) = i ↔ (α, t^i_α) ∈ graph of f_{node β δ}`. | Not in ref1 (ref1 does not state in-proof claims), not in ref2. | **Typo in the paper**: the display has no right-hand side for the left part; it should read `(C(·,δ)↾β)(α) = i` (as clause (1) of its proof shows). Stated with `= i`, and `(C(·,δ)↾β)(α)` written as `C(α,δ)` (equal by definition since `α < β`). Also `i < μ_α` instead of `i < μ` (for `μ_α ≤ i` the node `t^i_α` is undefined). Label `claim for theorem 4.21` is stale. In-proof claims (4.16–4.19, 5.4) can be dropped if you prefer. | |
+| 4.17 (in proof of 4.15) | For `β₁ ≤ δ₁`, `β₂ ≤ δ₂`: `C(·,δ₁)↾β₁ = C(·,δ₂)↾β₂` iff `f_{t_{β₁}^{C(β₁,δ₁)}} = f_{t_{β₂}^{C(β₂,δ₂)}}`. Hence `h` is well defined and injective. | `fiberRestr_eq_iff_histFun_eq` | The equivalence, with graphs. | Not in refs. | "Hence `h` is well defined and injective" is the consequence, not separately stated. The parenthetical "(so `β₁ = β₂`)" is not stated. | |
+| 4.18 (in proof of 4.15) | `h` is an order-homomorphism. | `fiberRestr_subset_iff_histFun_subset` | `C(·,δ₁)↾β₁ ⊆ C(·,δ₂)↾β₂ ↔ f_{…} ⊆ f_{…}`. | Not in refs. | The paper says "order-homomorphism" but its proof proves both directions ("The converse is similar"), which is what an isomorphism needs; stated as `↔`. | |
+| 4.19 (in proof of 4.15) | `h` is surjective. | `exists_histFun_node_eq` | If `e` covers `T`: for every `t` there are `β ≤ δ` with `f_{node β δ} = f_t`. | Not in refs. | None. | |
+| 4.20 | `κ`-trees `T₁, T₂` without leaves, `e_i` covering `T_i`: `T₁ ≅ T₂` iff `T(C(T₁,e₁)) ≅ T(C(T₂,e₂))`. | `nonempty_iso_iff_treeOfColoring` | Same, with `C_i` such that `IsTreeColoring e_i C_i`. | ref1/ref2 (ref2 has a proof from 4.5 and 4.15, to reuse in Phase 1). | None. | |
+| Aronszajn (not defined in paper) | `κ`-Aronszajn tree: a `κ`-tree with no cofinal branch. "There exists no `κ`-Aronszajn tree." | `IsAronszajn`, `NoAronszajn` | `IsKappaTree κ T ∧ ¬ ∃ b, IsCofinalBranch b`; `NoAronszajn κ`: no tree `T : Type w` (universe of `κ`) is `κ`-Aronszajn. | ref1 (`TreeProperty`, via `Lim T = ∅`), ref2 (`TreeProperty`). Renamed to the paper's wording. | Standard definition (not in the paper). Trees range over the universe of `κ`. | |
+| `κ → (κ)_{la_μ}` (Thm 5.2, Lemma 5.3) | "namely: every locally additive coloring `C : [κ]^2 → μ` admits a homogeneous set of size `κ`". | `LaArrowKappa` | `∀ C : [κ]^2 → Kappa μ, la C → ∃ H ⊆ κ, #H = κ ∧ H homogeneous`. | ref1 `LaArrow` and ref2 `RamseyLA` use `Arrow (bigSubsets κ) (bigSubsets κ) (laEq μ)` of Def 2.10. CHANGED to the paper's "namely" wording. | Def 2.10's arrow also quantifies over all subsets of `κ` of size `κ` and all color sets of size `μ`; the two forms are equivalent (subsets of size `κ` have order type `κ`), but that is not stated. Choice to approve. | |
+| 5.1 (FACT) | For strongly inaccessible `κ`: no `κ`-Aronszajn tree iff for every `λ < κ` every `C : [κ]^2 → λ` has a homogeneous set of size `κ`. | `Fact_5_1` (FACT) | `def Fact_5_1 : Prop`: for every `κ` with `κ.IsInaccessible`: `NoAronszajn κ ↔ ∀ λ < κ, ∀ C : [κ]^2 → Kappa λ, ∃ H, #H = κ ∧ H homogeneous`. | ref1/ref2 state it as a `theorem ... sorry`; changed to a FACT `def ... : Prop` per CLAUDE.md. (2) is literal (refs use the arrow notation). | "Strongly inaccessible" = Mathlib's `Cardinal.IsInaccessible` (uncountable, regular, strong limit). No result depends on it. | |
+| 5.2 | For infinite `μ`: no `μ⁺`-Aronszajn tree iff `μ⁺ → (μ⁺)_{la_μ}`. | `noAronszajn_succ_iff_laArrowKappa` | `ℵ₀ ≤ μ → (NoAronszajn (succ μ) ↔ LaArrowKappa (succ μ) μ)`. | ref1/ref2. | `μ⁺` = `Order.succ μ`. Label `theorem 4.2` is stale. | |
+| 5.3 | `κ` regular uncountable, `μ < κ`. TFAE: (1) every tree of height `κ` with levels of size `≤ μ` has a `κ`-sized branch; (2) `κ → (κ)_{la_μ}`. | `branch_iff_laArrowKappa` | `(∀ T, height T = κ.ord → (∀ α, #(Lev T α) ≤ μ) → ∃ b, IsBranch b ∧ #b = κ) ↔ LaArrowKappa κ μ`. | ref1. ref2 packages (1) as `AllBranches`. | "`κ`-sized branch" = maximal chain of cardinality `κ`. Proof gaps (statement looks fine): (a) see 5.4; (b) in (1)⇒(2), for consecutive `f(i+1) < f(i+2)` in `H` the color `C(f(i+1), f(i+2))` is not controlled by `b↾f(i+1) ⊆ C(·,f(i+2))`; fix: take `H` among non-consecutive indices. (c) In (¬1)⇒(¬2) the colors of `C(T,e)` are `< levelSup ≤ μ`, so the codomain must be enlarged to `μ`. | |
+| 5.4 (in proof of 5.3) | All levels of `T(C)` have size `≤ μ` (`C : [κ]^2 → μ` la). | `card_lev_treeOfColoring_le` | Under the hypotheses of 5.3, for la `C : [κ]^2 → Kappa μ`: `∀ β, #(Lev (T(C)) β) ≤ μ`. | ref2 (`claim_5_4`, with only `κ` regular and `μ < κ`). ref1 does not state it. | The proof's "WLOG `δ₀ > β`" needs `μ` infinite (for finite `μ` it discards one of only `μ+1` elements). The statement is still true for finite `μ` (another argument: successor levels have `≤ μ` nodes, then count at limit levels). | |
 
 ## Cited facts table (FACT hypotheses)
 
 | Location in the paper | Statement | Lean name | Results that depend on it |
 |---|---|---|---|
 | Fact 3.4 (`\label{fact dense}`), cited from [Sh42, Theorem 1.3] | For a dense linear ordering `I` and `F` = subsets of `I` dense in some interval of `I`: `F → (F)_{add_{<ℵ₀}}`. | `Fact_3_4` | Corollary 3.5 (`arrow_laLt_aleph0_denseInSomeInterval`) |
+| Fact 5.1 (Section 5, unlabelled, "Recall two equivalent definitions of a weakly compact cardinal"; no citation given) | For strongly inaccessible `κ`: no `κ`-Aronszajn tree iff for every `λ < κ` every coloring `C : [κ]^2 → λ` admits a homogeneous set of size `κ`. | `Fact_5_1` | None (motivation for Theorem 5.2; no proof in Sections 4–5 uses it) |
 
 No well-known unproved facts are used in the proofs of Sections 2–3 beyond elementary cardinal
 arithmetic (`|D*| ≤ 2^μ` for infinite `μ`, finite for finite `μ`), which can be proved in Phase 1.
+
+Sections 4–5: the proofs use only standard facts that can be proved as AUX lemmas in Phase 1
+(e.g. `μ⁺` is regular, which is `Cardinal.isRegular_succ` in Mathlib; pigeonhole for a regular `κ`;
+existence of a strictly increasing continuous `f : κ → κ` built by recursion; a `κ`-sized branch of a
+tree of height `κ` is cofinal). No additional FACT hypothesis is needed.
 
 ## Notes on the reference files (Sections 2–3)
 
@@ -67,13 +113,30 @@ arithmetic (`|D*| ≤ 2^μ` for infinite `μ`, finite for finite `μ`), which ca
   Mathematical content otherwise agrees.
 * ref3 (Theorem 3.1, restricted): see row 3.1; its statement is degenerate (trivial) as noted.
 
+## Notes on the reference files (Sections 4–5)
+
+* Section 4–5 encodings differ between the refs: trees (`class STree extends PartialOrder` in ref1,
+  `Prop` mixin `IsTree` in ref2); functions (graphs `Set (Ordinal × _)` in ref1, partial functions
+  `_ → Option _` in ref2); `C(T,e)` (both: `Ordinal`-valued by choice). See rows 4 prelim, 4.1, 4.6, 4.11.
+* In-proof claims: ref1 states none of them (it says Claims 4.16–4.19 and 5.4 are part of the proofs);
+  ref2 states 5.4 only. Here all five are stated (rows 4.16–4.19, 5.4).
+* Both refs add `κ.IsRegular` to Remark 4.14 without comment (see row 4.14).
+* The sentence in the introduction of Section 4 "The function `C ↦ T(C)` is not injective" is an
+  informal remark (it follows from Remark 4.7) and is not stated separately.
+
 ## Summary of sorries (Phase 0)
 
-* Paper statements: 8 (`uMap_color`, `uMap_wellDefined_iff`, `additive_isLocallyAdditive`, `uMap_comp`,
-  3.1, 3.2, 3.3, 3.5). AUX: 0. STUCK: 0.
+* Sections 2–3, paper statements: 8 (`uMap_color`, `uMap_wellDefined_iff`, `additive_isLocallyAdditive`, `uMap_comp`,
+  3.1, 3.2, 3.3, 3.5).
+* Section 4, paper statements: 20 (well-pruned "Clearly", `historyTree_isTree`, `ht_histFun`,
+  `mem_succPart_historyTree`, 4.3, 4.4, 4.5, `treeOfColoring_isTree`, `treeOfColoring_downwardClosed`,
+  4.7, 4.8, `existsUnique_isTreeColoring`, 4.12, 4.14, 4.15, 4.16, 4.17, 4.18, 4.19, 4.20).
+  Of these, 7 are implicit or "Clearly" claims of the paper (no number).
+* Section 5, paper statements: 3 (5.2, 5.3, 5.4).
+* Total 31. AUX: 0. STUCK: 0.
 
 ## Build status
 
-`lake build` succeeds. Warnings: 8 × `declaration uses sorry` (the 8 statements above) and
-2 × Mathlib header-linter style warnings ("Copyright too short") on Section2.lean and Section3.lean
+`lake build` succeeds. Warnings: 31 × `declaration uses sorry` (the 31 statements above) and
+4 × Mathlib header-linter style warnings ("Copyright too short") on Section2–5.lean
 (no copyright header; harmless). Loading Mathlib in this environment takes several minutes per file (I/O).
