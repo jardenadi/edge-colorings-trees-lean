@@ -33,9 +33,10 @@ Research project: formalizing mathematics papers in Lean 4 + Mathlib, and compar
 - Leave every proof as `sorry`. Do not start proving in this phase.
 - Put a docstring on every definition and statement citing its place in the paper (section, definition or theorem number).
 - Create FIDELITY.md with two tables.
-  - Main table, one row per definition/theorem: paper statement (short paraphrase) | Lean name | plain-language back-translation of the Lean statement | based on which reference file, and changes relative to it (none, or what and why) | doubts or choices you made | approved by user (leave empty).
+- Create FIDELITY.md with two tables.
+  - Main table, one row per definition/theorem: paper statement (short paraphrase) | Lean name | plain-language back-translation of the Lean statement | based on which reference file, and changes relative to it (none, or what and why) | role | used by | doubts or choices you made | approved by user (leave empty).
+  - role is your proposal and the user decides: "core" (definitions; main results that no other result depends on; statements the paper applies outside the formalized text; when in doubt, core) or "stepping stone" (a lemma, claim or corollary used only to prove other statements). used by lists the statements whose proofs in the paper use this one.
   - Cited facts table, one row per FACT hypothesis: location in the paper | statement | which results depend on it.
-- Then stop and report to the user.
 
 ### Phase 1: proofs
 - Start only when the user asks. Work only on statements whose row in FIDELITY.md is marked approved by the user. Do not prove statements that are not approved yet.
