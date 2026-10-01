@@ -1,4 +1,5 @@
-import Mathlib
+import Mathlib.Data.Sym.Sym2
+import Mathlib.SetTheory.Cardinal.Regular
 
 /-!
 # Jarden–Shami, "A Note on Edge Colorings and Trees" (arXiv:2204.06874), Section 2
