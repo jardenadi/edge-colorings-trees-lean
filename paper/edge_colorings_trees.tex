@@ -1,0 +1,2070 @@
+
+\documentclass[11pt]{amsart}
+
+\usepackage{amssymb}
+
+%\usepackage{times}
+
+\input xy
+
+\xyoption{all}
+
+%\CompileMatrices
+
+
+
+
+
+
+%%%%%%%%%% proclamations %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\theoremstyle{plain}
+
+\newtheorem{theorem}{Theorem}[section]
+
+\newtheorem{corollary}[theorem]{Corollary}
+
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newtheorem{ptheorem}[theorem]{Pseudo Theorem}
+
+\newtheorem{maintheorem}[theorem]{Main Theorem}
+
+\newtheorem{subproposition}[theorem]{Subproposition}
+
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newtheorem{proposition}[theorem]{Proposition}
+
+\newtheorem{fact}[theorem]{Fact}
+
+\newtheorem{claim}[theorem]{Claim}
+
+\newtheorem{question}[theorem]{Question}
+
+\theoremstyle{definition} %actually mainly do not "mute" (in hebrew, in other words, be strait)
+
+\newtheorem{definition}[theorem]{Definition}
+
+\newtheorem{example}[theorem]{Example}
+
+\newtheorem{remark}[theorem]{Remark}
+
+\newtheorem{remarks}[theorem]{Remarks}
+
+\newtheorem{assumption}[theorem]{Assumption}
+
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+
+\newtheorem{notation}[theorem]{Notation}
+
+\theoremstyle{remark}
+
+\newtheorem{problem}[theorem]{Problem}
+
+\def\thepart {\Roman{part}}
+
+
+
+
+
+%%%%%%%%%% definitions%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\St}{\operatorname{\mathfrak{S}t}}
+
+\renewcommand{\P}{\mathcal{P}}
+
+\newcommand{\Pm}{\mathcal{P}^{-}}
+
+\newcommand{\U}{\operatorname{\mathfrak{U}}}
+
+\newcommand{\IS}{\operatorname{I}}
+
+\newcommand{\V}{\operatorname{\mathfrak{V}}}
+
+\newcommand{\cf}{\operatorname{cf}}
+
+\newcommand{\otp}{\operatorname{otp}}
+
+\newcommand{\ec}{\operatorname{EC}}
+
+%\newcommand{\dom}{\operatorname{dom}}
+
+\DeclareMathOperator\dom{dom}
+%כך הציע השופט של המאמר בדו"ח הראשון.
+
+
+\newcommand{\Aut}{\operatorname{Aut}}
+
+\def\rg{\operatorname{rg}}
+
+\newcommand{\ftp}{\operatorname{tp}}
+
+\newcommand{\tp}{\operatorname{ga-tp}}
+
+\newcommand{\gaS}{\operatorname{ga-S}}
+
+\newcommand{\Hanf}{\operatorname{Hanf}}
+
+\newcommand{\Min}{\operatorname{Min}}
+
+\newcommand{\Max}{\operatorname{Max}}
+
+\newcommand{\conc}{\Hat{\ }}
+
+\newcommand{\aut}[1]{\operatorname{Aut}_{#1}(\mathfrak)}
+
+\newcommand{\sq}[2]{\sideset{^{#1}}{}{\operatorname{#2}}}
+
+\newcommand{\av}{\operatorname{Av}}
+
+\newcommand{\con}{\operatorname{Con}}
+
+
+\newcommand{\lan}{\operatorname{L}}
+
+\newcommand{\Mod}{\operatorname{Mod}}
+
+\renewcommand{\qedsymbol}{\ensuremath{\dashv}}
+
+\renewcommand{\phi}{\varphi}
+
+\renewcommand{\labelitemi}{$\cdot$}
+
+\renewcommand{\labelenumi}{(\theenumi)}
+
+\renewcommand{\labelenumiii}{(\theenumiii)}
+
+\newcommand{\Union}{\bigcup}
+
+\newcommand{\initial}\lessdot
+
+ \newcommand{\infinity}{\infty}
+
+\newcommand{\K}{\operatorname{\mathcal{K}}}
+
+\newcommand{\id}{\operatorname{id}}
+
+\def\x{\mathbf{x}}
+
+\def\y{\mathbf{y}}
+
+\def\z{\mathbf{z}}
+
+\def\a{\mathbf{a}}
+
+\def\b{\mathbf{b}}
+
+\def\c{\mathbf{c}}
+
+\def\F{\Bbb{F}}
+
+\def\J{\mathbf{J}}
+
+\def\I{\mathbf{I}}
+
+\newcommand{\LS}{\operatorname{LS}}
+
+\def\M{\mathcal M}
+
+\newcommand{\B}{\mathcal B}
+
+\newcommand{\C}{\mathfrak C}
+
+\newcommand{\N}{\mathcal N}
+
+%\def\G{{}^\backprime\kern-1pt\Gamma}
+
+\def\G{\Gamma}
+
+\def\?{?\vadjust
+
+{\vbox to 0pt{\vskip-7pt\hbox to 1.1\hsize{\hfill\huge ?!}}}}
+
+\def\okbreak{\vfil\penalty2000 \vfilneg}
+
+
+%%%%%%%%%%a list environment with empty label %%%%%%%%%%
+
+
+
+\newenvironment{nolabels}
+{\begin{list}{}{\margin 15pt}} {\end{list}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%my new commands
+
+\usepackage{verbatim}
+
+% non-forking: *************
+ \def\nfork{\setbox0\hbox{$\bigcup$}%
+ \setbox1=\hbox to \wd0{\hfil\vrule width 0.7pt depth 2pt height 7.5pt\hfil}%
+ \wd1=0cm\relax\box1\box0}
+ \def\dnf{\mathop{\nfork}\limits}
+
+%\newcommand{angle0}{$\langle M_{0,\alpha},a_\alpha:\alpha<\alpha^* \rangle ^\frown
+%\langle M_{\alpha^*} \rangle$}
+\newcommand{\case}{\emph}
+\newcommand{\step}{\emph}
+\newcommand{\discussion}{\subsubsection*}
+%\renewcommand{\theenumi}{\alph{enumi}}
+%\renewcommand{\theenumii}{\alph{enumi}}
+%\usepackage{enumerate}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\al}{\allowbreak}
+\usepackage{enumerate}
+
+
+
+
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+
+\newcommand{\bd}{\begin{definition}}
+\newcommand{\ed}{\end{definition}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{document}
+
+%\title {Ramsey's Theorem for A Locally Additive Coloring}
+
+\title{A Note on Edge Colorings and Trees}
+
+\author{Adi Jarden}
+\email{jardena@ariel.ac.il}
+\address{Department of Mathematics.\\ Ariel University \\ Ariel, Israel}
+
+\begin{comment}
+\author{Assaf Rinot}
+\address{Department of Mathematics, Bar-Ilan University, Ramat-Gan 52900, Israel.}
+\urladdr{http://www.assafrinot.com}
+\end{comment}
+
+
+\author{Ziv Shami}
+\email{zivsh@ariel.ac.il}
+\address{Department of Mathematics.\\ Ariel University \\ Ariel, Israel}
+
+
+
+
+\begin{abstract}
+We point out some connections between existence of homogenous sets for certain edge colorings and existence of branches in certain trees.
+
+As a consequence, we get that any locally additive coloring (a notion introduced in the paper) of a cardinal $\kappa$ has a homogeneous set of size $\kappa$ provided that the number of colors, $\mu$ satisfies $\mu^+<\kappa$.
+
+Another result is that an uncountable cardinal $\kappa$ is weakly compact if and only if $\kappa$ is regular, has the tree property and for each $\lambda,\mu<\kappa$ there exists $\kappa^*<\kappa$ such that every tree of height $\mu$ with $\lambda$ nodes has less than $\kappa^*$ branches.
+
+\end{abstract}
+
+
+
+
+
+
+
+
+% \end{abstract}
+%\footnote{
+ \keywords{Ramsey, tree property, weakly compact, colorings}
+\subjclass{03E02, 03E55}
+%}
+
+
+
+\maketitle
+
+\tableofcontents
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%   section                                                                         %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+In \cite{sh42} Shelah studied additive colorings as a tool in the study of monadic theories. Here, we focus on combinatorics only. On the one hand, we study Ramsey theorems and the connection between them and the existence of branches in some trees. On the other hand, we find a new characterization of weakly compact cardinals.
+
+
+%הערה דקדוקית: 2 שתי  אפשרויות לגבי assign
+%assign to each  x  a  y
+%assign x to a y
+
+In Section 2 we introduce the basic definitions and notations about the colorings we deal in this paper.
+
+In Section 3 we point out a connection between additive colorings and locally-additive colorings.
+
+In Section 4 we assign to each coloring $C$ a tree $T(C)$ and to each tree $T$ with an enumeration $e$, a locally additive coloring $C(T,e)$. The function $C \mapsto T(C)$ is not injective on the class of locally additive colorings. On the other hand, we prove that if $e$ covers $T$ in some sense then
+the tree $T(C(T,e))$ is isomorphic to the history tree of $T$.
+
+In Section \ref{section the tree property at successor cardinals}, we prove the following lemma:
+for any uncountable regular cardinal, $\kappa$ and $\mu<\kappa$,
+the existence of a homogeneous set of size $\kappa$ for every locally additive coloring from $[\kappa]^2$ to $\mu$ is equivalent to the property that every tree of height $\kappa$ whose levels have size $\leq \mu$ admits a $\kappa$-sized branch.
+
+As a consequence, we get a characterization of the successor cardinals satisfying the tree property.
+
+In Section \ref{section strongly inaccessibles} we find an equivalent definition for weakly compact cardinals using the tree power.
+
+In Section 7 prove theorems about existence of large homogeneous sets. On the one hand, we slightly improve a theorem of Shelah about $*$-locally-additive colorings. On the other hand, we derive a theorem on locally-additive colorings from the lemma in Section 5.
+
+
+\subsection*{Acknowledgments.}
+We would like to thank Assaf Rinot for his significant contribution to this paper. The proof of $(2)\Rightarrow (1)$ in Lemma \ref{the main lemma} and  Theorem 5.2, as well as a full proof of Lemma 5.3 included in the paper, is due to Assaf Rinot. In particular, the definitions of the tree $ T(C)$ associated to a coloring $C$ (Definition \ref{definition T(C)}) and the definition of the locally additive coloring associated to an enumerated tree $C( T,e)$ (Definition \ref{definition C(T,e)}) are due to him.  Originally, we had proven only the direction $(1)\Rightarrow (2)$ in Lemma \ref{the main lemma} by a slightly different argument and deduced Theorem \ref{the only theorem}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%   section                                                                         %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Basic Definitions}
+We commence by defining several classes of colorings: additive colorings, locally-additive colorings and *-locally-additive colorings. We generalize the well-known Erd\H{o}s and Rado arrow notation.
+
+\begin{definition}
+A \emph{coloring} (or edge coloring) of a set $A$ with $\mu$ colors is a function
+\[
+C:[A]^2 \to D
+\]
+for some set $D$ of cardinality $\mu$. A coloring of a set $A$ is a coloring of a set $A$ with $\mu$ colors for some $\mu$. A coloring is a coloring of some set $A$.  An element in $D$ is called \emph{a color}.
+
+%For shortness we write $C(a,b)$ instead of $C(\{a,b\})$.
+If $A$ is a linearly ordered set and $C$ is a coloring of $A$ then we write $C(a,b)$ instead of $C(\{a,b\})$ when $a<b$ are in $A$.
+\end{definition}
+
+\begin{definition}
+Let $C$ be a coloring of a set $A$. A subset $B$ of $A$ is a called \emph{homogeneous for $C$} if $C \restriction [B]^2$ is constant.
+\end{definition}
+
+ \begin{definition}\label{definition additive}\cite[$\S$1]{sh42}
+Let $(A,<)$ be a linear ordering and let $D$ be a set. A function $C:[A]^2\rightarrow D$
+is said to be an additive coloring if there is a function
+\[
+s:D \times D \to D
+\]
+ such that if $a,b,c$ are in $A$ and
+$a<b<c$ then:
+\[
+C(a,c)=s(C(a,b),C(b,c))
+\]
+\end{definition}
+
+
+
+\begin{definition}\label{definition locally-additive}
+Let $(A,<)$ be a linear ordering and let $D$ be a set. A function $C:[A]^2\to D$
+is said to be a locally-additive coloring if for all $a<b<c<d$ we have:
+\[
+C(b,c)=C(b,d) \Rightarrow C(a,c)=C(a,d)
+\]
+\end{definition}
+
+\begin{notation}\label{notation local additivity}
+Let $(A,<)$ be a linear ordering, $D$ be a set and $C:[A]^2\to D$ be a locally additive coloring.
+For $b$ in $A$, let $D_b$ be the set
+of colors $t \in D$ such that $C(b,c)=t$ for some $c>b$. For every $a<b$ in $A$ we define the following function:
+\begin{align*}
+&u_{a,b}:D_b \to D\\
+&u_{a,b}(C(b,c))=C(a,c)
+\end{align*}
+\end{notation}
+Note that $u_{a,b}$ is well-defined  for each $a<b$ if and only if the coloring $C$ is locally-additive.
+
+\begin{definition}
+Let $\kappa$ be a cardinal. A coloring $C$ of $\kappa$
+is said to be a locally-additive coloring if it is locally-additive with respect to the $\in$-order of $\kappa$. $C$ is a *-locally additive coloring  if $C$ is locally-additive with respect to the reverse order of $\kappa$.
+\end{definition}
+
+\begin{remark}
+Every additive coloring is locally-additive.
+\end{remark}
+
+\begin{claim}\label{C^* is additive}
+For every locally additive coloring $C$ on a set $A$, for all $a<b<c$ in $A$, we have:
+\[
+u_{a,b} \circ u_{b,c}=u_{a,c}
+\]
+\end{claim}
+
+\begin{proof}
+Let $a<b<c$. Each side of the equality is a function from \[D_c=\{t \in D:t=C(c,d) \text{ for some } d>c\}
+\] into $\mu$. Let $t \in D_c$, namely, $C(c,d)=t$ for some $d>c$. On the one hand,
+\[
+u_{a,c}(t)=u_{a,c}(C(c,d))=C(a,d)
+\]
+
+But on the other hand,
+\[
+(u_{a,b} \circ u_{b,c})(t)=u_{a,b}(u_{b,c}(C(c,d)))=u_{a,b}(C(b,d))=C(a,d)
+\]
+\end{proof}
+
+
+\begin{notation} Let $\mu$ be a cardinal. We introduce the following notations:
+\be
+\item $add$=the class of additive colorings.
+\item $add_\mu$=the class of additive colorings with $\mu$ colors.
+\item $add_{<\mu}$= the class of additive colorings with less than $\mu$ colors.
+\item $la$= the class of locally-additive colorings.
+\item *-$la$= the class of *-locally additive colorings on a regular cardinal.
+\item Similarly, $la_\mu$, $la_{<\mu}$, *-$la_{\mu}$ and *-$la_{<\mu}$.
+\ee
+\end{notation}
+
+
+
+
+% בעקבות הערת השופט, מחקתי כאן את הדיון על צביעה שהיא downward unary. מושג זה יאבד כנראה לעד. בכל אֹפן השארתי לו זכר אחרי פקודת סוף המאמר.
+
+We generalize the well-known Erd\H{o}s and Rado arrow notation:
+\begin{definition}
+Let $F_1,F_2$ be families of subsets of a fixed linearly ordered set. Let $\mathfrak{C}$ be a class of colorings.
+\[
+F_1 \rightarrow  (F_2)_\mathfrak{C}
+\]
+is the following principle:
+For every set $D \in F_1$ and every coloring $C \in \mathfrak{C}$ of $D$, there is a subset $E$ of $D$
+such that $E \in F_2$ and $C \restriction [E]^2$ is constant. We put $\kappa$ for $F_1$ when $F_1$ is the family of subsets of $\kappa$ of cardinality $\kappa$ and similarly for $F_2$. We put $\mu$ for $\mathfrak{C}$ when $\mathfrak{C}$ is the class of all colorings with $\mu$ colors.
+
+
+\end{definition}
+Special cases of $\mathfrak{C}$ may be $add$, $la$, *-$la$, $add_{<\aleph_0}$, $la_{\kappa}$,
+%$dense_{<\kappa}$ נראה לי שזו שגיאה, שכן משפחת הקבוצות הצפופות צריכה להופיע כאות הלטינית אף.
+ and more.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%   section                                                                         %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Replacing Additivity by Local Additivity}
+In this section we prove that every Ramsey theorem related to additive colorings can be translated to the context of locally additive colorings at one price: the number of colors is decreased (in the infinite case, it is decreased to its logarithm). As an application, we get a direct generalization of a theorem  of Shelah on additive colorings of dense linear orderings.
+
+
+
+
+
+
+
+
+\begin{theorem}\label{generalizing add to loc less than mu colors}\label{theorem generalizing add to la}
+Let $\kappa,\mu$ be cardinals such that $2^\mu+\aleph_0 \leq \kappa$ and let $F$ be a family of subsets of a linearly ordered set.
+Assume that
+\[
+F \rightarrow (F)_{add_\kappa}
+\]
+
+Then
+\[
+F \rightarrow (F)_{la_\mu}
+\]
+(recall that $la_\mu$ is the class of locally additive colorings with $\mu$ colors).
+\end{theorem}
+
+\begin{proof}
+Let $A \in F$ and $C:[A]^2 \to \mu$ be a locally additive coloring. For each $a<b$ in $A$ let $u_{a,b}$ be the function that is defined in Notation \ref{notation local additivity}.
+Define:
+\[
+D^*=\bigcup_{D^- \subseteq \mu} \ ^{D^-} \mu
+\]
+(the set of functions of subsets of $\mu$ into $\mu$).  We define a new coloring
+\begin{align*}
+&C^*:[A]^2 \to D^* \\
+&C^*(a,b)=u_{a,b} \text{ where } a<b
+\end{align*}
+By Claim \ref{C^* is additive}, $C^*$ is an additive coloring. Since $|D^*| \leq \kappa$, we can apply the assumption,
+\[
+F \rightarrow (F)_{add_\kappa}
+\]
+on the additive coloring $C^*$. So there is a subset $B$ of $A$ so that
+$B \in F$ and $C^* \restriction [B]^2$ is constant. Let $f$ be the function, such that $C^*(a,b)$ equals $f$, whenever $a<b$ are in $B$.
+
+%Now $C \restriction B$ is downward unary, because
+%)מחקתי את השורה הקודמת, כי לבקשת השופט מחקתי את המושג downward unary.
+Now for all $a<b<c$ are in $B$ the following holds:
+\[
+C(a,c)=C^*(a,b)(C(b,c))=f(C(b,c))
+\]
+So $C \restriction B$ is additive. We apply again the assumption,
+\[
+F \rightarrow (F)_{add_\kappa}
+\]
+to get a subset $E$ of $B$ such that
+$E \in F$
+and $C \restriction [E]^2$ is constant.
+\end{proof}
+
+
+
+
+
+\begin{corollary}\label{generalizing add to loc for strong limit cardinal}
+Let $\mu$ be a strong limit cardinal and let $F$ be a family of subsets of a linearly ordered set.
+Assume that
+\[
+F \rightarrow (F)_{add_{<\mu}}
+\]
+
+Then:
+\[
+F \rightarrow (F)_{la_{<\mu}}
+\]
+
+\end{corollary}
+
+\begin{corollary}\label{generalizing add to loc for finite}
+Let $F$ be a family of subsets of a linearly ordered set.
+Assume that
+\[
+F \rightarrow (F)_{add_{<\aleph_0}}
+\]
+
+Then:
+\[
+F \rightarrow (F)_{la_{<\aleph_0}}
+\]
+\end{corollary}
+
+
+In our notation, Shelah proved the following fact:
+\begin{fact}\cite[Theorem 1.3]{sh42}\label{fact dense}
+Let $I$ be a dense linear ordering and let $F$ be the family of subsets of $I$ that are dense in some interval of $I$. Then:
+\[
+F \rightarrow (F)_{add_{<\aleph_0}}
+\]
+\end{fact}
+
+Theorem \ref{generalizing add to loc less than mu colors} and Fact \ref{fact dense} yield:
+\begin{corollary}
+Let $I$ be a dense linear ordering and let $F$ be the family of subsets of $I$ that are dense in some interval of $I$.  Then:
+\[
+F \rightarrow (F)_{la_{<\aleph_0}}
+\]
+\end{corollary}
+
+\begin{proof}
+By Fact \ref{fact dense} and Corollary \ref{generalizing add to loc for finite}
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+%On 7.7.21 I found a new idea of how to generalize additivity to local-additivity.
+%מתברר שכתבתי שטויות.
+\begin{comment}
+\begin{remark}
+If
+\[
+\mu^+ \to_{add} \mu
+\]
+then
+\[
+\mu^+ \to_{la} \mu
+\]
+\end{remark}
+
+\begin{proof}
+Let
+$C:\mu^+ \to \mu$
+be a locally-additive coloring. Define:
+\begin{align*}
+&C^*:\mu^+ \to \mu \times \mu \\
+&C^*(\alpha,\beta)=\langle C(\alpha,\beta),\alpha \rangle
+\end{align*}
+The coloring $C^*$ is additive. So we can find a $C^*$-homogeneous subset $A$ of $\mu^+$ of cardinality $\mu^+$.
+\end{proof}
+\end{comment}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%\section{Reconstructing a Tree from its History}
+%כרגע חלקתי את התת-סעיפים לשניִם, כי החלטתי להגדיר שני עצים זרימים לכל עץ, מה שיהפֹך את הנושא לכזה שמצדיק תת-סעיף בפני עצמו. אחרי כמה שעות החלטתי שנושא זה ידון במאמר המשך, אם אזכה לכתֹב.
+%\subsection{The Streamlined Tree of a Coloring}
+%בעקבות הדו"ח הראשון של השופט, הגעתי למסקנה שזה לא דרוש.
+\begin{comment}
+\begin{definition}
+A \emph{tree} is a partial-order $(T,\leq_{T})$ such  that for each $t \in T$ the set $\{s \in T:s<_{T}t\}$ is well-ordered by $\leq_{T}$.
+\end{definition}
+
+\begin{definition}
+\emph{A full branch} in a tree is a chain having an element in each level.
+%אני מסופק אם זו ההגדרה המקובלת.
+\end{definition}
+
+%%%%%%%%%%%%%%5
+%%
+%   זיו בִקש שאמחק מושג זה, כי הוא לא דרוש למשפטים. זאת למרות טענתי, לפיה הוא מבהיר מכוון נוסף את האפשרות להניח בה''כ שהעץ זרים.
+%למחרת התברר שמושג זה כן דרוש.
+%בעקבות הדו"ח הראשון של השופט, הגעתי למסקנה, שזה לא דרוש.
+
+\begin{definition}
+$succ({T})$ is the tree consisting of the nodes in $T$ of successor levels.
+\end{definition}
+
+\begin{remark}\label{remark 4.3}
+A tree $T$ has a full branch if and only if $succ(T)$ has a full branch.
+\end{remark}
+\end{comment}
+
+
+
+
+
+
+%בעקבות הדו"ח הראשון של השופט, החלטתי שמושג זה מיותר.
+\begin{comment}
+\begin{definition}\cite{paper23}
+A tree $T$ is \emph{Hausdorff} when for every   two distinct nodes $x$ and $y$ of the same non-successor level, there is a node $z$ such that $z <_{T} x$ and
+$z \nleq_{T} y$ (so every Hausdorff tree is rooted).
+\end{definition}
+
+
+%השופט שם לב שהטענה הבאה שגויה ולכן מחקתי אותה:
+%\begin{remark}\label{remark the trees are isomorphic iff their successors are isomorphic}
+%Let $T_1$ and $T_2$ be two Hausdorff trees. The trees $T_1$ and $T_2$ are isomorphic if and only if $succ(T_1)$ and $succ(T_2)$ are isomorphic.
+%\end{remark}
+
+
+The following definition is similar to that of streamlined tree in \cite{paper23}. The only tiny difference is that the range here is arbitrary.
+\begin{definition}
+A set $T$ is \emph{a streamlined tree} if and only if there exists some cardinal $\kappa$ such that each element $f \in T$ is a function whose domain is an ordinal in $\kappa$ and each restriction of $f$ to an ordinal $\beta<\dom(f)$ is in $T$. The partial-order of this tree is the inclusion relation between functions.
+\end{definition}
+\end{comment}
+
+
+
+
+%%%%%%%%
+%%
+\begin{comment}
+\begin{notation}
+For an ordinal, $\alpha$ we denote:
+\[
+nlim(\alpha)=\{\beta<\alpha:\beta \text{ is a non-limit ordinal}\}
+\]
+\end{notation}
+\end{comment}
+%%
+%%%%%%%%5
+
+
+%Sometimes we assume without loss of generality that a tree is a streamlined tree. Remark \ref{remark homomorphism onto a streamlined tree} justifies this assumption.
+
+
+
+
+
+
+%%%%%%%%%%5
+%%
+\begin{comment}
+\begin{remark}
+The history tree of each tree is streamlined.
+\end{remark}
+
+
+
+
+Every Hausdorff tree of limit height is a homomorphic image of a subset of its history tree:
+\begin{remark}\label{remark T from T(C(T,e))}
+Let $T$ be a Hausdorff tree of limit (ordinal) height and let $T^*=\{f_t:t \in T\}$ be its history tree. The following function is an epimorphism of $succ(T^*)$ onto $T$:
+\begin{align*}
+&h:succ(T^*) \to T\\
+&h(f_{t})=s \text{ if and only if } s<_T t \text{ and } ht(s,T)+1=ht(t,T)
+\end{align*}
+\end{remark}
+
+
+
+
+\begin{remark}\label{remark homomorphism onto a streamlined tree}
+Let $T$ be a tree and let $h:T \to T^*$ be the epimorphism of $T$ onto its streamlined tree. the following hold:
+\be
+\item $h$ is indeed an epimorphism;
+%\item $h \restriction succ(T)$ is an isomorphism onto $succ(T^*)$;
+\item
+$T$ has a full branch if and only if $T^*$ has a full branch; and
+\item $h$ is an isomorphism if and only if $T$ is Hausdorff.
+\ee
+\end{remark}
+
+
+
+
+\begin{proof}
+(1) Easy.
+By definition, $h$ is onto. Assume that $s<_{T}t$. We have to show that for  each $\beta<Lev_{T}(s)$, we have $f_s(\beta)=f_t(\beta)$. Let $\beta<Lev_{T}(s)$ be a ordinal. The follwing are equivalent:
+\begin{itemize}
+\item $f_t(\beta)=r$;
+\item $r<_{T}t$ and $Lev(r)=\beta$;
+\item $r<_{T}s$ and $Lev(r)=\beta$ and
+\item $f_s(\beta)=r$.
+\end{itemize}
+
+
+(2) Easy.
+
+(3) By Clause (2) and Remark \ref{remark 4.3}.
+\end{proof}
+ \end{comment}
+ %%
+ %%%%%%%%%%%
+
+
+
+
+
+%     the end of the justificaton of
+%     the assumption that a tree is a tree of
+%    functions.
+%%%%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%   section                                                                         %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Trees and Colorings}
+
+
+In this section we study two functions: one assigns to each coloring $C$ a tree $T(C)$ and the other assigns to each tree $T$ with an enumeration $\{t^i_\alpha:i<\mu_\alpha\}$ for each level of $T$, a locally additive coloring $C(T,e)$. The function $C \mapsto T(C)$ is not injective. By Theorem \ref{T isomorphic to T(C(T,e))}, if $e$ covers $T$ (see the definition below) then the tree $T(C(T,e))$ is isomorphic to its history tree, so it does not depend on $e$.
+$\\$
+
+Recall some basic notions and notations about trees. A \emph{tree} is a partial-order $(T,\leq_{T})$ such  that for each $t \in T$ the set $\{s \in T:s<_{T}t\}$ is well-ordered by $\leq_{T}$. A \emph{branch} in $T$ is a maximal linearly ordered subset of $T$. %The length of
+A \emph{cofinal branch} in $T$ is a branch whose order type is the height of $T$.
+
+
+For a tree $T$ and an ordinal $\alpha$, let $Lev_\alpha(T)$ denote the $\alpha$-th level of $T$ and let $Lev_{<\alpha}(T)$ denote the subtree of $T$, consisting the nodes of level smaller than $\alpha$. We denote the height of $t \in T$ in $T$ by $ht(t,T)$ and $ht(T)$ is the first $\alpha$ so that $Lev_\alpha(T)=\emptyset$. A tree $T$ is said to be \emph{well-pruned} if $Lev_0(T)$ has only one element and we have:
+\[
+\forall x \in T \forall \alpha [ht(x,T)<\alpha<ht(T) \rightarrow \exists y \in Lev_\alpha(T)(x<_T y)]
+\]
+A \emph{leaf} in a tree is a maximal element in the tree. Clearly, every well-pruned tree of limit ordinal height has no leaves.
+
+
+
+
+\subsection{Reconstructing a Tree from its History}
+%כאן יש להציג את הדוגמאות של השופט במאמר שלי עם זיו בהן מופעים עצים עם עלים ולא נִתן לשחזר את העץ מההיסטוריה שלו? כדאי להוסיף?
+
+%%%%%%%%%%%%%%%%
+%% הגרסה שבה מופיע גם עץ ההיסטוריה וגם הקודמים
+\begin{comment}
+\begin{definition}
+For a tree $T$, let $pred_T$ be the function on $T$ defined by
+\[
+pred_T(t)=\{t' \in T:t'<_T t\}
+\]
+and let $f_t:ht(t,T) \to T$ be function such that $f_t(\alpha)$ is the unique $t'<_Tt$ in $Lev_\alpha(T)$.
+
+\emph{The tree of initial segments of $T$} is the tree
+\[
+Pred_T=:(\{pred_T(t):t \in T\},\subseteq)
+\]
+
+
+\emph{The history tree of $T$} is the tree
+\[
+F_T=(\{f_t:f \in T\},\subseteq)
+\]
+\end{definition}
+
+\begin{remark}\label{remark history and segments}
+For every tree $T$, the tree of initial segments of $T$ is isomorphic to the history tree of $T$.
+\end{remark}
+
+\begin{definition}
+For a tree $T$, let
+$T^{succ}$ be the subtree of $T$ induced by the set
+\[
+\{t \in T:ht(t,T) \text{ is a successor ordinal}\}
+\]
+Let $Pred_T^{succ}$ be the following subtree of $Pred_T$:
+\[
+(\{pred_T(t):t \in T^{succ}\},\subseteq)
+\]
+\end{definition}
+
+
+\begin{remark}\label{remark 3.3}
+Let $T,S$ be trees. If $g:Pred_T \to Pred_S$ is an isomorphism then
+$g \restriction Pred_T^{succ}$ is an isomorphism of $Pred_T^{succ}$ onto $Pred_S^{succ}$.
+\end{remark}
+
+\begin{proposition}\label{proposition without leaves}
+Let $T$ be a tree without leaves. Then $T$ is isomorphic to the tree $Pred_T^{succ}$.
+\end{proposition}
+
+\begin{proof}
+Define:
+\begin{align*}
+&h:T \to Pred_T^{succ}\\
+&h(t)=\{t' \in T:t' \leq_T t\}
+\end{align*}
+Since $T$ has no leaves, for each $t \in T$, the set $h(t)$ is indeed an element of $Pred_T^{succ}$. Clearly, $h$ is an isomorphism.
+\end{proof}
+
+\begin{corollary}\label{corollary reconstruction a tree from its history}
+Let $T,S$ be two trees without leaves. Then the following conditions are equivalent:
+\be
+\item The trees $T,S$ are isomorphic;
+\item the initial segments trees $Pred_T$ and $Pred_S$ are isomorphic.
+\item the history trees $F_T,F_S$ are isomorphic.
+\ee
+\end{corollary}
+
+\begin{proof}
+Conditions (2) and (3) are equivalent by Remark \ref{remark history and segments}.
+Trivially, Condition (1) yields Conditions (2) and (3). Assume that Condition (2) holds. Then by Remark \ref{remark 3.3}, $Pred_T^{succ} \cong Pred_S^{succ}$ and so by Proposition \ref{proposition without leaves}, $T \cong S$.
+\end{proof}
+\end{comment}
+%הגרסה של תת-סעיף 4.1 עם הכפילות: גם עץ היסטוריה וגם עץ הקודמים.
+%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{definition}
+For a tree $T$ and $t \in T$, let $f_t:ht(t,T) \to T$ be the function such that $f_t(\alpha)$ is the unique $t'<_Tt$ in $Lev_\alpha(T)$. \emph{The history tree of $T$} is the tree
+\[
+F_T=(\{f_t:t \in T\},\subseteq)
+\]
+\end{definition}
+
+\begin{definition}
+For a tree $T$, let
+$T^{succ}$ be the subtree of $T$ induced by the set
+\[
+\{t \in T:ht(t,T) \text{ is a successor ordinal}\}
+\]
+\end{definition}
+Clearly,
+\[
+(F_T)^{succ}=(\{f_t:t \in T^{succ}\},\subseteq)
+\]
+(as $ht(f_t,F_T)=ht(t,T)$).
+
+
+
+\begin{remark}\label{remark 3.3}
+Let $T,S$ be trees. If $g:F_T \to F_S$ is an isomorphism then
+$g \restriction (F_T)^{succ}$ is an isomorphism from $(F_T)^{succ}$ to $(F_S)^{succ}$.
+\end{remark}
+
+\begin{proposition}\label{proposition without leaves}
+Let $T$ be a tree without leaves. Then $T$ is isomorphic to the tree $(F_T)^{succ}$.
+\end{proposition}
+
+\begin{proof}
+Define a function $h:T \to (F_T)^{succ}$ as follows:
+$h(t)$ is the unique function whose domain is $ht(t,T)+1$ such that $h(t)$ is $f_{t^*}$ for some $t^*>_T t$ with $ht(t^*,T)=ht(t,T)+1$. Since $T$ has no leaves, for each $t \in T$ we can find $t^*$. By the definition of a tree, $h(t)$ does not depend on the choice of $t^*$. Clearly, $h$ is an isomorphism.
+\end{proof}
+
+\begin{corollary}\label{corollary reconstruction a tree from its history}
+Let $T,S$ be two trees without leaves. Then the trees $T,S$ are isomorphic if and only if the history trees $F_T,F_S$ are isomorphic.
+\end{corollary}
+
+\begin{proof}
+For the non-trivial direction, assume that $F_T \cong F_S$. Then by Remark \ref{remark 3.3}, $(F_T)^{succ} \cong (F_S)^{succ}$ and so by Proposition \ref{proposition without leaves}, $T \cong S$.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{The Tree of a Coloring}
+The following definition assigns to each coloring a tree.
+\begin{definition}\label{definition T(C)}\cite[Page 7]{ri:chain}
+Let $\kappa$ and $\mu$ be cardinals and let $C:[\kappa]^2 \to \mu$ be a coloring. For every $\delta<\kappa$, consider the induced fiber map $C(\cdot,\delta):\delta\rightarrow\mu$ which satisfies $C(\cdot,\delta)(\alpha)=C(\alpha,\delta)$ for all $\alpha<\delta$.
+Then, consider the following downward-closed subtree of $({}^{<\kappa}\mu,\subseteq)$:
+$$  T(C):=\{ C(\cdot,\delta)\restriction\beta\mid \beta\le\delta<\kappa\}.%\footnote{btw, guys, this tree is studied in \texttt{http://www.assafrinot.com/paper/18}.}
+$$
+\end{definition}
+
+
+
+
+
+
+
+
+
+
+%זיו העיר לי שאפשר להכליל כך את הדוגמא שלמטה. לכן היא נמחקה.
+\begin{remark}
+For each $f:\kappa \to 2$, define a coloring:
+\begin{align*}
+&C_f:[\kappa]^2 \to 2\\
+&C_f(\alpha,\beta)=f(\alpha)
+\end{align*}
+Let $\mathcal{C}$ be the set of colorings $C_f$ where $f:\kappa \to 2$ is a function. Note that $\mathcal{C}$ is both locally-additive and $*$-locally-additive. All the trees $T(C)$ for $C \in \mathcal{C}$ are isomorphic to $(\kappa,\in)$.
+\end{remark}
+
+
+\begin{remark}
+For each $f:\kappa \to 2$, define a coloring:
+\begin{align*}
+&C_f:[\kappa]^2 \to 2\\
+&C_f(\alpha,\beta)=f(\beta)
+\end{align*}
+Let $\mathcal{C}$ be the set of colorings $C_f$ where $f:\kappa \to 2$ is a function which is not eventually constant. Note that $\mathcal{C}$ is both locally-additive and $*$-locally-additive. For each $C \in \mathcal{C}$, we have:
+\[
+T(C)=^{<\kappa}\{0\} \cup ^{<\kappa}\{1\}
+\]
+\end{remark}
+
+
+\begin{question}
+Find a characterization of the equivalence classes of locally additive colorings induced by the map $C \mapsto T(C)$.
+\end{question}
+
+
+
+
+
+
+
+
+
+\begin{comment}
+%העתקתי את הדוגמא מהתת סעיף הבא שבינתיים לא יכנס למאמר. השארתי עותק שלה גם בתת-סעיף עצמו. אחרי שנשלח את המאמר, אצטרך לבדֹק שוב אם לאמץ את תת-הסעיף.
+The following example shows that if we consider the class of trees up to isomorphism then the function $C \to T(C)$ is not injective. Actually, the colorings in the following are very different, while the trees are isomorphic.
+\begin{example}
+Define $C_1:[\kappa]^2 \to \mu$ by $C_1(\alpha,\delta)=0$ for each $\alpha<\delta$ in $\kappa$. Fix $\alpha^*<\kappa$ and define another coloring $C_2:[\kappa]^2 \to \mu$ by $$C_2(\alpha,\delta)=\left \{ \begin{matrix} 0, & \text{ if } \alpha<\alpha^* \text{ and } \alpha<\delta \\
+1 & \text{ otherwise} \end{matrix} \right \} $$
+
+The colorings $C_1$ and $C_2$ are locally additive colorings that are not isomorphic, but the trees $T(C_1)$ and $T(C_2)$ are isomorphic to $(\kappa,\in)$.
+\end{example}
+\end{comment}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{The Locally Additive Coloring of an Enumerated Tree}
+\begin{definition}\label{definition enumeration}
+Let $T$ be a $\kappa$-tree. For each $\alpha<\kappa$, let
+\[
+\langle t^i_\alpha:i<\mu_\alpha \rangle
+\]
+ be a bijective enumeration of $Lev_\alpha(T)$. A sequence
+\[
+e=\langle \langle t^i_\alpha:i<\mu_\alpha \rangle:\alpha<\kappa \rangle
+\]
+of enumerations of the levels of $T$
+is called an \emph{enumeration} of $T$.
+\end{definition}
+
+
+\begin{definition}\label{definition C(T,e)}
+Let $T$ be a $\kappa$-tree and let $e$ be an enumeration of $T$ as given by Definition \ref{definition enumeration}. Let $\mu$ be the supremum of $\{\mu_\alpha:\alpha<\kappa\}$. Let
+\[
+C(T,e):[\kappa]^2 \to \mu
+\]
+be the coloring defined by:
+\[
+C(T,e)(\alpha,\delta)=i
+\]
+if and only if $\alpha<\delta$ and $i<\mu$ is the unique ordinal such that $t^i_\alpha \leq_T t^0_\delta$.
+\end{definition}
+
+
+
+\begin{claim}\label{claim C(T,e) is locally additive}
+For each $\kappa$-tree $T$ and an enumeration $e$ of $T$, the coloring $C(T,e)$ is locally additive.
+\end{claim}
+\begin{proof}
+Denote $C=C(T,e)$. Let $\alpha<\beta<\gamma_1,\gamma_2<\kappa$. We have to show:
+\[
+C(\beta,\gamma_1)=C(\beta,\gamma_2) \Rightarrow C(\alpha,\gamma_1)=C(\alpha,\gamma_2)
+\]
+Let
+\[
+i=C(\beta,\gamma_1)=C(\beta,\gamma_2)
+\]
+So
+\begin{align*}
+&t^i_\beta \leq_T t^0_{\gamma_1},t^0_{\gamma_2}\\
+&t^{C(\alpha,\gamma_1)}_\alpha \leq_T t^0_{\gamma_1}\\
+&t^{C(\alpha,\gamma_2)}_\alpha \leq_T t^0_{\gamma_2}
+\end{align*}
+Since $\alpha<\beta$, we have:
+\[
+t^{C(\alpha,\gamma_1)}_\alpha,t^{C(\alpha,\gamma_2)}_\alpha \leq_T t^i_\beta
+\]
+Since $t^{C(\alpha,\gamma_1)}_\alpha,t^{C(\alpha,\gamma_2)}_\alpha$ are of the same level and comparable, we have:
+\[
+t^{C(\alpha,\gamma_1)}_\alpha=t^{C(\alpha,\gamma_2)}_\alpha
+\]
+By the injectivity of the enumeration of each level, we have:
+\[
+C(\alpha,\gamma_1)=C(\alpha,\gamma_2)
+\]
+
+\begin{comment}
+ For all $\alpha<\beta<\kappa$, we define a function:
+\begin{align*}
+&u_{\alpha,\beta}:\mu \to \mu \\
+ &u_{\alpha,\beta}(j)=\begin{cases}
+  i &,j<\mu_\beta \text{ and } t^j_\beta\restriction\alpha=t^i_\alpha\\
+  0 &,\text{ there is no such } i
+\end{cases}
+\end{align*}
+% \footnote{for $j\in[\mu_\beta,\mu)$, we can simply let $u_{\alpha,\beta}(j):=0$.}
+
+To see that $u_{\alpha,\beta}$ witnesses the local additivity, let $\gamma\in(\beta,\kappa)$ be arbitrary. Then,
+$C(\alpha,\gamma)=i$ iff $t^0_\gamma\restriction\alpha=t^i_\alpha$ iff $(t^0_\gamma\restriction\beta)\restriction\alpha=t^i_\alpha$ iff
+$t^{C(\beta,\gamma)}_\beta\restriction\alpha=t^i_\alpha$ iff $i=u_{\alpha,\beta}(C(\beta,\gamma))$.
+\end{comment}
+\end{proof}
+
+
+
+
+\begin{definition}
+Let $e$ be an enumeration of a $\kappa$-tree $T$. We say that $e$ \emph{covers} $T$ if for every $t \in T$ for some $\delta<\kappa$, we have $t <_T t_\delta^0$.%what is mu? I replace it by kappa and add that the height of T is kappa, hoping that it is not a mistake.
+\end{definition}
+
+\begin{remark}
+For every cardinal $\kappa$ and a well-pruned $\kappa$-tree $T$, there is an enumeration $e$ of $T$ that covers $T$.
+\end{remark}
+
+
+
+
+%נראה לי שלא דרושה הוכחה. זיו טוען שהיא לא כתובה טוב. אחרי שהגשנו, השופט בִקש שנוסיף הוכחה או לפחות רמז.
+\begin{proof}
+Fix a bijection $f:\kappa \to T$. We define $\delta_\gamma<\kappa$ and choose $t^0_{\delta_\gamma}$ by induction on $\gamma$ in the following way:
+\begin{align*}
+&\delta_\gamma=\max(ht(f(\gamma),T),\sup\{\delta_\beta:\beta<\gamma\})+1 \\
+&f(\gamma) <_T t^0_{\delta_\gamma} \text{ and } ht(t^0_{\delta_\gamma},T)=\delta_\gamma
+\end{align*}
+  Since $\kappa$ is regular, $\delta_\gamma<\kappa$. Note that the function $\gamma \mapsto \delta_\gamma$ is increasing and so injective. For each $\delta \notin \{\delta_\gamma:\gamma<\kappa\}$ we choose $t^0_\delta$ arbitrarily. It remains to choose an enumeration $\langle t^i_\alpha:0<i<\mu_\alpha \rangle$ of $Lev_\alpha(T) \setminus \{t^0_\alpha\}$ for each $\alpha<\kappa$. Clearly, the enumeration $e$ covers $T$.
+\end{proof}
+
+
+
+
+
+
+
+
+
+%הנה ההוכחה שכתבתי לבקשת השופט. אולם זיו הראה שהיא שגויה (כי יתכן ש-A_\alpha ריקה) והציע אחרת. אמנם קל לתקן את ההוכחה, אבל נדמה לי שהוכחתו פשוטה יותר.
+%%%%%%%%
+%%
+\begin{comment}
+\begin{proof}
+Fix a bijection $cd:\kappa \to T$. For every $\alpha<\kappa$, consider the following set:
+\[
+A_\alpha=\{t \in Lev_{<\alpha}(T):\forall \beta<\alpha (t \nleq_{T} t_\beta^0\}
+\]
+Let $\gamma_\alpha$ be the first ordinal so that $cd(\gamma_\alpha) \in A_\alpha$. Define $t_\alpha^0$ as the $\leq_{T}$-extension of $cd(\gamma_\alpha)$ of level $\alpha$. For every $\alpha<\kappa$, choose an enumeration $\langle t_\alpha^i:0<i<\mu_\alpha \rangle$ of $Lev_\alpha(T) \setminus \{t_\alpha^0\}$. The definition of the enumeration has completed. It remains to show that it covers $T$. Towards a contradiction, assume that for some $t \in T$ for every $\beta<\kappa$ we have  $t \nleq_{T} t_\beta^0$. For each $\alpha>ht(t,T)$ we have $t \in A_\alpha$. So for each $\alpha>ht(t,T)$, we have $\gamma_\alpha<cd^{-1}(t)$. Therefore we get the following injection:
+\begin{align*}
+&g:(ht(t,T),\kappa) \to cd^{-1}(t)\\
+&g(\alpha)=\gamma_\alpha
+\end{align*}
+But $cd^{-1}(t)<\kappa=|(ht(t,T),\kappa)|$, a contradiction.
+\end{proof}
+\end{comment}
+%%
+%%%%%%%%%%%%%%%5
+
+
+
+
+
+
+
+
+
+\begin{theorem}\label{T isomorphic to T(C(T,e))}
+Let $T$ be a $\kappa$-tree and let $e=\langle \langle t^i_\alpha:i<\mu_\alpha \rangle:\alpha<\kappa \rangle$ be an enumeration of $T$ as given by Definition \ref{definition enumeration}. If $e$ covers $T$ then $T(C(T,e))$ is isomorphic to the history tree of $T$, $\{f_t:t \in T\}$.% So (wrong, so deleted) if in addition, $T$ is a Hausdorff tree of limit height then
+%$T$ can be reconstructed from $T(C(T,e))$.
+\end{theorem}
+
+\begin{proof}
+In order to simplify the notation, we write $C$ for $C(T,e)$. For $\delta<\kappa$ we stipulate $C(\delta,\delta)=0$.
+We shall prove that the following function is a well-defined isomorphism:
+\begin{align*}
+&h:T(C) \to \{f_t:t \in T\}\\
+&h(C(\cdot,\delta) \restriction \beta)=f_{t_\beta^{C(\beta,\delta)}} \text{ for every } \beta \leq \delta<\kappa
+\end{align*}
+We separate the proof into several claims. First note that the level of $t_\beta^{C(\beta,\delta)}$ is $\beta$, so the domain of the function $f_{t_\beta^{C(\beta,\delta)}}$ is $\beta$.
+\begin{claim}\label{claim for theorem 4.21}
+Let $\alpha<\beta \leq \delta<\kappa$ be levels  of $T$. Let $i<\mu$ and let $s=t^i_\alpha$. Then
+\[
+(C(\cdot,\delta) \restriction \beta)(\alpha) \text{ if and only if } f_{t^{C(\beta,\delta)}_\beta}(\alpha)=t^i_\alpha.
+\]
+\end{claim}
+
+\begin{proof}
+We prove that the following are equivalent:
+\be
+\item $(C(\cdot,\delta) \restriction \beta)(\alpha)=i$
+\item $C(\alpha,\delta)=i$
+\item $t_\alpha^i <_T t^0_\delta$
+\item $s <_T t_\delta^0$
+\item $s <_T t_\beta^{C(\beta,\delta)}$
+\item $f_{t^{C(\beta,\delta)}_\beta}(\alpha)=t^i_\alpha$
+\ee
+The equivalence between every pair of consecutive clauses holds immediately by the definitions, except the equivalence between Clauses (4) and (5). Note that $t_\beta^{C(\beta,\delta)} \leq_T t^0_\delta$. Assume that Clause (5) holds. Then by the transitivity of $\leq_T$, Clause (4) holds. Conversely, assume that Clause (4) holds. So $s$ and $t_\beta^{C(\beta,\delta)}$ are comparable. As the level of $s$ is $\alpha$ and $\alpha<\beta$, Clause (5) holds.
+\end{proof}
+
+\begin{claim}\label{claim result of claim for theorem 4.21}
+Let $\beta_1 \leq \delta_1$ and $\beta_2 \leq \delta_2$ be levels of $T$. The following are equivalent:
+\be
+\item
+$C(\cdot,\delta_1) \restriction \beta_1=C(\cdot,\delta_2) \restriction \beta_2$ (so $\beta_1=\beta_2$).
+\item
+$f_{t^{C(\beta_1,\delta_1)}_{\beta_1}}=f_{t^{C(\beta_2,\delta_2)}_{\beta_2}}$
+\ee
+Hence, the function $h$ is well-defined and injective.
+\end{claim}
+
+\begin{proof}
+The equivalence holds by claim \ref{claim for theorem 4.21} and the injectivity of each enumeration in $e$.
+So by its definition, $h$ is well-defined and injective.
+\end{proof}
+
+\begin{claim}
+The function $h$ is an order-homomorphism.
+\end{claim}
+
+\begin{proof}
+
+
+%%%%%%%%%%%%%5
+%%
+%\begin{comment}
+For the first direction, suppose:
+ $$C(\cdot,\delta_1) \restriction \beta_1 \subseteq C(\cdot,\delta_2) \restriction \beta_2$$
+We should prove:
+\[
+f_{t_{\beta_1}^{C(\beta_1,\delta_1)}} \subseteq f_{t_{\beta_2}^{C(\beta_2,\delta_2)}}
+\]
+Let $\alpha<\beta_1$. Then:
+\[
+(C(\cdot,\delta_1) \restriction \beta_1)(\alpha)= (C(\cdot,\delta_2) \restriction \beta_2)(\alpha)
+\]
+So Claim \ref{claim for theorem 4.21} yields:
+\[
+f_{t_{\beta_1}^{C(\beta_1,\delta_1)}}(\alpha)= f_{t_{\beta_2}^{C(\beta_2,\delta_2)}}(\alpha)
+\]
+The converse is similar, using the injectivity of each enumeration in $e$.
+\end{proof}
+
+
+
+\begin{claim}
+The function $h$ is surjective.
+\end{claim}
+
+\begin{proof}
+Let $t \in T$. Since $e$ covers $T$, we can find $\delta$ such that $t <_T t_\delta^0$. Let $\alpha$ be the level of $t$. Then $t=t_\alpha^{C(\alpha,\delta)}$. So
+\[
+h(C(\cdot,\delta) \restriction \alpha)=f_{t_\alpha^{C(\alpha,\delta)}}=f_t
+\]
+\end{proof}
+The proof of Theorem \ref{T isomorphic to T(C(T,e))} has completed.
+\end{proof}
+
+\begin{corollary}
+Let $T_1,T_2$ be two $\kappa$-trees without leaves and for $i=1,2$ let $e_i$ be enumerations of $T_i$ that covers $T_i$. Then the trees $T_1,T_2$ are isomorphic if and only if the trees $T(C(T_1,e_1))$ and $T(C(T_2,e_2))$ are isomorphic.
+\end{corollary}
+
+\begin{proof}
+The following conditions are equivalent:
+\be
+\item
+The trees $T_1$ and $T_2$ are isomorphic;
+\item
+the history trees of $T_1$ and $T_2$  are isomorphic; and
+\item
+the trees $T(C(T_1,e_1))$ and $T(C(T_2,e_2))$ are isomorphic.
+\ee
+The equivalence between (2) and (3) is satisfied by Theorem \ref{T isomorphic to T(C(T,e))} and the equivalence between (1) and (2) is satisfied by Corollary \ref{corollary reconstruction a tree from its history}, as the trees has no leaves.
+\end{proof}
+
+
+
+
+
+
+
+
+\begin{comment}
+% אדון בו אחרי שנשלח את המאמר ללא תת-סעיף זה.
+%%%%%%%%%%%%%%
+%%     subsection
+\subsection{What about $C(T(C))$?}
+Here comes a question: is the function $C \to T(C)$ injective? We have to define the question precisely. Naturally, we identify trees that are isomorphic as partial orders. But what equivalence relation on colorings will be considered?
+
+First consider a coloring $C:[\kappa]^2 \to \mu$ as a structure whose universe is the disjoint union of $\kappa$ and $\mu$, it has a binary relation $\in$ and a ternary relation $\{(\alpha,\beta,\gamma):c_1(\alpha,\beta)=\gamma\}$. Since an order-morphism of an ordinal with the relation $\in$ is the identity, the following holds: $c_1$ and $c_2$ are isomorphic if and only if they are equal up to the names of the colors:
+\begin{definition}
+The colorings $c_1,c_2:[\kappa]^2 \to \mu$ are \emph{equal up to the names of the colors} if there is a bijection $h:\mu \to \mu$ such that $c_2(\alpha,\beta)=h(c_1(\alpha,\beta))$ for every $\alpha<\beta<\kappa$.
+\end{definition}
+
+It is easy to show that the function $C \to T(C)$ is not injective in the following sense:
+there are two colorings $c_1,c_2:[\kappa]^2 \to \mu$ that are not equal up to the names of the colors but $T(C_1)=T(C_2)$.  We prove below a stronger result. In order to state it, we define a notion of isomorphism between colorings where a coloring is considered as a structure whose universe is the disjoint union of $\kappa$ and $\mu$ and it has the ternary relation as above. Now isomorphisms should not be order-morphisms!
+
+\begin{definition}
+Define $A=\{(\alpha,0):\alpha<\kappa\} \cup \{(\alpha,1):\alpha<\mu\}$.
+The colorings $c_1,c_2$ are said to be \emph{isomorphic} if there is a bijection $h:A  \to A$ such that $$(c_2(\alpha,\beta),1)=h(c_1(h(\alpha,0),h(\beta,0)),1)$$ for every $\alpha<\beta<\kappa$.
+\end{definition}
+
+This weak sense of isomorphism between colorings is good for the study of homogeneous sets:
+\begin{remark}
+If $c_1$ and $c_2$ are isomorphic then there is a $c_1$-homogeneous subset of $\kappa$ of cardinality $\kappa$ if and only if there is a $c_2$-homogeneous subset of $\kappa$ of cardinality $\kappa$.
+\end{remark}
+
+The following examples show that the function $C \to T(C)$ is not injective even if we identify isomorphic colorings.
+\begin{example}
+Fix $\alpha^*<\kappa$.
+Define $c_1:[\kappa]^2 \to \mu$ by $c_1(\alpha,\delta)=0$ for each $\alpha<\delta$ in $\kappa$. Define another coloring $c_2:[\kappa]^2 \to \mu$ by $$c_2(\alpha,\delta)=\left \{ \begin{matrix} 0, & \text{ if } \alpha<\alpha^* \text{ and } \alpha<\delta \\
+1 & \text{ otherwise} \end{matrix} \right \} $$
+
+The colorings $c_1$ and $c_2$ are locally additive colorings that are not isomorphic, but the trees $T(C_1)$ and $T(C_2)$ are isomorphic to $(\kappa,\in)$.
+\end{example}
+
+
+\begin{example}
+to delete this example? complete...
+We define two coloring $c_1:[\kappa]^2 \to 2$ and $c_2:[\kappa]^2 \to 2$. $c_1(\alpha,\delta)=0$ if and only if $\delta$ is an even ordinal. $c_2(\alpha,\delta)=0$ if and only if $\delta$ is a limit ordinal. $T(C_1)=T(C_2)$ is the tree whose levels are the constant functions of ordinals less than $\kappa$ to $2$.
+
+But we show that $c_1$ and $c_2$ are not isomorphic. Towards contradiction assume that $h:\kappa \to \kappa$ is an isomorphism, namely $c_2(h(\alpha),h(\beta))=c_1(\alpha,\beta)$ whenever $\alpha<\beta<\kappa$ or  $c_2(h(\alpha),h(\beta)) \neq c_1(\alpha,\beta)$ whenever $\alpha<\beta<\kappa$. First we handle the case  $c_2(h(\alpha),h(\beta))=c_1(\alpha,\beta)$ whenever $\alpha<\beta<\kappa$. For each $\alpha<\kappa$ if $0 \notin \{\alpha,h(\alpha)\}$ then $h(\alpha)$ is limit iff $\alpha$ is even and $h(\beta)$ is limit iff $\beta$ is even.
+
+It is sufficient to find $\alpha,\beta$ of different parity witnessing that $h$ is not an order-morphism. Towards contradiction assume that $h(\alpha)<h(\beta)$ holds whenever  $\alpha<\beta$ and they have different parity. We take an even ordinal $0<\alpha*2<\kappa$ such that $h(\alpha*2) \neq 0$. So $h(\alpha*2)$ is a limit ordinal. Since $\alpha*2<\alpha*2+1$, and they are not of the same parity, we have $h(\alpha*2)<h(\alpha*2+1)$.  Similarly, $h(\alpha*2+1)<h(\alpha*2+2)$. Since $h(\alpha*2+2)$ is limit, we have $h(\alpha*2+1)+\omega \leq h(\alpha*2+2)$. Define $\beta$ by $h(\beta)=h(\alpha*2+1)+1$. So $\alpha*2+1<\beta$. But $\beta \neq \alpha*2+2$. So $\alpha*2+2<\beta$. Define $\alpha'=\alpha*2+2$. $\alpha'<\beta$ and $h(\beta)<h(\alpha')$. We have found $\alpha,\beta$ of different parity witnessing that $h$ is not ordermorphism.
+\end{example}
+
+Consider the following three equivalence relations on the set of colorings:
+\begin{enumerate}
+ \item $c_1$ and $c_2$ are equal up to the names of the colors, \item $c_1$ and $c_2$ are are isomorphic and \item $T(C_1) \cong T(C_2)$.
+\end{enumerate}
+
+(1) $\Rightarrow$ (2) $\Rightarrow$ (3). Identifying colors $c_1$ and $c_2$ such that $T(C_1) \cong T(C_2)$, enables to write $C(T,e)$ without specifying the enumeration $e$:
+% there were a theorem here, but I removed it to a place above.
+
+We saw that the functions $C \to T(C)$ and $T \to C(T,e)$ are not bijections. But by Theorem \ref{branch and homogeneous}, finding a homogeneous set of a locally additive coloring is equivalent to finding a cofinal branch of the corresponding tree.
+\begin{proposition}
+Let $C$ be a coloring. Assume that there is a $C$-homogeneous subset of $\kappa$ of cardinality $\kappa$. Then $  T$ has a cofinal branch.
+\end{proposition}
+
+\begin{proof}
+Let $H$ be a $C$-homogeneous subset of $\kappa$ of cardinality $\kappa$. Let $B$ be the set of $C(\cdot,\delta) \restriction \beta$ such that $\delta \in H$ and $\beta<\gamma<\delta$ for some $\gamma \in H$. $B$ is a cofinal branch of $  T$.
+\end{proof}
+
+\begin{theorem}\label{branch and homogeneous}\hfill
+\begin{enumerate}
+\item $T$ has a branch iff $C(T,e)$ has a homogeneous set. \item $C$ has a homogeneous set iff $  T(C)$ has a branch.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\hfill
+(1) If $C(T,e)$ has a branch then by complete... $T$ has a branch. Conversely, assume that $T$ has a cofinal branch. By complete... $T(C(T,e))$ is isomphic to $T$, so has a cofinal branch. So by complete... $C(T,e)$ has a homogeneous set.
+
+(2) If $c$ has a  homogeneous set then by Proposition \ref{homogeness implies branch}, $  T$ has a cofinal branch. Conversely, assume that $  T$ has a cofinal branch. Then by complete... $c$ has a homogeneous set.
+\end{proof}
+\end{comment}
+%%
+%%%%%%%%%%%%%%%%%%5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%        Section Two                                                                               %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5%%
+\section{The Tree Property at Successor Cardinals}\label{section the tree property at successor cardinals}
+In this section, we establish a connection between two properties:
+\be
+\item
+existence of $\kappa$-sized branches in certain trees and
+\item
+existence of $\kappa$-sized homogeneous sets for locally additive colorings.
+\ee
+As a result, we get a characterization of the tree property at a successor cardinal.
+$ $\\
+
+
+Recall two equivalent definitions of a weakly compact cardinal:
+\begin{fact} For every strongly inaccessible cardinal $\kappa$, the following are equivalent:
+\begin{enumerate}
+\item There exists no $\kappa$-Aronszajn tree;
+\item For every $\lambda<\kappa$, every coloring $C:[\kappa]^2\rightarrow\lambda$ admits a homogeneous set of size $\kappa$.
+\end{enumerate}
+\end{fact}
+
+Here, we shall get a similar characterization for successor cardinals.
+\begin{theorem}\label{theorem 4.2}  For every infinite cardinal $\mu$, the following are equivalent:
+\begin{enumerate}
+\item There exists no $\mu^+$-Aronszajn tree;
+\item $\mu^+ \rightarrow (\mu^+)_{la_\mu}$, namely: Every locally additive coloring $C:[\mu^+]^2\rightarrow\mu$ admits a homogeneous set of size $\mu^+$.
+\end{enumerate}
+\end{theorem}
+
+
+
+The preceding theorem
+%(as well as Theorem~\ref{the only theorem})
+is a particular case of the following lemma (where $\mu^+$ stands for $\kappa$).%, which has proved by Assaf Rinot in a private communication. זו הגרסה שאני כתבתי  אולם אחרי שזיו תֵאר את תרומתו של אסף בתודות, קטע זה הפך למיותר. בפרט שזיו חושב שממנו משמע כאילו אסף  הוכיח את כל המשפט לבדו, בעוד שלמעשה הוא הוכיח רק כוון אחד.
+\begin{lemma}\label{lemma 6}\label{the main lemma} Suppose that $\kappa$ is a regular uncountable cardinal and $\mu<\kappa$. The following are equivalent:
+\begin{enumerate}
+\item Every tree of height $\kappa$ whose levels have size $\le\mu$ admits a $\kappa$-sized branch.
+\item $\kappa \rightarrow (\kappa)_{la_\mu}$, namely: Every locally additive coloring $C:[\kappa]^2\rightarrow\mu$ admits a homogeneous set of size $\kappa$.
+\end{enumerate}
+\end{lemma}
+\begin{proof} $(1)\implies(2)$: Let $C:[\kappa]^2\rightarrow\mu$ be an arbitrary locally additive coloring.
+\begin{claim} All the levels of $  T(C)$ have size $\le\mu$.
+\end{claim}
+\begin{proof} Suppose not. Pick $\beta<\kappa$ such that $|  T(C)\cap{}^\beta\mu|>\mu$.
+Let $\langle \delta_i\mid i<\mu^+\rangle$
+be a strictly increasing sequence of ordinals $<\kappa$ for which $i\mapsto C(\cdot,\delta_i)\restriction\beta$ is one-to-one over $\mu^+$.
+Without loss of generality, $\delta_0>\beta$. Pick $i<j<\mu^+$ such that $C(\beta,\delta_i)=C(\beta,\delta_j)$.
+As $C(\cdot,\delta_i)\restriction\beta\neq C(\cdot,\delta_j)\restriction\beta$, pick $\alpha<\beta$ such that $C(\alpha,\delta_i)\neq C(\alpha,\delta_j)$.
+Then we arrive at the following contradiction:
+$$C(\alpha,\delta_i)=u_{\alpha,\beta}(C(\beta,\delta_i))=u_{\alpha,\beta}(C(\beta,\delta_j))=C(\alpha,\delta_j).$$
+\end{proof}
+By (1), $  T(C)$ must admit a cofinal branch. Pick $b:\kappa\rightarrow\mu$ such that $\{ b\restriction\beta\mid \beta<\kappa\}\subseteq   T(C)$.
+Fix a strictly increasing and continuous function $f:\kappa\rightarrow\kappa$ such that $f(0)=0$ and $b\restriction f(i)\subseteq C(\cdot,f(i+1))$ for all $i<\kappa$.
+Pick $H\subseteq \{ f(i+1)\mid i<\kappa\}$ of size $\kappa$ on which $b$ is constant. Then $H$ is a $C$-homogeneous set of size $\kappa$.
+
+$(\neg1)\implies(\neg2)$: Suppose that $ (T,<_T)$ is a tree of height $\kappa$ whose levels have size $\le\mu$, and $  T$ admits no $\kappa$-sized branch. We fix an enumeration $e$ of $T$ and consider the locally additive coloring $C(T,e)$ (given by Claim \ref{claim C(T,e) is locally additive}).
+
+Towards a contradiction, suppose that $H$ is a $\kappa$-sized homogeneous set for $C(T,e)$, with value, say, $i$.
+So for all $\alpha<\beta<\gamma$ from $H$ we have $t^i_\alpha\leq_T t_\gamma^0$ and $t^i_\beta\leq_T t_\gamma^0$,
+and hence $t^i_\alpha\leq_T t^i_\beta$. So $\{ t^i_\alpha\mid \alpha\in H\}$ is a $\kappa$-sized chain in $  T$.
+This is a contradiction.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%   section                                                                         %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Strongly Inaccessibles in the tree sense}\label{section strongly inaccessibles}
+In this section, we prove that a regular cardinal that satisfies the tree property is strongly inaccessible if and only if it is strongly limit in the sense of the tree exponent.
+
+\begin{definition}\cite{sh589}
+For infinite cardinals $\mu \leq \lambda$, let $\mathfrak{T}_{\lambda,\mu}$ denote the set of trees $T$ of height $\mu$ with $\leq \lambda$ nodes. Let $Lim(T)$ denote the set of cofinal-branches of $T$. We define the tree exponent $\lambda^{\mu,tr}$ as follows:
+\[
+\lambda^{\mu,tr}=\sup\{|Lim(T)|:T \in \mathfrak{T}_{\lambda,\mu}\}
+\]
+\end{definition}
+
+\begin{remark}\label{remark tree exponent leq exponent}
+For every two infinite cardinals $\lambda$ and $\mu$ we have:
+\[
+\lambda^{\mu,tr} \leq \lambda^\mu
+\]
+\end{remark}
+
+Recall, that a \emph{weakly compact} cardinal is a strongly inaccesible cardinal that satisfies the tree property.
+
+\begin{fact}\label{fact 6.3}
+Let $\kappa$ be an uncountable cardinal. The principle $\kappa \to (\kappa)_2$ holds if and only if $\kappa$ is weakly compact.
+\end{fact}
+
+
+
+By the following theorem, a cardinal satisfying the tree property is strongly inaccessible in the tree sense if and only if it is strongly inaccessible.
+\begin{theorem}\label{theorem 5.4}
+Let $\kappa$ be an uncountable regular cardinal that satisfies the tree property. The following are equivalent:
+\begin{enumerate}
+\item $\lambda^{\mu,tr}<\kappa$ for each $\lambda,\mu<\kappa$ and \item  $\kappa$ is strongly inaccessible.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+On the one hand, by Remark \ref{remark tree exponent leq exponent}, Clause $(2)$ implies Clause $(1)$. Conversely, assume that Clause $(1)$ holds. By Fact \ref{fact 6.3}, it is enough to prove that $\kappa \rightarrow (\kappa)_2$ holds.% So $\kappa$ is weakly compact (and in particular, strongly inaccessible).
+
+Take a coloring $F:[\kappa]^2 \to 2$. We construct a tree $T=\{t_\alpha:\alpha<\kappa\}$ of functions of ordinals into $2$: We define $t_\alpha$ by induction on $\alpha<\kappa$. We define $t_\alpha \restriction \xi$ by induction on $\xi$. If $t_\alpha \restriction \xi$ is not in $\{t_\beta:\beta<\alpha \}$ then we define $t_\alpha=t_\alpha \restriction \xi$. Otherwise $t_\alpha \restriction \xi=t_\beta$ for some $\beta<\alpha$. In this case, we define $t_\alpha(\xi)=F(\beta,\alpha)$. Clearly, the domain of each $t_\alpha$ is an ordinal smaller than $\kappa$ and $T=\{t_\alpha:\alpha<\kappa\}$ is a tree. Note that $t_\alpha \neq t_\beta$ for all $\alpha \neq \beta$ and therefore if $t_\alpha<_T t_\beta$ then $\alpha<\beta$.
+
+We prove by induction on $\alpha<\kappa$ that the cardinality of $Lev_\alpha(T)$ is smaller than $\kappa$. By the induction hypothesis and the regularity of $\kappa$, $|Lev_{<\alpha}(T)|<\kappa$. Therefore by Assumption (1), we have $|Lim(Lev_{<\alpha}(T))|<\kappa$. But the function on $Lev_\alpha(T)$ into $Lim(Lev_{<\alpha}(T))$ assigning $t_\beta$ to $\{t_\gamma \in T:t_\gamma <_T t_\beta\}$ is injective. So $|Lev_\alpha(T)|<\kappa$.
+
+$T$ is a $\kappa$-tree. So by assumption, $T$ has a $\kappa$-branch, $B$. If $t_\alpha<_T t_\beta<_T t_\gamma$ are in $B$ then $t_\beta \restriction \xi=t_\gamma \restriction \xi=t_\alpha$ where $\xi=ht(t_\alpha,T)$. So $F(\alpha,\beta)=t_\beta(\xi)=t_\gamma(\xi)=F(\alpha,\gamma)$. For $i<2$, define:
+\[
+H_i=\{\alpha \in \kappa:t_\alpha \in B \text{ and }\forall \beta>\alpha [t_\beta \in B \Rightarrow F(\alpha,\beta)=i]\}
+\]
+
+%%%%%%%%%
+%%
+%    the old version of the definition of H_i. I can delete it.
+\begin{comment}
+\[
+H_i=\{\alpha \in \kappa: t_\alpha \in B \text{ and } F(\alpha,\beta)=i \text{ holds for each } \beta>\alpha \text{ such that } t_\beta \in B\}
+\]
+\end{comment}
+%%
+%%%%%%%%%%
+Each ordinal in $\{\alpha \in \kappa:t_\alpha \in B\}$ is in $H_0$ or in $H_1$. So one of $H_0$ and $H_1$ has cardinality $\kappa$. But each $H_i$ is homogeneous, because $F({\alpha,\beta})=i$ holds whenever $\alpha<\beta$ are in $H_i$.
+\end{proof}
+
+
+%\begin{question}
+%Assume that the tree power under $\kappa$ is eventually constant. Can we infer something?
+%\end{question}
+
+
+
+\begin{corollary}
+Let $\kappa$ be an uncountable cardinal. Then $\kappa$ is weakly compact if and only if $\kappa$ satisfies the following properties:
+\be
+\item $\kappa$ is regular,
+\item $\kappa$ satisfies the tree property and
+\item $\lambda^{\mu,tr}<\kappa$ for each $\lambda,\mu<\kappa$.
+\ee
+\end{corollary}
+
+\begin{proof}
+Assume that $\kappa$ is weakly compact. Clearly $\kappa$ satisfies Properties (1),(2) and is strongly inaccesible. By Remark \ref{remark tree exponent leq exponent} $\kappa$ satisfies Property (3).
+
+Conversely, if $\kappa$ satisfies Properties (1)-(3) then by Theorem \ref{theorem 5.4}, $\kappa$ is strongly inaccesible, so weakly compact.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%   section                                                                         %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Ramsey Theorems for locally-additive colorings}
+%Shelah and Ziv
+
+We present two theorems relating colorings of $\kappa$ by $\mu$ colors where $\mu^+<\kappa=cf(\kappa)$: while in Theorem \ref{the only theorem} the coloring is assumed to be locally-additive, in Theorem \ref{theorem shelah *-locally-additive} the coloring is assumed to be *-locally-additive. We observe that the result for $*$-local additivity coloring cannot be generalized to the case $\mu^+=\kappa$. For local additivity we do not know whether the generalization holds. Here is a summary of the results of this section:
+\begin{align*}
+&\kappa \rightarrow_{*-la} (\kappa)_\mu \text{ (Theorem \ref{theorem shelah *-locally-additive}) }\\
+&\kappa \rightarrow_{la} (\kappa)_\mu \text{ (Theorem \ref{the only theorem}) } \\
+&\mu^+ \nrightarrow_{*-la} (\mu^+)_\mu  \text{ (Proposition \ref{proposition mu^+<kappa can's be omitted})  }            \\
+&\mu^+ \rightarrow_{la} (\mu^+)_\mu? \text{ (unknown) }
+\end{align*}
+
+
+\subsection{*-locally-additive colorings}
+In this subsection we verify that Shelah's proof of (\cite[Theorem 1.1]{sh42}) works for *-locally additive colorings (rather than additive colorings) with few number of colors (rather than finite).
+For the rest of this subsection, we assume:
+%Theorem \ref{theorem shelah *-locally-additive}.
+\[
+\mu<\kappa=\cf(\kappa) \text{ and }
+C:[\kappa]^2 \to \mu \text{ is a *-locally additive coloring. }
+\]
+
+
+\begin{definition}
+For $\beta,\gamma<\kappa$, we write $\beta \sim \gamma$ if for some $\alpha<\kappa$ with $\beta,\gamma<\alpha$, we have $C(\beta,\alpha)=C(\gamma,\alpha)$. In this case, we say that $\alpha$ witnesses that $\beta \sim \gamma$.
+\end{definition}
+
+\begin{remark}\label{remark 7.2}
+By local additivity, if $\beta \neq \gamma$, $\alpha_1$ witnesses that $\beta \sim \gamma$ and $\alpha_1<\alpha_2$ then $\alpha_2$ witnesses that $\beta \sim \gamma$ as well. Hence, $\sim$ is an equivalence relation.
+\end{remark}
+
+\begin{lemma}\label{lemma number of equivalence classes}
+If $\mu^+<\kappa$ then
+the number of $\sim$-equivalence classes is $\mu$ at most.
+\end{lemma}
+
+\begin{proof}
+Assume towards contradiction that there are $\mu^+$ equivalence classes at least. Let $\{\alpha_i:i<\mu^+\}$ be a system of representatives. Since $\mu^+<\kappa$, we can find an ordinal $\alpha^*<\kappa$ which is bigger than each $\alpha_i$. The set $\{C(\alpha_i,\alpha^*):i<\mu^+\}$ is included in $\mu$. So for some distinct $i,j$ we have $C(\alpha_i,\alpha^*)=C(\alpha_j,\alpha^*)$, so $\alpha_i \sim \alpha_j$, a contradiction.
+\end{proof}
+
+
+\begin{theorem}\label{theorem shelah *-locally-additive}
+$\kappa \rightarrow (\kappa)_{*-la_\mu}$ holds whenever $\mu^+<\kappa=cf(\kappa)$.
+\end{theorem}
+
+\begin{proof}
+ By lemma \ref{lemma number of equivalence classes}, some $\sim$-equivalence class, $A$, is unbounded. We construct by induction a strictly increasing sequence $\langle y_\alpha:\alpha \in \kappa\rangle$ of elements of $A$, such that whenever $\beta<\gamma<\alpha$ we have $C(y_\beta,y_\alpha)=C(y_\gamma,y_\alpha)$. Given $y_\beta$ for all $\beta<\alpha$ we choose $y_\alpha$ as follows: for every $\beta<\gamma$ there is $\epsilon_{\beta,\gamma}<\kappa$ such that $\epsilon_{\beta,\gamma}>y_{\beta,},y_{\gamma}$ and $C(y_\beta,\epsilon_{\beta,\gamma})=C(y_\gamma,\epsilon_{\beta,\gamma})$. By Remark \ref{remark 7.2}, we may choose $y_\alpha$ to be any element of $A$ greater than $\sup\{\epsilon_{\beta,\gamma}: \beta<\gamma<\alpha\}$.
+
+It follows that for every $\beta<\gamma<\alpha$ in $\kappa$ we have $C(y_\beta,y_\alpha)=C(y_\gamma,y_\alpha)$. Consider the function $f:\kappa \setminus \{0\} \to \mu$ defined by $f(\alpha)=C(y_0,y_\alpha)$. As $\mu<\kappa=cf(\kappa)$, there is an unbounded subset $B$ of $\kappa \setminus \{0\}$ and $t \in \mu$ such that $C(y_0,y_\alpha)=t$ holds for each $\alpha \in B$. So $C(y_\beta,y_\alpha)=t$ whenver $\beta<\alpha$ are in $B$. Thus, the set  $\{y_\alpha:\alpha \in B \}$ is $C$-homogeneous of size $\kappa$.
+\end{proof}
+
+\begin{proposition}\label{proposition mu^+<kappa can's be omitted}
+$\kappa \rightarrow (\kappa)_{*-la_\mu}$ does not hold if $\mu^+=\kappa$.
+\end{proposition}
+
+\begin{proof}
+We present a coloring witnessing the negation of this principle. For each $\alpha<\kappa$, let $f_\alpha:\alpha \to \mu$ be an injection. For $\beta<\alpha<\kappa$, we define $C(\beta,\alpha)=f_\alpha(\beta)$. The coloring $C$ is $*$-locally additive vacuously, because for any $\beta<\gamma<\alpha<\kappa$, we have $C(\beta,\alpha) \neq C(\gamma,\alpha)$ . By the same reason, there is no homogeneous set of cardinality $3$.
+\end{proof}
+
+
+
+
+
+\subsection{locally-additive colorings}
+
+If we replace in Proposition \ref{proposition mu^+<kappa can's be omitted} the property of *-local additivity by local additivity then we get the following open question:
+\begin{question}
+Does $\mu^+ \rightarrow  (\mu^+)_{la_\mu}$ hold?
+\end{question}
+
+
+%the theorem of Ziv
+\begin{theorem}\label{the only theorem}
+Let $\kappa$ be a regular cardinal and let $\mu$ be a cardinal with
+ $\mu^+<\kappa$. The following principle holds:
+
+ \[
+ \kappa \rightarrow  (\kappa)_{la_\mu}
+ \]
+
+
+%  Let $C$ be a locally additive coloring of $[\kappa]^2$ by $\mu$ colors.
+%Then there exists a $C$-homogeneous subset of $\kappa$ of size $\kappa$.
+\end{theorem}
+
+\begin{proof}
+Define $\lambda=\mu^+$. By Claim \ref{the exercise of kunen} (below), every tree of height $\kappa$ whose levels have size $\leq \mu$ is not $\kappa$-Aronszajn. So by Lemma \ref{the main lemma}, the principle $\kappa \rightarrow_{la} (\kappa)_\mu$ holds.
+\end{proof}
+
+
+%The following Claim is \cite[Exercise 38 on Page 90]{kunen}:
+Recall the following claim \cite[Proposition 7.9]{Large}.
+\begin{claim}\label{the exercise of kunen}
+Let $\kappa$ and $\lambda$ be cardinals such that $\kappa$ is regular and $\lambda<\kappa$. If $(T,<)$ is
+a $\kappa$-tree whose levels have size $<\lambda$ then $(T,<)$ is not $\kappa$-Aronszajn.
+\end{claim}
+
+For completeness, we prove Claim \ref{the exercise of kunen}.
+\begin{proof}
+\emph{Case A:} $\lambda$ is regular. Without loss of generality $(T,<)$ is well-pruned
+(it a well-known fact that every $\kappa$-tree has a well-pruned subtree which is a $\kappa$-tree and so there is no harm in assuming that $(T,<)$ is well-pruned).
+
+
+\begin{claim}\label{argue}
+For every ordinal $\alpha<\kappa$ with $cf(\alpha)=\lambda$ there is an ordinal $q(\alpha)<\alpha$, such that for every ordinal $\beta$ with $q(\alpha)<\beta<\alpha$, and any element $a \in Lev_{q(\alpha)}(T)$ there are no two distinct elements $b,c \in Lev_\beta(T)$ such that $a<b$ and $a<c$.
+\end{claim}
+
+\begin{proof}
+Towards a contradiction assume that there exists an $\alpha$ with $cf(\alpha)=\lambda$ such that for every $q(\alpha)<\alpha$ there are $\beta,a,b,c$ such that $q(\alpha)<\beta<\alpha$, $a \in Lev_{q(\alpha)}(T)$, $b,c \in Lev_\beta(T)$, $a<_T b$ and $a <_T c$. We choose by induction on $i<\lambda$ an ordinal $\alpha_i<\alpha$ and an element $d_i \in Lev_\alpha(T)$ such that $d_i \restriction Lev_{\alpha_{i}}(T) \neq d_j \restriction Lev_{\alpha_{i}}(T)$ for each $j<i$. Suppose we have chosen $\alpha_j$ and $d_j$ for each $j<i$. Let $q=\sup_{j<i}\alpha_j$. Then for each $j_1,j_2<i$ the elements $d_{j_1} \restriction Lev_q(T)$ and $d_{j_2} \restriction Lev_q(T)$ are distinct. In order to find $\alpha_{i}$ and $d_i$, we apply our assumption (towards a contradiction), where we substitute $q$ in place of $q(\alpha)$. So there is an ordinal $\alpha_{i}$, an element $a \in Lev_{q}(T)$ and two elements $b,c \in Lev_{\alpha_{i}}(T)$ such that $a<b$ and $a<c$. By the induction hypothesis, there is at most one ordinal $j<i$ such that $d_j \restriction Lev_{q}(T)=a$. We choose $d_i \in Lev_{\alpha}(T)$ such that $d_i \restriction Lev_{q}(T)=a$ and if for some $j<i$, $d_j \restriction Lev_{q}(T)=a$ then $d_i \restriction Lev_{\alpha_{i}}(T) \neq d_j \restriction Lev_{\alpha_{i}}(T)$ (if $d_j \restriction Lev_{\alpha_{i}}(T)=b$ then $d_i \restriction Lev_{\alpha_{i}}(T)=c$ and vice versa). Hence, we can carry out the induction. The $d_i$'s are pairwise distinct. So $|Lev_\alpha(T)|$ is $\lambda$ at least, a contradiction. Claim \ref{argue} is proved.
+\end{proof}
+
+
+We now can apply Fodor's Lemma with the function from $\kappa$ to $\kappa$, $\alpha \mapsto q(\alpha)$. So for some stationary subset $S$ of $\kappa$ and some ordinal $\alpha^*<\kappa$, $q(\alpha)=\alpha^*$ for each $\alpha \in S$. Fix $a \in Lev_{\alpha^*}(T)$. The set $\{b \in Lev_{\geq \alpha^*}(T):a<_Tb\}$ is a chain of size $\kappa$ since $(T,<_T)$ is well-pruned. So $(T,<_T)$ is not $\kappa$-Aronszajn.
+
+\emph{Case B:} $\lambda$ is singular so in partucular, $\lambda$ is a limit cardinal. For the sake of a contradiction, assume that $(T,<)$ is $\kappa$-Aronszajn. By Case A, for each $\mu<\lambda$ there is a level of size $\mu^+$ at least. Since $\lambda<cf(\kappa)=\kappa$, it follows that there is a level of cardinality $\lambda$ at least, contradicting our assumption. Claim \ref{the exercise of kunen} is proved.
+\end{proof}
+
+
+
+
+
+
+
+
+
+%I decided that the following section will become a comment temporarily only!
+\begin{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%%%%%%%%%
+\section{A Non-Well-Ordered Linear Ordering}
+In this section, we try to generalize Lemma \ref{lemma 6} to a non-well-ordered linear ordering of a specific kind.
+
+
+\begin{definition}
+Suppose that $\kappa$ is a regular uncountable cardinal and $\mu<\kappa$. \emph{$tree(\kappa,\mu)$} is that assersion that every tree of height $\kappa$ whose levels have size $\le\mu$ admits a $\kappa$-sized branch.
+\end{definition}
+
+The following lemma is a version of one direction of Lemma \ref{lemma 6}.
+\begin{lemma}
+Suppose that $\lambda,\kappa$ are regular uncountable cardinals and $\mu<\kappa<\lambda$. Let $(B,\leq)$ be a linear ordering such that $|B|=\lambda$. Let $D$ is a cofinal subset of $B$. If $|D|=\kappa$ and $tree(\kappa,\mu)$ holds then every locally additive coloring $C:[B]^2\rightarrow\mu$ admits a cofinal sequence $\langle \alpha_i:i<\kappa \rangle$ of elements of $D$ such that for some $\gamma<\mu$ the following holds: $C(\alpha,\alpha_{i+1})=\gamma$ for each $i<\kappa$ and $\alpha<\alpha_i$.
+\end{lemma}
+
+
+
+We almost quote the first direction of the proof of Lemma \ref{lemma 6}. When we complete the mathematical work, we will decide what proof to delete. complete...
+\begin{proof}
+%Let $C:[B]^2\rightarrow\mu$ be an arbitrary locally additive coloring.
+Without loss of generality, $\kappa \subseteq B$, the relation $\leq_B$ extends the natural linear ordering of $\kappa$ and $D=\kappa$. For $a \in B$, let $seg(a):=\{x \in B:x<a\}$.
+For every $\delta<\kappa$, consider the induced fiber map $C(\cdot,\delta):seg(\delta) \rightarrow \mu$ which satisfies $C(\cdot,\delta)(\alpha)=C(\alpha,\delta)$ for all $\alpha<\delta$.
+Then, consider the following tree:
+$$  T(C):=\{ C(\cdot,\delta)\restriction seg(\beta) \mid \beta,\delta \in \kappa \text{ and } \beta<\delta<\kappa\}.}$$
+\begin{claim} All the levels of $  T(C)$ have size $\le\mu$.
+\end{claim}
+
+\begin{proof} Suppose not. Pick an ordinal $\beta<\kappa$ such that $|  T(C)\cap{}^\beta\mu|>\mu$.
+Let $\langle \delta_i\mid i<\mu^+\rangle$
+be a strictly increasing sequence of ordinals $<\kappa$ for which $i\mapsto C(\cdot,\delta_i)\restriction\beta$ is one-to-one over $\mu^+$.
+
+ Pick $i<j<\mu^+$ such that $C(\beta,\delta_i)=C(\beta,\delta_j)$.
+As $C(\cdot,\delta_i)\restriction\beta\neq C(\cdot,\delta_j)\restriction\beta$, pick $a<\beta$ (not necessarily an ordinal) such that $C(a,\delta_i)\neq C(a,\delta_j)$.
+Then we arrive at the following contradiction:
+$$C(a,\delta_i)=u_{a,\beta}(C(\beta,\delta_i))=u_{a,\beta}(C(\beta,\delta_j))=C(a,\delta_j).$$
+\end{proof}
+
+So $  T(C)$ must admit a cofinal branch. Pick $b:\kappa\rightarrow\mu$ such that the set $\{ b\restriction seg(\beta)\mid \beta<\kappa\}$ is included in $  T(C)$.
+Fix a strictly increasing and continuous function $f:\kappa\rightarrow\kappa$ such that $f(0)=0$ and $b\restriction f(i)\subseteq C(\cdot,f(i+1))$ for all $i<\kappa$.
+Pick $H\subseteq \{ f(2i+1)\mid i<\kappa\}$ of size $\kappa$ on which $b$ equals constantly a fixed $\gamma$ and let $\alpha_i$ be the $i$-th element of $H$. Then $H$ is a $C$-homogeneous set of size $\kappa$ and $C(a,\alpha_{i+1})=C(a,\alpha_{j+1})$ holds for each $i,j<\kappa$ and each $a<\alpha_i$.
+\end{proof}
+\end{comment}
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%   section                                                                         %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%זיו מציע למחֹק את הסעיף, או להשאיר הערה בלבד. האם כדאי למחֹק? אני בוחר למחֹק, אבל להשאיר אותו לעצמי לעתיד, אם ארצה לחזֹר לנושא.
+\section{A Comparison between Kinds of Colorings}
+
+Theorem \ref{theorem 8.3} exhibits a connection between local additivity and another property of colorings of another flavour.
+
+\begin{definition}
+Let $C$ be a coloring. We say that the families of partial branches of $  T(C)$ have cardinality $\mu$ at most if for each $\alpha<\kappa$ the set $\{C(\cdot,\delta) \restriction \alpha:\delta \in (\alpha,\kappa)\}$ has cardinality $\mu$ at most.
+\end{definition}
+
+\begin{proposition}\label{partial branches implies la}
+If $C:[\kappa]^2 \to \mu$ is a locally additive coloring then the families of partial branches of $  T$ have cardinality $\mu$ at most.
+\end{proposition}
+
+\begin{proof}
+Fix $\alpha<\kappa$. The set $\{C(\alpha,\delta):\delta \in (\alpha,\kappa)\}$ is included in $\mu$. By local additivity, if $C(\alpha,\delta_1)=C(\alpha,\delta_2)$ then $C(\cdot,\delta_1) \restriction \alpha=C(\cdot,\delta_2) \restriction \alpha$. Therefore $$|\{C(\cdot,\delta) \restriction \alpha:\delta \in (\alpha,\kappa)\}| \leq |\{C(\alpha,\delta):\delta \in (\alpha,\kappa)\}| \leq \mu.$$
+\end{proof}
+
+\begin{theorem}\label{theorem 8.3}
+Let $\mu<cf(\kappa)=\kappa$. The following conditions are equivalent:
+\begin{enumerate}
+\item For every locally additive coloring $C:[\kappa]^2 \to \mu$, there is a $C$-homogeneous subset of $\kappa$ of cardinality $\kappa$ and \item for every coloring $C$ of $\kappa$ (namely a function on $[\kappa]^2$), if the families of partial branches of $  T$ have cardinality $\mu$ at most, then there is a $C$-homogeneous subset of $\kappa$ of cardinality $\kappa$.
+\end{enumerate}
+\end{theorem}
+
+
+\begin{proof}
+By Proposition \ref{partial branches implies la}, Condition (2) implies Condition (1). Conversely, assume Condition (1) and let $C$ be a coloring such that the families of partial branches have cardinality $\mu$ at most. We have to find a $C$-homogeneous subset of $\kappa$ of cardinality $\kappa$.
+
+For each $\alpha<\kappa$, fix an enumeration without repetitions $\{f_\alpha^i:i<\mu_\alpha\}$ of the set $\{C(\cdot,\delta):\delta \in (\alpha,\kappa)\}$. Define a new coloring $c^*:[\kappa]^2 \to \mu$ by $c^*(\alpha,\delta)=i$ if and only if $C(\cdot,\delta) \restriction \alpha=f_\alpha^i$ (where $\alpha<\delta$). $c^*$ is locally additive, because if $c^*(\beta,\delta_1)=c^*(\beta,\delta_2)$ then $C(\cdot,\delta_1) \restriction \beta=C(\cdot,\delta_2) \restriction \beta$. Hence, for every $\alpha<\beta$, $C(\cdot,\delta_1) \restriction \alpha=C(\cdot,\delta_2) \restriction \alpha$, or equivalently, $c^*(\alpha,\delta_1)=c^*(\alpha,\delta_2)$.
+
+By Condition (1), there is a $c^*$-homogeneous subset $\{\delta_\alpha:\alpha<\kappa\}$ of $\kappa$ so that $\alpha<\beta \implies \delta_\alpha<\delta_\beta$. Let
+\[
+H=\{\delta_\alpha:\alpha \text{ is an even ordinal in } \kappa\}
+\]
+\begin{claim}\label{claim half homodeneity}
+For every $\alpha<\beta<\gamma$ in $\kappa$ we have:
+\[
+C(\delta_\alpha,\delta_\beta)=C(\delta_\alpha,\delta_\gamma)
+\]
+\end{claim}
+
+\begin{proof}
+Since $H$ is $c^*$-homogeneous, we have:
+\[
+c^*(\delta_{\alpha+1},\delta_\beta)=c^*(\delta_{\alpha+1},\delta_{\gamma})
+\]
+ or equivalently,
+ \[
+ C(\cdot,\delta_\beta) \restriction \delta_{\alpha+1})=C(\cdot,\delta_{\gamma}) \restriction \delta_{\alpha+1}).
+ \]
+  Hence,
+  \[
+  C(\delta_\alpha,\delta_\beta)=C(\delta_{\alpha},\delta_\gamma)
+  \]
+\end{proof}
+
+We continue the proof of Theorem \ref{theorem 8.3}.
+For $i<\mu$, let $H_i$ be the set of $\delta_\alpha \in H$ such that $C(\delta_\alpha,\delta_\beta)=i$ for each $\beta \in [\alpha+2,\kappa)$. By Claim \ref{claim half homodeneity}, each $\alpha \in H$ is in some $H_i$. Clearly, each $H_i$ is $C$-homogeneous. As $\mu<cf(\kappa)$, some $H_i$ has cardinality $\kappa$.
+\end{proof}
+
+
+
+\begin{remark}\label{remark 8.5}%I called it a proposition, but since it has no continutation, I replaced its name to a theorem.
+Let $C$ be a coloring of $\kappa$. Let $F$ be a $\kappa$-closed filter on $\kappa$ (not neccessarily normal). If for any $\beta<\kappa$ for some function $f_\beta$ and $E_\beta \in F$ with $E_\beta \subseteq (\beta,\kappa)$, the equality $C(\cdot,\delta) \restriction \beta=f_\beta$ holds for each $\delta \in E_\beta$ then $  T(C)$ has a cofinal branch.
+\end{remark}
+
+\begin{proof}
+ We choose by induction on $\beta<\kappa$, an ordinal $\delta_\beta$ in $\bigcap_{\alpha<\beta} E_{\delta_\alpha}$. We argue that $$\{C(\cdot,\delta_\beta) \restriction \delta_\alpha:\alpha<\beta<\kappa\}$$ is a cofinal branch in $T(C)$. We have to verify that $$C(\cdot,\delta_{\beta_1}) \restriction \delta_{\alpha_1} \subseteq C(\cdot,\delta_{\beta_2}) \restriction \delta_{\alpha_2}$$
+
+whenever $\alpha_1 \leq \alpha_2$, $\alpha_1 \leq \beta_1$ and $\alpha_2 \leq \beta_2$. Let $\alpha<\delta_{\alpha_1}$. The ordinals $\delta_{\beta_1}$ and $\delta_{\beta_2}$ are both in $E_{\delta_{\alpha_1}}$. So $C(\cdot,\delta_{\beta_1}) \restriction \delta_{\alpha_1}$  and $C(\cdot,\delta_{\beta_2}) \restriction \delta_{\alpha_1}$ are both equal to $f_{\delta_{\alpha_1}}$.
+\end{proof}
+\end{comment}
+%מחיקה עד סוף הסעיף. כאמור לעיל, בעתיד אולם אחשוב שוב על תוצאה זו.
+%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\bibliographystyle{amsplain}
+\bibliography{lit}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
