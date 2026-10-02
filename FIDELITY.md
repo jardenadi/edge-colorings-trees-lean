@@ -3,7 +3,7 @@
 Scope: **Phase 0, Sections 2–7** (Sections 2–3: first pass, approved; Sections 4–5: second pass,
 mostly approved; Sections 6–7: third pass, not reviewed yet).
 Lean files: `MyResearchesLLMLean/JardenShami/Section2.lean` … `Section7.lean`
-(all imported from `MyResearchesLLMLean.lean`). Phase 1 done for Sections 2–4 (no `sorry` there); Sections 5–7 are still `sorry`. No axioms. AUX lemmas: 61 (8 in Section 3, 52 in Section 4, `exists_wellPruned_subtree` in Section 7).
+(all imported from `MyResearchesLLMLean.lean`). Phase 1 done for Sections 2–5 (no `sorry` there); Sections 6–7 are still `sorry`. No axioms. AUX lemmas: 81 (8 in Section 3, 52 in Section 4, 20 in Section 5, `exists_wellPruned_subtree` in Section 7).
 
 Numbering (active text only; one shared counter per section):
 Section 2: 2.1 Def (coloring), 2.2 Def (homogeneous), 2.3 Def (additive, `definition additive`),
@@ -94,9 +94,10 @@ compiled numbers.
 | Aronszajn (not defined in paper) | `κ`-Aronszajn tree: a `κ`-tree with no cofinal branch. "There exists no `κ`-Aronszajn tree." | `IsAronszajn`, `NoAronszajn` | `IsKappaTree κ T ∧ ¬ ∃ b, IsCofinalBranch b`; `NoAronszajn κ`: no tree `T : Type w` (universe of `κ`) is `κ`-Aronszajn. | ref1 (`TreeProperty`, via `Lim T = ∅`), ref2 (`TreeProperty`). Renamed to the paper's wording. | core | Statements 5.1, 5.2; proof of Thm 7.7 (Section 7, not formalized). | Standard definition (not in the paper). Trees range over the universe of `κ`. | approved |
 | `κ → (κ)_{la_μ}` (Thm 5.2, Lemma 5.3) | "namely: every locally additive coloring `C : [κ]^2 → μ` admits a homogeneous set of size `κ`". | `LaArrowKappa` | `∀ C : [κ]^2 → Kappa μ, la C → ∃ H ⊆ κ, #H = κ ∧ H homogeneous`. | ref1 `LaArrow` and ref2 `RamseyLA` use `Arrow (bigSubsets κ) (bigSubsets κ) (laEq μ)` of Def 2.10. CHANGED to the paper's "namely" wording. | core | Statements 5.2, 5.3; Thm 7.7 (Section 7). | Def 2.10's arrow also quantifies over all subsets of `κ` of size `κ` and all color sets of size `μ`; the two forms are equivalent (subsets of size `κ` have order type `κ`), but that is not stated. Choice to approve. | approved |
 | 5.1 (FACT) | For strongly inaccessible `κ`: no `κ`-Aronszajn tree iff for every `λ < κ` every `C : [κ]^2 → λ` has a homogeneous set of size `κ`. | `Fact_5_1` (FACT) | `def Fact_5_1 : Prop`: for every `κ` with `κ.IsInaccessible`: `NoAronszajn κ ↔ ∀ λ < κ, ∀ C : [κ]^2 → Kappa λ, ∃ H, #H = κ ∧ H homogeneous`. | ref1/ref2 state it as a `theorem ... sorry`; changed to a FACT `def ... : Prop` per CLAUDE.md. (2) is literal (refs use the arrow notation). | core (FACT) | None. | "Strongly inaccessible" = Mathlib's `Cardinal.IsInaccessible` (uncountable, regular, strong limit). No result depends on it. | approved |
-| 5.2 | For infinite `μ`: no `μ⁺`-Aronszajn tree iff `μ⁺ → (μ⁺)_{la_μ}`. | `noAronszajn_succ_iff_laArrowKappa` | `ℵ₀ ≤ μ → (NoAronszajn (succ μ) ↔ LaArrowKappa (succ μ) μ)`. | ref1/ref2. | core | None (the paper derives 5.2 from 5.3). | `μ⁺` = `Order.succ μ`. Label `theorem 4.2` is stale. | approved |
-| 5.3 | `κ` regular uncountable, `μ < κ`. TFAE: (1) every tree of height `κ` with levels of size `≤ μ` has a `κ`-sized branch; (2) `κ → (κ)_{la_μ}`. | `branch_iff_laArrowKappa` | `(∀ T, height T = κ.ord → (∀ α, #(Lev T α) ≤ μ) → ∃ b, IsBranch b ∧ #b = κ) ↔ LaArrowKappa κ μ`. | ref1. ref2 packages (1) as `AllBranches`. | core (also applied outside the formalized text) | 5.2; Thm 7.7 (`the only theorem`, Section 7, not formalized). | "`κ`-sized branch" = maximal chain of cardinality `κ`. Proof gaps (statement looks fine): (a) see 5.4; (b) in (1)⇒(2), for consecutive `f(i+1) < f(i+2)` in `H` the color `C(f(i+1), f(i+2))` is not controlled by `b↾f(i+1) ⊆ C(·,f(i+2))`; fix: take `H` among non-consecutive indices. (c) In (¬1)⇒(¬2) the colors of `C(T,e)` are `< levelSup ≤ μ`, so the codomain must be enlarged to `μ`. | approved |
-| 5.4 (in proof of 5.3) | All levels of `T(C)` have size `≤ μ` (`C : [κ]^2 → μ` la). | `card_lev_treeOfColoring_le` | Under the hypotheses of 5.3, for la `C : [κ]^2 → Kappa μ`: `∀ β, #(Lev (T(C)) β) ≤ μ`. | ref2 (`claim_5_4`, with only `κ` regular and `μ < κ`). ref1 does not state it. | stepping stone | 5.3 ((1)⇒(2)). | The proof's "WLOG `δ₀ > β`" needs `μ` infinite (for finite `μ` it discards one of only `μ+1` elements). The statement is still true for finite `μ` (another argument: successor levels have `≤ μ` nodes, then count at limit levels). | |
+| 5.2 | For infinite `μ`: no `μ⁺`-Aronszajn tree iff `μ⁺ → (μ⁺)_{la_μ}`. | `noAronszajn_succ_iff_laArrowKappa` | `ℵ₀ ≤ μ → (NoAronszajn (succ μ) ↔ LaArrowKappa (succ μ) μ)`. | ref1/ref2. | core | None (the paper derives 5.2 from 5.3). | `μ⁺` = `Order.succ μ`. Label `theorem 4.2` is stale. **Phase 1:** proved from 5.3 (with `κ = μ⁺`: `isRegular_succ`) and the AUX lemma `isCofinalBranch_iff` (in a tree of height `κ`, a branch is cofinal iff it has size `κ`). Moved after 5.3 in the file (position only). Statement unchanged. | approved |
+| 5.3 | `κ` regular uncountable, `μ < κ`. TFAE: (1) every tree of height `κ` with levels of size `≤ μ` has a `κ`-sized branch; (2) `κ → (κ)_{la_μ}`. | `branch_iff_laArrowKappa` | `(∀ T, height T = κ.ord → (∀ α, #(Lev T α) ≤ μ) → ∃ b, IsBranch b ∧ #b = κ) ↔ LaArrowKappa κ μ`. | ref1. ref2 packages (1) as `AllBranches`. | core (also applied outside the formalized text) | 5.2; Thm 7.7 (`the only theorem`, Section 7, not formalized). | "`κ`-sized branch" = maximal chain of cardinality `κ`. Proof gaps (statement looks fine): (a) see 5.4; (b) in (1)⇒(2), for consecutive `f(i+1) < f(i+2)` in `H` the color `C(f(i+1), f(i+2))` is not controlled by `b↾f(i+1) ⊆ C(·,f(i+2))`; fix: take `H` among non-consecutive indices. (c) In (¬1)⇒(¬2) the colors of `C(T,e)` are `< levelSup ≤ μ`, so the codomain must be enlarged to `μ`. **Phase 1:** proved, statement unchanged; gaps (a)–(c) closed as follows. (1)⇒(2): `T(C)` has height `κ` (`height_treeOfColoring`) and levels `≤ μ` (5.4); for a `κ`-sized branch `B`, pick for each `γ` a node of `B` above level `γ` and its `δ =: F(γ)`; then `C(α,F γ) = C(α,F α)` for `α ≤ γ` (`b` of the paper). Pigeonhole (`infinite_pigeonhole_set`, `κ` regular, `μ < κ`) gives `κ` many `γ` with the same `C(F γ, F(F γ)) = c`; instead of the paper's `{f(i+1)}`, a `κ`-sized subset `Γ'` with `F γ₀ < γ` for `γ₀ < γ` in `Γ'` (AUX `Kappa.exists_sparse`, closes gap (b)) and `H = F[Γ']`. (2)⇒(1) is proved directly (the paper's (¬1)⇒(¬2) by contraposition): an enumeration exists (AUX `exists_enumeration`; the paper says "we fix"), the colors of `C(T,e)` are mapped injectively into `μ` (gap (c); `IsLocallyAdditive.comp_injective`), and the `κ`-sized chain `{t^i_α : α ∈ H}` is extended to a branch by Zorn (`IsChain.exists_maxChain`; implicit in the paper, a chain is not yet a branch); a chain has size `≤ κ` (`mk_le_of_isChain`). | approved |
+| 5.4 (in proof of 5.3) | All levels of `T(C)` have size `≤ μ` (`C : [κ]^2 → μ` la). | `card_lev_treeOfColoring_le` | Under the hypotheses of 5.3, for la `C : [κ]^2 → Kappa μ`: `∀ β, #(Lev (T(C)) β) ≤ μ`. | ref2 (`claim_5_4`, with only `κ` regular and `μ < κ`). ref1 does not state it. | stepping stone | 5.3 ((1)⇒(2)). | The proof's "WLOG `δ₀ > β`" needs `μ` infinite (for finite `μ` it discards one of only `μ+1` elements). The statement is still true for finite `μ` (another argument: successor levels have `≤ μ` nodes, then count at limit levels). **Phase 1:** proved for every `μ` (finite included). The hypotheses `κ.IsRegular` and `μ < κ` are not used (only `ℵ₀ < κ`, to get a color, i.e. `μ ≠ 0`); `hκ` gives an unused-variable warning; statement unchanged. Infinite `μ`: the paper's argument (a node `C(·,δ)↾β` with `δ > β` is determined by `C(β,δ)`, plus the single node with `δ = β`: `≤ μ + 1 = μ`). Finite `μ = n`: of `n+1` distinct nodes, take `a < β` above a witness of difference for each pair; then `C(a,δ)` separates them (local additivity), contradiction. | approved |
+| AUX (Section 5, Phase 1) | (Not paper statements.) Auxiliary lemmas used in the proofs of Section 5. | 20 declarations marked `AUX: not in paper` in `Section5.lean`. `Kappa`: `Kappa.mk_eq`, `Kappa.mk_Iic_lt`, `Kappa.exists_gt_of_card_eq`, `Kappa.exists_gt_of_card_lt`, `Kappa.card_eq_of_forall_exists_gt`, `Kappa.exists_sparse`. Colorings: `IsLocallyAdditive.color_eq_of_le`, `Coloring.color_congr`, `IsLocallyAdditive.comp_injective`. Trees: `lt_iff_ht_lt_of_isChain`, `ht_injOn_of_isChain`, `isWellOrder_of_isChain`, `mk_le_of_isChain`, `isCofinalBranch_iff`. `T(C)`: `fiberRestr_eq_fiberRestr`, `fiberRestr_ssubset_iff`, `ht_fiberRestr`, `mem_lev_treeOfColoring`, `height_treeOfColoring`. Enumerations: `exists_enumeration`. | Standard facts about trees, ordinals and cardinals; all proved, none changes a definition or a statement. | Not in the refs. | stepping stone | Proofs of Section 5. | None. | |
 | 6 implicit (subtree) | (implicit: "subtree", `Lev_{<α}(T)` in the proof of 6.4, the well-pruned subtree in the proof of 7.8) A subset of a tree, with the induced order, is a tree. | `isTree_subtype` (+ instance) | For `S : Set T`: `IsTree S`. | ref1 (`STree.induced`, an instance with `sorry`). Not in ref2. | core (borderline: an implicit claim, but needed to state `exists_wellPruned_subtree`) | Proof of 6.4 (`Lev_{<α}(T)`); statement of `exists_wellPruned_subtree` (AUX); proof of 7.8. | Placed in Section6.lean, where it is first used. | approved |
 | 6.1 | For infinite `μ ≤ λ`: `𝔗_{λ,μ}` = trees of height `μ` with `≤ λ` nodes; `Lim(T)` = set of cofinal branches; `λ^{μ,tr} = sup{\|Lim(T)\| : T ∈ 𝔗_{λ,μ}}`. | `Lim`, `treeExp` | `Lim T` = `{b \| IsCofinalBranch b}`. `treeExp λ μ` = `sSup` of `#(Lim T)` over trees `T : Type w` with `height T = μ.ord` and `#T ≤ λ`. | ref1 (same shape, `STree`). ref2: same content (branches as a subtype). | core | 6.2, 6.4, 6.5. | Total in Lean; the paper defines it only for infinite `μ ≤ λ`. Outside that range the Lean value is a by-product (e.g. `0` when `μ > λ`: no such trees). `sSup` of an unbounded set of cardinals is `0`, but this set is bounded by `2^λ`. Trees range over `Type w` (as E3). "Height `μ`" read as `height T = μ.ord`. | approved |
 | 6.2 | For every two infinite cardinals `λ, μ`: `λ^{μ,tr} ≤ λ^μ`. | `treeExp_le_power` | `ℵ₀ ≤ λ → ℵ₀ ≤ μ → treeExp λ μ ≤ λ ^ μ`. | ref1/ref2 add `μ ≤ λ`. Change: dropped (the paper says "every two infinite cardinals"). | stepping stone | 6.4 ((2)⇒(1)), 6.5. | No proof in the paper (easy: a cofinal branch is determined by a function `μ → T`). For `μ > λ` the Lean statement is trivially true (`treeExp λ μ = 0`). | |
@@ -174,7 +175,7 @@ The well-pruned subtree fact ("well-known" in the proof of 7.8) is the AUX lemma
 * ref2 has proofs of Remark 7.2, Lemma 7.3 (via a quotient) and Corollary 6.5 (from 6.2, 6.4 and an
   auxiliary `λ^μ < κ`), usable as starting material in Phase 1.
 
-## Summary of sorries (after Phase 1: Sections 2–4; Phase 0 for Sections 5–7)
+## Summary of sorries (after Phase 1: Sections 2–5; Phase 0 for Sections 6–7)
 
 * Section 2: 0 sorries. Phase 1 proved the 4 approved statements: `uMap_color` (2.5),
   `uMap_wellDefined_iff` (Note after 2.5), `additive_isLocallyAdditive` (2.7), `uMap_comp` (2.8).
@@ -193,28 +194,35 @@ The well-pruned subtree fact ("well-known" in the proof of 7.8) is the AUX lemma
 * Section 4: 0 sorries. Phase 1 proved all 20 paper statements (well-pruned "Clearly",
   `historyTree_isTree`, `ht_histFun`, `mem_succPart_historyTree`, 4.3, 4.4, 4.5, `treeOfColoring_isTree`,
   `treeOfColoring_downwardClosed`, 4.7, 4.8, `existsUnique_isTreeColoring`, 4.12, 4.14, 4.15, 4.16, 4.17,
-  4.18, 4.19, 4.20), with 52 AUX declarations (see the AUX row of Section 4). Rows 4.3 and 4.16–4.19 are
-  not yet marked approved; they were proved at the user's explicit request (statements unchanged).
+  4.18, 4.19, 4.20), with 52 AUX declarations (see the AUX row of Section 4). Rows 4.3 and 4.16–4.19 were
+  proved at the user's explicit request before they were approved (statements unchanged); the user
+  approved them afterwards.
   No statement or definition was changed. File order changed only: 4.15 now comes after 4.19, and 4.17
   after 4.18 (their proofs use the later claims). Section4.lean now imports Section3.lean (for
   `Pairs.exists_eq_mk`, `Pairs.mk_inj`). 4.14 was proved with the agreed `ℵ₀ ≤ κ`, without regularity;
   4.16 with the agreed `= i`. `#print axioms` (all 65 theorems of Section 4): only `propext`,
   `Classical.choice`, `Quot.sound` (some use fewer). STUCK: 0.
-* Section 5, paper statements: 3 (5.2, 5.3, 5.4). Not proved yet (approved except 5.4).
+* Section 5: 0 sorries. Phase 1 proved all 3 paper statements (5.4, 5.3, 5.2), with 20 AUX declarations
+  (see the AUX row of Section 5). Row 5.4 is not yet marked approved; it was proved at the user's
+  explicit request (statement unchanged). `Fact_5_1` (FACT) is neither proved nor used (no proof in
+  Section 5 depends on it). No statement or definition was changed. File order changed only: 5.4, 5.3,
+  5.2 (each uses the next). Section5.lean now also imports `Mathlib.SetTheory.Cardinal.Pigeonhole`.
+  `#print axioms` (all 27 declarations of Section 5): only `propext`, `Classical.choice`, `Quot.sound`
+  (some use fewer). STUCK: 0.
 * Section 6, paper statements: 4 (`isTree_subtype` (implicit), 6.2, 6.4, 6.5). Not proved yet. Approved
   rows (6 of the 12 approved Section 6–7 rows of the main table): `isTree_subtype`, 6.1, Weakly compact,
   6.3 (FACT), 6.4, 6.5; not approved: 6.2.
 * Section 7, paper statements: 7 (7.2, 7.3, 7.4, 7.5, 7.7, 7.8, 7.9). Not proved yet. Approved rows
   (the other 6 of the 12): 7.1, `κ → (κ)_{*-la_μ}`, 7.4, 7.5, 7.7, 7.8; not approved: 7.2, 7.3,
   7.6, 7.9 and the AUX row (`exists_wellPruned_subtree`).
-* Total 14 (paper statements, Sections 5–7). AUX: 61 (8 in Section 3 and 52 in Section 4, proved;
-  `exists_wellPruned_subtree` in Section 7, `sorry`). STUCK: 0. Total `sorry`: 15.
+* Total 11 (paper statements, Sections 6–7). AUX: 81 (8 in Section 3, 52 in Section 4 and 20 in
+  Section 5, proved; `exists_wellPruned_subtree` in Section 7, `sorry`). STUCK: 0. Total `sorry`: 12.
 * FACT hypotheses: 3 (`Fact_3_4`, `Fact_5_1`, `Fact_6_3`).
 
 ## Build status
 
-`lake build` succeeds. Warnings: 15 × `declaration uses sorry` (the 14 statements and 1 AUX lemma above),
-1 × unused variable `hT` in 4.12 (see row 4.12), and
+`lake build` succeeds. Warnings: 12 × `declaration uses sorry` (the 11 statements and 1 AUX lemma above),
+1 × unused variable `hT` in 4.12 (see row 4.12), 1 × unused variable `hκ` in 5.4 (see row 5.4), and
 6 × Mathlib header-linter style warnings ("Copyright too short") on Section2–7.lean
 (no copyright header; harmless). Loading full `import Mathlib` in this environment takes about
 15 minutes (I/O); the library files import only specific Mathlib modules, so they build in seconds.
