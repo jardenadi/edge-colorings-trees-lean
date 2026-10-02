@@ -191,11 +191,13 @@ theorem binTree_isTree : IsTree (binTree ν) := by
     · left
       change x.1 ⊆ y.1
       rw [hβ x, hβ y]
-      exact binRestr_subset_iff.2 ⟨hle, fun α hα => (ax.2 α hα).trans (ay.2 α (hα.trans_le hle)).symm⟩
+      exact binRestr_subset_iff.2
+        ⟨hle, fun α hα => (ax.2 α hα).trans (ay.2 α (hα.trans_le hle)).symm⟩
     · right
       change y.1 ⊆ x.1
       rw [hβ x, hβ y]
-      exact binRestr_subset_iff.2 ⟨hle, fun α hα => (ay.2 α hα).trans (ax.2 α (hα.trans_le hle)).symm⟩
+      exact binRestr_subset_iff.2
+        ⟨hle, fun α hα => (ay.2 α hα).trans (ax.2 α (hα.trans_le hle)).symm⟩
 
 instance : IsTree (binTree ν) := binTree_isTree
 
@@ -342,7 +344,8 @@ theorem two_power_lt_of_treeExp_lt {κ : Cardinal.{w}} (hreg : κ.IsRegular)
   | ind ν IH =>
   intro hν
   rcases lt_or_ge ν ℵ₀ with hfin | hinf
-  · exact (Cardinal.power_lt_aleph0 (by exact_mod_cast Cardinal.natCast_lt_aleph0 (n := 2)) hfin).trans_le hreg.aleph0_le
+  · exact (Cardinal.power_lt_aleph0 (by exact_mod_cast Cardinal.natCast_lt_aleph0 (n := 2))
+      hfin).trans_le hreg.aleph0_le
   · have hcard : #(binTree ν) < κ := by
       refine mk_binTree_le.trans_lt (Cardinal.sum_lt_of_isRegular hreg ?_ fun β => ?_)
       · rwa [Kappa.mk_eq]
