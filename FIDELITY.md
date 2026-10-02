@@ -203,8 +203,8 @@ The well-pruned subtree fact ("well-known" in the proof of 7.8) is the AUX lemma
   4.16 with the agreed `= i`. `#print axioms` (all 65 theorems of Section 4): only `propext`,
   `Classical.choice`, `Quot.sound` (some use fewer). STUCK: 0.
 * Section 5: 0 sorries. Phase 1 proved all 3 paper statements (5.4, 5.3, 5.2), with 20 AUX declarations
-  (see the AUX row of Section 5). Row 5.4 is not yet marked approved; it was proved at the user's
-  explicit request (statement unchanged). `Fact_5_1` (FACT) is neither proved nor used (no proof in
+  (see the AUX row of Section 5). Row 5.4 was proved at the user's explicit request before it was
+  approved (statement unchanged); the user approved it after checking the statement against the paper. `Fact_5_1` (FACT) is neither proved nor used (no proof in
   Section 5 depends on it). No statement or definition was changed. File order changed only: 5.4, 5.3,
   5.2 (each uses the next). Section5.lean now also imports `Mathlib.SetTheory.Cardinal.Pigeonhole`.
   `#print axioms` (all 27 declarations of Section 5): only `propext`, `Classical.choice`, `Quot.sound`
