@@ -5,7 +5,7 @@ import MyResearchesLLMLean.JardenShami.Section2
 
 Section 3 ("Replacing Additivity by Local Additivity").
 
-Phase 0: statements only; every proof is `sorry`. Fact 3.4 is cited from [Sh42] and is not
+Phase 1: all statements are proved. Fact 3.4 is cited from [Sh42] and is not
 proved in the paper; it is a hypothesis (`Fact_3_4`) of Corollary 3.5.
 -/
 
@@ -74,23 +74,17 @@ section Sec3
 
 variable {X : Type w} [LinearOrder X]
 
-/-- **Theorem 3.1** (Section 3, `\label{generalizing add to loc less than mu colors}`,
-`\label{theorem generalizing add to la}`). Let `κ, μ` be cardinals with `2^μ + ℵ₀ ≤ κ` and `F` a
-family of subsets of a linearly ordered set. If `F → (F)_{add_κ}` then `F → (F)_{la_μ}`. -/
-theorem arrow_la_of_arrow_add (κ μ : Cardinal.{v}) (hκ : 2 ^ μ + ℵ₀ ≤ κ) (F : Set (Set X))
-    (h : Arrow F F (addEq κ)) : Arrow F F (laEq μ) := by
-  sorry
-
 /-! ## The argument of the proof of Theorem 3.1, for `< μ` colors (AUX: not in paper) -/
 
-/-- AUX: not in paper. The argument of the paper's proof of Theorem 3.1, for the classes
-`add_{<μ}` and `la_{<μ}`: if the set of colors `D* = D → Option D` (the partial functions
-`u_{a,b} : D_b → D`) has fewer than `μ` elements whenever `D` does, then
-`F → (F)_{add_{<μ}}` implies `F → (F)_{la_{<μ}}`. Used for Corollaries 3.2 and 3.3; it does not
-use Theorem 3.1 itself. -/
-theorem arrow_laLt_of_arrow_addLt_of_card (μ : Cardinal.{v})
-    (hpow : ∀ D : Type v, #D < μ → #(D → Option D) < μ) (F : Set (Set X))
-    (h : Arrow F F (addLt μ)) : Arrow F F (laLt μ) := by
+/-- AUX: not in paper. The argument of the paper's proof of Theorem 3.1, for a general bound on
+the number of colors. `Q` bounds the colors allowed in the hypothesis (additive colorings) and
+`P` those in the conclusion (locally additive colorings). If every `D` allowed by `P` and the set
+of colors `D* = D → Option D` (the partial functions `u_{a,b} : D_b → D`) are allowed by `Q`,
+then `F → (F)_{add, Q}` implies `F → (F)_{la, P}`. -/
+theorem arrow_la_of_arrow_add_of_card (P Q : Cardinal.{v} → Prop)
+    (hPQ : ∀ D : Type v, P #D → Q #D ∧ Q #(D → Option D)) (F : Set (Set X))
+    (h : Arrow F F (fun _ D C => IsAdditive C ∧ Q #D)) :
+    Arrow F F (fun _ D C => IsLocallyAdditive C ∧ P #D) := by
   classical
   rintro S hS D C ⟨hla, hD⟩
   have hwd := (uMap_wellDefined_iff C).2 hla
@@ -132,7 +126,7 @@ theorem arrow_laLt_of_arrow_addLt_of_card (μ : Cardinal.{v})
       rw [key1 b c d hbc hcd, Option.bind_some, key1 a b d hab (hbc.trans hcd),
         key1 a c d (hab.trans hbc) hcd]
     · rw [key2 b c hbc t ht, Option.bind_none, key2 a c (hab.trans hbc) t ht]
-  obtain ⟨B, hBF, hBhom⟩ := h S hS (D → Option D) Cs ⟨hadd, hpow D hD⟩
+  obtain ⟨B, hBF, hBhom⟩ := h S hS (D → Option D) Cs ⟨hadd, (hPQ D hD).2⟩
   -- The coloring `C ↾ [B]^2`, as a coloring of `B` viewed as a subset of `X`.
   have hsub : ∀ x ∈ Subtype.val '' B, x ∈ S := by
     rintro x ⟨y, -, rfl⟩
@@ -161,7 +155,7 @@ theorem arrow_laLt_of_arrow_addLt_of_card (μ : Cardinal.{v})
     · refine ⟨Prod.fst, ?_⟩
       intro a b c hab hbc
       exact absurd ⟨ι a, ι b, hι hab, hιB a, hιB b⟩ hp
-  obtain ⟨E, hEF, hEhom⟩ := h _ hBF D Cb ⟨hCbadd, hD⟩
+  obtain ⟨E, hEF, hEhom⟩ := h _ hBF D Cb ⟨hCbadd, (hPQ D hD).1⟩
   refine ⟨ι '' E, ?_, ?_⟩
   · rw [Set.image_image]
     exact hEF
@@ -169,6 +163,59 @@ theorem arrow_laLt_of_arrow_addLt_of_card (μ : Cardinal.{v})
     rintro _ _ _ _ hab hcd ⟨a, ha, rfl⟩ ⟨b, hb, rfl⟩ ⟨c, hc, rfl⟩ ⟨d, hd, rfl⟩
     exact (hCb a b hab).symm.trans
       (((isHomogeneous_iff_color Cb E).1 hEhom a b c d hab hcd ha hb hc hd).trans (hCb c d hcd))
+
+/-- AUX: not in paper. The argument of the paper's proof of Theorem 3.1, for the classes
+`add_{<μ}` and `la_{<μ}`: if the set of colors `D* = D → Option D` has fewer than `μ` elements
+whenever `D` does, then `F → (F)_{add_{<μ}}` implies `F → (F)_{la_{<μ}}`. This is the instance
+`P = Q = (· < μ)` of `arrow_la_of_arrow_add_of_card`. Corollaries 3.2 and 3.3 are proved directly
+from this lemma, not from the statement of Theorem 3.1 used as a black box (for `μ = ℵ₀` the
+statement of 3.1 does not apply). -/
+theorem arrow_laLt_of_arrow_addLt_of_card (μ : Cardinal.{v})
+    (hpow : ∀ D : Type v, #D < μ → #(D → Option D) < μ) (F : Set (Set X))
+    (h : Arrow F F (addLt μ)) : Arrow F F (laLt μ) :=
+  arrow_la_of_arrow_add_of_card (· < μ) (· < μ) (fun D hD => ⟨hD, hpow D hD⟩) F h
+
+/-- AUX: not in paper. Enlarging the set of colors (the gap noted in row 3.1 of FIDELITY.md):
+since Definition 2.1 counts the codomain, an additive coloring with at most `κ` colors is also an
+additive coloring with exactly `κ` colors (compose with an injection `D ↪ D'`, `#D' = κ`), and it
+has the same homogeneous sets. Hence `F₁ → (F₂)_{add_κ}` implies the same arrow for additive
+colorings with `≤ κ` colors. -/
+theorem arrow_addLe_of_arrow_addEq (κ : Cardinal.{v}) (F₁ F₂ : Set (Set X))
+    (h : Arrow F₁ F₂ (addEq κ)) : Arrow F₁ F₂ (fun _ D C => IsAdditive C ∧ #D ≤ κ) := by
+  classical
+  rintro S hS D C ⟨⟨s₀, hs₀⟩, hD⟩
+  obtain ⟨e⟩ : Nonempty (D ↪ κ.out) := by
+    rw [← Cardinal.le_def, Cardinal.mk_out]
+    exact hD
+  let C' : Coloring S κ.out := fun p => e (C p)
+  have hC'add : IsAdditive C' := by
+    by_cases hne : Nonempty D
+    · refine ⟨fun xy => e (s₀ (Function.invFun e xy.1, Function.invFun e xy.2)), ?_⟩
+      intro a b c hab hbc
+      change e (C.color a c (hab.trans hbc)) = e (s₀ (Function.invFun e (e (C.color a b hab)),
+        Function.invFun e (e (C.color b c hbc))))
+      rw [Function.leftInverse_invFun e.injective, Function.leftInverse_invFun e.injective,
+        hs₀ a b c hab hbc]
+    · exact ⟨Prod.fst, fun a b _ hab _ => absurd ⟨C.color a b hab⟩ hne⟩
+  obtain ⟨E, hEF, hEhom⟩ := h S hS κ.out C' ⟨hC'add, Cardinal.mk_out κ⟩
+  exact ⟨E, hEF, fun p q hp hq => e.injective (hEhom p q hp hq)⟩
+
+/-- **Theorem 3.1** (Section 3, `\label{generalizing add to loc less than mu colors}`,
+`\label{theorem generalizing add to la}`). Let `κ, μ` be cardinals with `2^μ + ℵ₀ ≤ κ` and `F` a
+family of subsets of a linearly ordered set. If `F → (F)_{add_κ}` then `F → (F)_{la_μ}`. -/
+theorem arrow_la_of_arrow_add (κ μ : Cardinal.{v}) (hκ : 2 ^ μ + ℵ₀ ≤ κ) (F : Set (Set X))
+    (h : Arrow F F (addEq κ)) : Arrow F F (laEq μ) := by
+  have hμκ : 2 ^ μ ≤ κ := le_self_add.trans hκ
+  have hω : ℵ₀ ≤ κ := le_add_self.trans hκ
+  refine arrow_la_of_arrow_add_of_card (· = μ) (· ≤ κ) (fun D hD => ?_) F
+    (arrow_addLe_of_arrow_addEq κ F F h)
+  refine ⟨hD ▸ (Cardinal.cantor μ).le.trans hμκ, ?_⟩
+  rw [← Cardinal.power_def, Cardinal.mk_option]
+  rcases lt_or_ge #D ℵ₀ with hfin | hinf
+  · exact (Cardinal.power_lt_aleph0 (Cardinal.add_lt_aleph0 hfin Cardinal.one_lt_aleph0)
+      hfin).le.trans hω
+  · rw [Cardinal.add_one_of_aleph0_le hinf, Cardinal.power_self_eq hinf, hD]
+    exact hμκ
 
 /-- **Corollary 3.2** (Section 3, `\label{generalizing add to loc for strong limit cardinal}`).
 Let `μ` be a strong limit cardinal and `F` a family of subsets of a linearly ordered set.
