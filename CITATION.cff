@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Lean 4 formalization of the results of 'A Note on Edge Colorings and Trees'"
+authors:
+  - family-names: "Jarden"
+    given-names: "Adi"
+version: 0.1.0
+date-released: 2026-11-03
+license: LICANCE  
+repository-code: "https://github.com/jardenadi/edge-colorings-trees-lean"
