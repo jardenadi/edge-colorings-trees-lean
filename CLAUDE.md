@@ -8,7 +8,7 @@ Research project: formalizing mathematics papers in Lean 4 + Mathlib, and compar
 ## Environment
 - Lean toolchain: leanprover/lean4:v4.34.1; Mathlib is pinned to v4.34.1 (see lakefile.toml).
 - Never run `lake update`, and never edit lean-toolchain, lakefile.toml or lake-manifest.json, without asking.
-- Library code lives in MyResearchesLLMLean/ (the default build target). Files at the repo root, such as CardinalMulSelf.lean, are outside that target, so `lake build` does not check them.
+- Library code lives in MyResearchesLLMLean/ (the default build target). Files at the repo root are outside that target, so `lake build` does not check them.
 
 ## Current target
 - Paper: "A Note on Edge Colorings and Trees" (Jarden & Shami), arXiv:2204.06874. LaTeX source: paper/edge_colorings_trees.tex.

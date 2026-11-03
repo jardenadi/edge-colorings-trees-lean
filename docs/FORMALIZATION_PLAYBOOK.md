@@ -1,5 +1,7 @@
 
 # Playbook: formalizing a mathematics paper in Lean 4 with an LLM agent
+> Note: commit hashes in this document refer to the history of the private development repository and differ from the hashes in this repository. The tags are preserved.
+> Note: commit hashes in this document refer to the history of the private development repository and differ from the hashes in this repository. The tags are preserved.
 
 Status: working draft, based on one project: Jarden & Shami, "A Note on Edge Colorings and Trees"
 (arXiv:2204.06874), formalized completely (Sections 2-7, statements and proofs; tag proofs-v1).
