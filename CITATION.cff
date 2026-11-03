@@ -1,10 +1,24 @@
 cff-version: 1.2.0
-message: "If you use this work, please cite it as below."
-title: "Lean 4 formalization of the results of 'A Note on Edge Colorings and Trees'"
+message: "If you use this formalization, please cite it as below, and also cite the paper."
+title: "Lean 4 formalization of 'A Note on Edge Colorings and Trees'"
+type: software
 authors:
-  - family-names: "Jarden"
-    given-names: "Adi"
-version: 0.1.0
-date-released: 2026-11-03
-license: LICANCE  
+  - family-names: Jarden
+    given-names: Adi
 repository-code: "https://github.com/jardenadi/edge-colorings-trees-lean"
+license: Apache-2.0
+version: 1.0.0
+date-released: 2026-11-03
+abstract: >-
+  A formalization in Lean 4 and Mathlib of Sections 2-7 of the paper
+  "A Note on Edge Colorings and Trees" by Adi Jarden and Ziv Shami
+  (arXiv:2204.06874). All theorems are proved without sorry. The
+  formalization was produced with an AI coding agent, with human review
+  of every formal statement.
+keywords:
+  - Lean 4
+  - Mathlib
+  - formal verification
+  - set theory
+  - edge colorings
+  - trees
