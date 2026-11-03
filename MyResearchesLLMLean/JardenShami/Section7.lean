@@ -86,9 +86,10 @@ theorem Kappa.exists_gt {κ : Cardinal.{w}} (hκ : ℵ₀ ≤ κ) (x : Kappa κ)
   exact ⟨y, h⟩
 
 /-- **Remark 7.2** (Section 7, `\label{remark 7.2}`). Under the standing assumption of Subsection
-7.1: if `β ≠ γ`, `α₁` witnesses `β ∼ γ` and `α₁ < α₂`, then `α₂` witnesses `β ∼ γ` as well.
-Hence `∼` is an equivalence relation. -/
-theorem sim_witness_mono_and_equivalence (κ μ : Cardinal.{w}) (hκ : κ.IsRegular) (hμ : μ < κ)
+7.1, except `μ < κ`, which is not needed and is not assumed here (`κ` regular,
+`C : [κ]^2 → μ` *-locally additive): if `β ≠ γ`, `α₁` witnesses `β ∼ γ` and `α₁ < α₂`, then
+`α₂` witnesses `β ∼ γ` as well. Hence `∼` is an equivalence relation. -/
+theorem sim_witness_mono_and_equivalence (κ μ : Cardinal.{w}) (hκ : κ.IsRegular)
     (C : Coloring (Kappa κ) (Kappa μ)) (hC : IsStarLocallyAdditive C) :
     (∀ (β γ α₁ α₂ : Kappa κ) (hβ : β < α₁) (hγ : γ < α₁) (h₁₂ : α₁ < α₂), β ≠ γ →
         C.color β α₁ hβ = C.color γ α₁ hγ →
@@ -122,13 +123,14 @@ theorem sim_witness_mono_and_equivalence (κ μ : Cardinal.{w}) (hκ : κ.IsRegu
 
 /-- **Lemma 7.3** (Section 7, `\label{lemma number of equivalence classes}`). Under the standing
 assumption of Subsection 7.1: if `μ⁺ < κ` then the number of `∼`-equivalence classes is at most
-`μ`. The classes are counted as the sets `{γ : β ∼ γ}`, `β < κ`. -/
-theorem card_simClasses_le (κ μ : Cardinal.{w}) (hκ : κ.IsRegular) (hμ : μ < κ)
+`μ`. The classes are counted as the sets `{γ : β ∼ γ}`, `β < κ`. The part `μ < κ` of the standing
+assumption is not a hypothesis here (it follows from `μ⁺ < κ`). -/
+theorem card_simClasses_le (κ μ : Cardinal.{w}) (hκ : κ.IsRegular)
     (C : Coloring (Kappa κ) (Kappa μ)) (hC : IsStarLocallyAdditive C)
     (h : Order.succ μ < κ) :
     #(Set.range fun β : Kappa κ => {γ : Kappa κ | Sim C β γ}) ≤ μ := by
   classical
-  obtain ⟨-, heqv⟩ := sim_witness_mono_and_equivalence κ μ hκ hμ C hC
+  obtain ⟨-, heqv⟩ := sim_witness_mono_and_equivalence κ μ hκ C hC
   set R := Set.range fun β : Kappa κ => {γ : Kappa κ | Sim C β γ} with hR
   by_contra hc
   obtain ⟨P, hPR, hPc⟩ := Cardinal.le_mk_iff_exists_subset.1 (Order.succ_le_of_lt (lt_of_not_ge hc))
@@ -168,8 +170,8 @@ theorem starLaArrowKappa_of_succ_lt (κ μ : Cardinal.{w}) (hκ : κ.IsRegular)
   intro C hC
   have hμ : μ < κ := (Order.lt_succ_of_not_isMax (not_isMax μ)).trans h
   have hκ0 := hκ.aleph0_le
-  obtain ⟨mono, heqv⟩ := sim_witness_mono_and_equivalence κ μ hκ hμ C hC
-  have hRle := card_simClasses_le κ μ hκ hμ C hC h
+  obtain ⟨mono, heqv⟩ := sim_witness_mono_and_equivalence κ μ hκ C hC
+  have hRle := card_simClasses_le κ μ hκ C hC h
   -- some class `A` has size `κ`
   set R := Set.range fun β : Kappa κ => {γ : Kappa κ | Sim C β γ}
   let cl : Kappa κ → R := fun β => ⟨{γ | Sim C β γ}, β, rfl⟩
@@ -606,12 +608,13 @@ theorem le_mk_lev_of_splitting {T : Type w} [PartialOrder T] [IsTree T] {ρ : Ca
   rwa [Kappa.mk_eq] at this
 
 /-- **Claim 7.9** (Section 7, `\label{argue}`, inside Case A of the proof of Claim 7.8). Let
-`κ` be regular, `λ < κ` regular, and `T` a well-pruned `κ`-tree whose levels have size `< λ`.
+`λ` be regular and `T` a well-pruned `κ`-tree whose levels have size `< λ`.
 For every ordinal `α < κ` with `cf(α) = λ` there is an ordinal `q(α) < α` such that for every
 ordinal `β` with `q(α) < β < α` and any `a ∈ Lev_{q(α)}(T)` there are no two distinct
-`b, c ∈ Lev_β(T)` with `a < b` and `a < c`. -/
-theorem exists_unique_extension_level (κ lam : Cardinal.{w}) (hκ : κ.IsRegular)
-    (hlamreg : lam.IsRegular) (hlam : lam < κ) (T : Type w) [PartialOrder T] [IsTree T]
+`b, c ∈ Lev_β(T)` with `a < b` and `a < c`. (In the paper `κ` is regular and `λ < κ`; these
+hypotheses are not needed and are not assumed here.) -/
+theorem exists_unique_extension_level (κ lam : Cardinal.{w})
+    (hlamreg : lam.IsRegular) (T : Type w) [PartialOrder T] [IsTree T]
     (hT : IsKappaTree κ T) (hwp : WellPruned T) (hlev : ∀ α : Ordinal.{w}, #(Lev T α) < lam) :
     ∀ α : Ordinal.{w}, α < κ.ord → α.cof = lam →
       ∃ q < α, ∀ β : Ordinal.{w}, q < β → β < α →

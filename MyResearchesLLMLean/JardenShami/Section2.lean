@@ -8,7 +8,7 @@ Section 2 ("Basic Definitions"): colorings, homogeneous sets, additive, locally-
 and *-locally-additive colorings, the maps `u_{a,b}`, the classes `add_μ`, `la_μ`, ...
 and the generalized arrow notation `F₁ → (F₂)_𝔆`.
 
-Phase 0: statements only; every proof is `sorry`.
+Statements and proofs: every statement in this file is proved (no `sorry`).
 
 ## Encoding conventions
 * `[A]^2`, the set of 2-element subsets of `A`, is `Pairs A`: the non-diagonal elements of

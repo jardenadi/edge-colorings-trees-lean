@@ -2,10 +2,9 @@
 
 Jarden & Shami, "A Note on Edge Colorings and Trees" (arXiv:2204.06874). Generated from `MyResearchesLLMLean/JardenShami/Section2.lean` … `Section7.lean`, in file order, for a fidelity check against the paper.
 
-* Commit: `9af7ce8d18a83c39d30a91ba47fa0a05bbe0cfcb` (the .lean files have no uncommitted changes).
 * Theorems and lemmas: docstring and full signature, the proof replaced by `:= sorry`. Definitions, structures, classes, instances and abbreviations: docstring and full body. An `omit ... in` line or an attribute before a declaration is kept with it.
 * Part A of each section: the paper's definitions and statements (including implicit claims and notation). FACT hypotheses (cited, not proved) are marked by a heading. Part B: the declarations whose docstring starts with `AUX: not in paper`. Declarations without a docstring are listed in Part C.
-* Each section starts with its context (`universe`, `variable`, `namespace`, `section`, `open`, `end` lines with line numbers): `variable` lines add implicit arguments to the statements below them.
+* Each section starts with its context (`universe`, `variable`, `namespace`, `section`, `open`, `end` lines): `variable` lines add implicit arguments to the statements below them.
 
 | Section | Declarations | Paper (A) | of which FACT | AUX (B) | No docstring (C) |
 |---|---|---|---|---|---|
@@ -28,22 +27,22 @@ keywords, 2 start with `@[simp] theorem` (`Kappa.coe_mk`, `Kappa.mk_coe`, Sectio
 ### Context
 
 ```lean
-open Cardinal  -- line 27
-universe v w  -- line 29
-noncomputable section  -- line 31
-namespace JardenShami  -- line 33
-section LinearOrder  -- line 62
-variable {A : Type w} [LinearOrder A] {D : Type v}  -- line 64
-end LinearOrder  -- line 154
-section Classes  -- line 171
-variable {X : Type w} [LinearOrder X]  -- line 173
-end Classes  -- line 227
-end JardenShami  -- line 233
+open Cardinal
+universe v w
+noncomputable section
+namespace JardenShami
+section LinearOrder
+variable {A : Type w} [LinearOrder A] {D : Type v}
+end LinearOrder
+section Classes
+variable {X : Type w} [LinearOrder X]
+end Classes
+end JardenShami
 ```
 
 ### A. Paper definitions and statements
 
-#### `Pairs` (def, line 39)
+#### `Pairs` (def)
 
 ```lean
 /-- **Definition 2.1** (`[A]^2`). The set of 2-element subsets of `A`, encoded as the
@@ -51,7 +50,7 @@ non-diagonal unordered pairs. -/
 def Pairs (A : Type w) : Type w := {z : Sym2 A // ¬ z.IsDiag}
 ```
 
-#### `Pairs.mk` (def, line 42)
+#### `Pairs.mk` (def)
 
 ```lean
 /-- The pair `{a, b}` as an element of `[A]^2`, for `a ≠ b`. -/
@@ -59,7 +58,7 @@ def Pairs.mk {A : Type w} (a b : A) (h : a ≠ b) : Pairs A :=
   ⟨s(a, b), by simpa [Sym2.mk_isDiag_iff] using h⟩
 ```
 
-#### `Coloring` (abbrev, line 47)
+#### `Coloring` (abbrev)
 
 ```lean
 /-- **Definition 2.1** (Section 2). A coloring (edge coloring) of the set `A` with colors in
@@ -67,7 +66,7 @@ the set `D`: a function `C : [A]^2 → D`. It is a coloring with `μ` colors whe
 abbrev Coloring (A : Type w) (D : Type v) : Type (max w v) := Pairs A → D
 ```
 
-#### `Coloring.color` (def, line 51)
+#### `Coloring.color` (def)
 
 ```lean
 /-- **Definition 2.1** (Section 2), notation: for `a < b` in a linearly ordered `A`,
@@ -77,7 +76,7 @@ def Coloring.color {A : Type w} [LinearOrder A] {D : Type v} (C : Coloring A D) 
   C (Pairs.mk a b h.ne)
 ```
 
-#### `IsHomogeneous` (def, line 59)
+#### `IsHomogeneous` (def)
 
 ```lean
 /-- **Definition 2.2** (Section 2). `B ⊆ A` is homogeneous for `C` if `C ↾ [B]^2` is constant,
@@ -86,7 +85,7 @@ def IsHomogeneous {A : Type w} {D : Type v} (C : Coloring A D) (B : Set A) : Pro
   ∀ p q : Pairs A, (∀ x ∈ p.1, x ∈ B) → (∀ x ∈ q.1, x ∈ B) → C p = C q
 ```
 
-#### `IsAdditive` (def, line 70)
+#### `IsAdditive` (def)
 
 ```lean
 /-- **Definition 2.3** (Section 2, after [Sh42, §1]). `C : [A]^2 → D` is additive if there is
@@ -96,7 +95,7 @@ def IsAdditive (C : Coloring A D) : Prop :=
     C.color a c (hab.trans hbc) = s (C.color a b hab, C.color b c hbc)
 ```
 
-#### `IsLocallyAdditive` (def, line 76)
+#### `IsLocallyAdditive` (def)
 
 ```lean
 /-- **Definition 2.4** (Section 2). `C : [A]^2 → D` is locally-additive if for all
@@ -107,7 +106,7 @@ def IsLocallyAdditive (C : Coloring A D) : Prop :=
       C.color a c (hab.trans hbc) = C.color a d ((hab.trans hbc).trans hcd)
 ```
 
-#### `IsStarLocallyAdditive` (def, line 85)
+#### `IsStarLocallyAdditive` (def)
 
 ```lean
 /-- **Definition 2.6** (Section 2, second sentence). `C` is *-locally additive if it is
@@ -118,7 +117,7 @@ def IsStarLocallyAdditive (C : Coloring A D) : Prop :=
   IsLocallyAdditive (A := Aᵒᵈ) C
 ```
 
-#### `Dset` (def, line 92)
+#### `Dset` (def)
 
 ```lean
 /-- **Notation 2.5** (Section 2). `D_b`: the set of colors `t` such that `C(b,c) = t` for some
@@ -127,7 +126,7 @@ def Dset (C : Coloring A D) (b : A) : Set D :=
   {t | ∃ (c : A) (h : b < c), C.color b c h = t}
 ```
 
-#### `uMap` (def, line 98)
+#### `uMap` (def)
 
 ```lean
 /-- **Notation 2.5** (Section 2). For `a < b`, `u_{a,b} : D_b → D`, `u_{a,b}(C(b,c)) = C(a,c)`.
@@ -137,7 +136,7 @@ def uMap (C : Coloring A D) (a b : A) (hab : a < b) : Dset C b → D :=
   fun t => C.color a (Classical.choose t.2) (hab.trans (Classical.choose_spec t.2).fst)
 ```
 
-#### `uMap_color` (theorem, line 103)
+#### `uMap_color` (theorem)
 
 ```lean
 /-- **Notation 2.5** (Section 2), the defining equation `u_{a,b}(C(b,c)) = C(a,c)`, for a locally
@@ -147,7 +146,7 @@ theorem uMap_color {C : Coloring A D} (hC : IsLocallyAdditive C) {a b c : A}
     uMap C a b hab ⟨C.color b c hbc, c, hbc, rfl⟩ = C.color a c (hab.trans hbc) := sorry
 ```
 
-#### `uMap_wellDefined_iff` (theorem, line 119)
+#### `uMap_wellDefined_iff` (theorem)
 
 ```lean
 /-- **Note after Notation 2.5** (Section 2, unnumbered). `u_{a,b}` is well-defined for each
@@ -160,7 +159,7 @@ theorem uMap_wellDefined_iff (C : Coloring A D) :
       IsLocallyAdditive C := sorry
 ```
 
-#### `additive_isLocallyAdditive` (theorem, line 136)
+#### `additive_isLocallyAdditive` (theorem)
 
 ```lean
 /-- **Remark 2.7** (Section 2). Every additive coloring is locally-additive. -/
@@ -168,7 +167,7 @@ theorem additive_isLocallyAdditive {C : Coloring A D} (hC : IsAdditive C) :
     IsLocallyAdditive C := sorry
 ```
 
-#### `uMap_comp` (theorem, line 145)
+#### `uMap_comp` (theorem)
 
 ```lean
 /-- **Claim 2.8** (Section 2, `\label{C^* is additive}`). For a locally additive `C` and
@@ -180,7 +179,7 @@ theorem uMap_comp {C : Coloring A D} (hC : IsLocallyAdditive C) {a b c : A}
       uMap C a b hab ⟨uMap C b c hbc t, h⟩ = uMap C a c (hab.trans hbc) t := sorry
 ```
 
-#### `Kappa` (abbrev, line 161)
+#### `Kappa` (abbrev)
 
 ```lean
 /-- **Definition 2.6** (Section 2). A cardinal `κ`, as the set of ordinals below it, with its
@@ -189,7 +188,7 @@ coloring of `Kappa κ`, and *-locally additive if `IsStarLocallyAdditive` holds.
 abbrev Kappa (κ : Cardinal.{w}) : Type w := κ.ord.ToType
 ```
 
-#### `ColoringClass` (def, line 168)
+#### `ColoringClass` (def)
 
 ```lean
 /-- A class of colorings of subsets of the linearly ordered type `X` (used in Notation 2.9 and
@@ -199,7 +198,7 @@ def ColoringClass (X : Type w) [LinearOrder X] : Type (max w (v + 1)) :=
   ∀ (S : Set X) (D : Type v), Coloring S D → Prop
 ```
 
-#### `allColorings` (def, line 177)
+#### `allColorings` (def)
 
 ```lean
 /-- **Definition 2.10** (Section 2, last sentence): "`μ` for `𝔆`", the class of all colorings
@@ -207,21 +206,21 @@ with `μ` colors. -/
 def allColorings (μ : Cardinal.{v}) : ColoringClass.{v, w} X := fun _ D _ => #D = μ
 ```
 
-#### `add` (def, line 180)
+#### `add` (def)
 
 ```lean
 /-- **Notation 2.9 (1)** (Section 2). `add`: the class of additive colorings. -/
 def add : ColoringClass.{v, w} X := fun _ _ C => IsAdditive C
 ```
 
-#### `addEq` (def, line 183)
+#### `addEq` (def)
 
 ```lean
 /-- **Notation 2.9 (2)** (Section 2). `add_μ`: additive colorings with `μ` colors. -/
 def addEq (μ : Cardinal.{v}) : ColoringClass.{v, w} X := fun _ D C => IsAdditive C ∧ #D = μ
 ```
 
-#### `addLt` (def, line 187)
+#### `addLt` (def)
 
 ```lean
 /-- **Notation 2.9 (3)** (Section 2). `add_{<μ}`: additive colorings with fewer than `μ`
@@ -229,21 +228,21 @@ colors. -/
 def addLt (μ : Cardinal.{v}) : ColoringClass.{v, w} X := fun _ D C => IsAdditive C ∧ #D < μ
 ```
 
-#### `la` (def, line 190)
+#### `la` (def)
 
 ```lean
 /-- **Notation 2.9 (4)** (Section 2). `la`: the class of locally-additive colorings. -/
 def la : ColoringClass.{v, w} X := fun _ _ C => IsLocallyAdditive C
 ```
 
-#### `laEq` (def, line 193)
+#### `laEq` (def)
 
 ```lean
 /-- **Notation 2.9 (6)** (Section 2). `la_μ`: locally-additive colorings with `μ` colors. -/
 def laEq (μ : Cardinal.{v}) : ColoringClass.{v, w} X := fun _ D C => IsLocallyAdditive C ∧ #D = μ
 ```
 
-#### `laLt` (def, line 197)
+#### `laLt` (def)
 
 ```lean
 /-- **Notation 2.9 (6)** (Section 2). `la_{<μ}`: locally-additive colorings with fewer than `μ`
@@ -251,7 +250,7 @@ colors. -/
 def laLt (μ : Cardinal.{v}) : ColoringClass.{v, w} X := fun _ D C => IsLocallyAdditive C ∧ #D < μ
 ```
 
-#### `IsRegularCardinalOrder` (def, line 201)
+#### `IsRegularCardinalOrder` (def)
 
 ```lean
 /-- The domain `S` of a coloring "is a regular cardinal": `S` (with the order induced from `X`)
@@ -260,7 +259,7 @@ def IsRegularCardinalOrder (S : Set X) : Prop :=
   ∃ κ : Cardinal.{w}, κ.IsRegular ∧ Nonempty (S ≃o Kappa κ)
 ```
 
-#### `starLa` (def, line 206)
+#### `starLa` (def)
 
 ```lean
 /-- **Notation 2.9 (5)** (Section 2). `*-la`: the class of *-locally additive colorings on a
@@ -269,7 +268,7 @@ def starLa : ColoringClass.{v, w} X :=
   fun S _ C => IsRegularCardinalOrder S ∧ IsStarLocallyAdditive C
 ```
 
-#### `starLaEq` (def, line 211)
+#### `starLaEq` (def)
 
 ```lean
 /-- **Notation 2.9 (6)** (Section 2). `*-la_μ`: *-locally additive colorings on a regular
@@ -278,7 +277,7 @@ def starLaEq (μ : Cardinal.{v}) : ColoringClass.{v, w} X :=
   fun S D C => IsRegularCardinalOrder S ∧ IsStarLocallyAdditive C ∧ #D = μ
 ```
 
-#### `starLaLt` (def, line 216)
+#### `starLaLt` (def)
 
 ```lean
 /-- **Notation 2.9 (6)** (Section 2). `*-la_{<μ}`: *-locally additive colorings on a regular
@@ -287,7 +286,7 @@ def starLaLt (μ : Cardinal.{v}) : ColoringClass.{v, w} X :=
   fun S D C => IsRegularCardinalOrder S ∧ IsStarLocallyAdditive C ∧ #D < μ
 ```
 
-#### `Arrow` (def, line 223)
+#### `Arrow` (def)
 
 ```lean
 /-- **Definition 2.10** (Section 2). `F₁ → (F₂)_𝔆`: for every `S ∈ F₁` and every coloring
@@ -297,7 +296,7 @@ def Arrow (F₁ F₂ : Set (Set X)) (𝔆 : ColoringClass.{v, w} X) : Prop :=
     ∃ E : Set S, Subtype.val '' E ∈ F₂ ∧ IsHomogeneous C E
 ```
 
-#### `bigSubsets` (def, line 231)
+#### `bigSubsets` (def)
 
 ```lean
 /-- **Definition 2.10** (Section 2, last sentence): "`κ` for `F₁`", the family of subsets of
@@ -314,22 +313,21 @@ None.
 ### Context
 
 ```lean
-open Cardinal  -- line 12
-universe v w  -- line 14
-noncomputable section  -- line 16
-namespace JardenShami  -- line 18
-section AuxPairs  -- line 22
-end AuxPairs  -- line 71
-section Sec3  -- line 73
-variable {X : Type w} [LinearOrder X]  -- line 75
-end Sec3  -- line 241
-open interval `(a, b)` there is a point of `S`. (`S` is not required to lie inside `(a, b)`.) -/  -- line 245
-end JardenShami  -- line 263
+open Cardinal
+universe v w
+noncomputable section
+namespace JardenShami
+section AuxPairs
+end AuxPairs
+section Sec3
+variable {X : Type w} [LinearOrder X]
+end Sec3
+end JardenShami
 ```
 
 ### A. Paper definitions and statements
 
-#### `arrow_la_of_arrow_add` (theorem, line 206)
+#### `arrow_la_of_arrow_add` (theorem)
 
 ```lean
 /-- **Theorem 3.1** (Section 3, `\label{generalizing add to loc less than mu colors}`,
@@ -339,7 +337,7 @@ theorem arrow_la_of_arrow_add (κ μ : Cardinal.{v}) (hκ : 2 ^ μ + ℵ₀ ≤ 
     (h : Arrow F F (addEq κ)) : Arrow F F (laEq μ) := sorry
 ```
 
-#### `arrow_laLt_of_arrow_addLt_strongLimit` (theorem, line 223)
+#### `arrow_laLt_of_arrow_addLt_strongLimit` (theorem)
 
 ```lean
 /-- **Corollary 3.2** (Section 3, `\label{generalizing add to loc for strong limit cardinal}`).
@@ -349,7 +347,7 @@ theorem arrow_laLt_of_arrow_addLt_strongLimit (μ : Cardinal.{v}) (hμ : μ.IsSt
     (F : Set (Set X)) (h : Arrow F F (addLt μ)) : Arrow F F (laLt μ) := sorry
 ```
 
-#### `arrow_laLt_aleph0_of_arrow_addLt_aleph0` (theorem, line 235)
+#### `arrow_laLt_aleph0_of_arrow_addLt_aleph0` (theorem)
 
 ```lean
 /-- **Corollary 3.3** (Section 3, `\label{generalizing add to loc for finite}`).
@@ -358,7 +356,7 @@ theorem arrow_laLt_aleph0_of_arrow_addLt_aleph0 (F : Set (Set X))
     (h : Arrow F F (addLt (ℵ₀ : Cardinal.{v}))) : Arrow F F (laLt (ℵ₀ : Cardinal.{v})) := sorry
 ```
 
-#### `denseInSomeInterval` (def, line 246)
+#### `denseInSomeInterval` (def)
 
 ```lean
 /-- The family of subsets of `I` that are dense in some interval of `I` (Fact 3.4 and
@@ -368,7 +366,7 @@ def denseInSomeInterval (I : Type w) [LinearOrder I] : Set (Set I) :=
   {S | ∃ a b : I, a < b ∧ ∀ x y : I, a < x → x < y → y < b → ∃ s ∈ S, x < s ∧ s < y}
 ```
 
-#### FACT hypothesis (cited, not proved): `Fact_3_4` (line 252)
+#### FACT hypothesis (cited, not proved): `Fact_3_4`
 
 ```lean
 /-- FACT: cited, not proved in the paper. **Fact 3.4** (Section 3, `\label{fact dense}`;
@@ -378,7 +376,7 @@ def Fact_3_4 (I : Type w) [LinearOrder I] [DenselyOrdered I] : Prop :=
   Arrow (denseInSomeInterval I) (denseInSomeInterval I) (addLt (ℵ₀ : Cardinal.{v}))
 ```
 
-#### `arrow_laLt_aleph0_denseInSomeInterval` (theorem, line 258)
+#### `arrow_laLt_aleph0_denseInSomeInterval` (theorem)
 
 ```lean
 /-- **Corollary 3.5** (Section 3, unlabelled). Let `I` be a dense linear ordering and `F` the
@@ -391,7 +389,7 @@ theorem arrow_laLt_aleph0_denseInSomeInterval (I : Type w) [LinearOrder I] [Dens
 
 ### B. Auxiliary lemmas (AUX: not in paper)
 
-#### `Pairs.exists_eq_mk` (theorem, line 25)
+#### `Pairs.exists_eq_mk` (theorem)
 
 ```lean
 /-- AUX: not in paper. Every element of `[A]^2` is `{a, b}` for some `a < b`. -/
@@ -399,7 +397,7 @@ theorem Pairs.exists_eq_mk {A : Type*} [LinearOrder A] (p : Pairs A) :
     ∃ (a b : A) (h : a < b), p = Pairs.mk a b h.ne := sorry
 ```
 
-#### `Pairs.mk_inj` (theorem, line 36)
+#### `Pairs.mk_inj` (theorem)
 
 ```lean
 /-- AUX: not in paper. `{a, b} = {c, d}` with `a < b` and `c < d` forces `a = c` and `b = d`. -/
@@ -407,7 +405,7 @@ theorem Pairs.mk_inj {A : Type*} [LinearOrder A] {a b c d : A} (hab : a < b) (hc
     (h : Pairs.mk a b hab.ne = Pairs.mk c d hcd.ne) : a = c ∧ b = d := sorry
 ```
 
-#### `isHomogeneous_iff_color` (theorem, line 45)
+#### `isHomogeneous_iff_color` (theorem)
 
 ```lean
 /-- AUX: not in paper. Homogeneity (Definition 2.2) in terms of `C(a,b)`, `a < b`. -/
@@ -417,7 +415,7 @@ theorem isHomogeneous_iff_color {A : Type*} [LinearOrder A] {D : Type*} (C : Col
       a ∈ B → b ∈ B → c ∈ B → d ∈ B → C.color a b hab = C.color c d hcd := sorry
 ```
 
-#### `Pairs.map` (def, line 63)
+#### `Pairs.map` (def)
 
 ```lean
 /-- AUX: not in paper. The image of a pair under an injective map. -/
@@ -425,7 +423,7 @@ def Pairs.map {A B : Type*} (f : A → B) (hf : Function.Injective f) (p : Pairs
   ⟨p.1.map f, by rw [Sym2.isDiag_map hf]; exact p.2⟩
 ```
 
-#### `Pairs.map_mk` (theorem, line 67)
+#### `Pairs.map_mk` (theorem)
 
 ```lean
 /-- AUX: not in paper. `f {a, b} = {f a, f b}`. -/
@@ -433,7 +431,7 @@ theorem Pairs.map_mk {A B : Type*} (f : A → B) (hf : Function.Injective f) (a 
     (h : a ≠ b) : Pairs.map f hf (Pairs.mk a b h) = Pairs.mk (f a) (f b) (hf.ne h) := sorry
 ```
 
-#### `arrow_la_of_arrow_add_of_card` (theorem, line 84)
+#### `arrow_la_of_arrow_add_of_card` (theorem)
 
 ```lean
 /-- AUX: not in paper. The argument of the paper's proof of Theorem 3.1, for a general bound on
@@ -447,7 +445,7 @@ theorem arrow_la_of_arrow_add_of_card (P Q : Cardinal.{v} → Prop)
     Arrow F F (fun _ D C => IsLocallyAdditive C ∧ P #D) := sorry
 ```
 
-#### `arrow_laLt_of_arrow_addLt_of_card` (theorem, line 173)
+#### `arrow_laLt_of_arrow_addLt_of_card` (theorem)
 
 ```lean
 /-- AUX: not in paper. The argument of the paper's proof of Theorem 3.1, for the classes
@@ -461,7 +459,7 @@ theorem arrow_laLt_of_arrow_addLt_of_card (μ : Cardinal.{v})
     (h : Arrow F F (addLt μ)) : Arrow F F (laLt μ) := sorry
 ```
 
-#### `arrow_addLe_of_arrow_addEq` (theorem, line 183)
+#### `arrow_addLe_of_arrow_addEq` (theorem)
 
 ```lean
 /-- AUX: not in paper. Enlarging the set of colors (the gap noted in row 3.1 of FIDELITY.md):
@@ -478,38 +476,38 @@ theorem arrow_addLe_of_arrow_addEq (κ : Cardinal.{v}) (F₁ F₂ : Set (Set X))
 ### Context
 
 ```lean
-open Cardinal  -- line 30
-universe u v w  -- line 32
-noncomputable section  -- line 34
-namespace JardenShami  -- line 36
-namespace Tree  -- line 45
-variable {T : Type w} [PartialOrder T] [IsTree T]  -- line 47
-variable (T) in  -- line 54
-variable (T) in  -- line 58
-variable (T) in  -- line 63
-variable (T) in  -- line 79
-end Tree  -- line 240
-open Tree  -- line 242
-section History  -- line 251
-variable {T : Type w} [PartialOrder T] [IsTree T]  -- line 253
-variable (T) in  -- line 284
-variable (T) in  -- line 288
-variable (T) in  -- line 308
-end History  -- line 516
-section TreeOfColoring  -- line 520
-variable {κ : Cardinal.{w}} {D : Type v}  -- line 522
-end TreeOfColoring  -- line 741
-section Enumeration  -- line 745
-variable {κ : Cardinal.{w}} {T : Type w} [PartialOrder T] [IsTree T]  -- line 747
-variable (κ T) in  -- line 749
-variable (κ T) in  -- line 758
-end Enumeration  -- line 1145
-end JardenShami  -- line 1166
+open Cardinal
+universe u v w
+noncomputable section
+namespace JardenShami
+namespace Tree
+variable {T : Type w} [PartialOrder T] [IsTree T]
+variable (T) in
+variable (T) in
+variable (T) in
+variable (T) in
+end Tree
+open Tree
+section History
+variable {T : Type w} [PartialOrder T] [IsTree T]
+variable (T) in
+variable (T) in
+variable (T) in
+end History
+section TreeOfColoring
+variable {κ : Cardinal.{w}} {D : Type v}
+end TreeOfColoring
+section Enumeration
+variable {κ : Cardinal.{w}} {T : Type w} [PartialOrder T] [IsTree T]
+variable (κ T) in
+variable (κ T) in
+end Enumeration
+end JardenShami
 ```
 
 ### A. Paper definitions and statements
 
-#### `IsTree` (class, line 42)
+#### `IsTree` (class)
 
 ```lean
 /-- **Section 4, preliminaries** ("Recall ..."). A tree is a partial order `(T, ≤_T)` such that
@@ -518,7 +516,7 @@ class IsTree (T : Type w) [PartialOrder T] : Prop where
   wellOrder_Iio : ∀ t : T, IsWellOrder (Set.Iio t) (fun x y => (x : T) < y)
 ```
 
-#### `ht` (def, line 51)
+#### `ht` (def)
 
 ```lean
 /-- **Section 4, preliminaries.** `ht(t,T)`: the height of `t`, the order type of
@@ -527,14 +525,14 @@ def ht (t : T) : Ordinal.{w} :=
   @Ordinal.type (Set.Iio t) (fun x y => (x : T) < y) (IsTree.wellOrder_Iio t)
 ```
 
-#### `Lev` (def, line 56)
+#### `Lev` (def)
 
 ```lean
 /-- **Section 4, preliminaries.** `Lev_α(T)`: the `α`-th level of `T`. -/
 def Lev (α : Ordinal.{w}) : Set T := {t | ht t = α}
 ```
 
-#### `LevLt` (def, line 61)
+#### `LevLt` (def)
 
 ```lean
 /-- **Section 4, preliminaries.** `Lev_{<α}(T)`: the nodes of level smaller than `α` (regarded
@@ -542,21 +540,21 @@ as a subtree with the induced order). -/
 def LevLt (α : Ordinal.{w}) : Set T := {t | ht t < α}
 ```
 
-#### `height` (def, line 65)
+#### `height` (def)
 
 ```lean
 /-- **Section 4, preliminaries.** `ht(T)`: the first `α` such that `Lev_α(T) = ∅`. -/
 def height : Ordinal.{w} := sInf {α | Lev T α = ∅}
 ```
 
-#### `IsBranch` (def, line 68)
+#### `IsBranch` (def)
 
 ```lean
 /-- **Section 4, preliminaries.** A branch: a maximal linearly ordered subset of `T`. -/
 def IsBranch (b : Set T) : Prop := IsMaxChain (· ≤ ·) b
 ```
 
-#### `IsCofinalBranch` (def, line 72)
+#### `IsCofinalBranch` (def)
 
 ```lean
 /-- **Section 4, preliminaries.** A cofinal branch: a branch whose order type is the height
@@ -566,14 +564,14 @@ def IsCofinalBranch (b : Set T) : Prop :=
     @Ordinal.type b (fun x y => (x : T) < y) h = height T
 ```
 
-#### `IsLeaf` (def, line 77)
+#### `IsLeaf` (def)
 
 ```lean
 /-- **Section 4, preliminaries.** A leaf: a maximal element of the tree. -/
 def IsLeaf (t : T) : Prop := IsMax t
 ```
 
-#### `WellPruned` (def, line 82)
+#### `WellPruned` (def)
 
 ```lean
 /-- **Section 4, preliminaries.** `T` is well-pruned: `Lev_0(T)` has exactly one element, and
@@ -583,7 +581,7 @@ def WellPruned : Prop :=
     ∀ (x : T) (α : Ordinal.{w}), ht x < α → α < height T → ∃ y ∈ Lev T α, x < y
 ```
 
-#### `wellPruned_noLeaves_of_isSuccLimit` (theorem, line 233)
+#### `wellPruned_noLeaves_of_isSuccLimit` (theorem)
 
 ```lean
 /-- **Section 4, preliminaries** (unnumbered, "Clearly"). Every well-pruned tree of limit
@@ -592,7 +590,7 @@ theorem wellPruned_noLeaves_of_isSuccLimit (hT : WellPruned T)
     (hlim : Order.IsSuccLimit (height T)) : ∀ t : T, ¬ IsLeaf t := sorry
 ```
 
-#### `IsKappaTree` (def, line 246)
+#### `IsKappaTree` (def)
 
 ```lean
 /-- `κ`-tree (used from Definition 4.10 on; not defined in the paper, standard meaning): a tree
@@ -601,7 +599,7 @@ def IsKappaTree (κ : Cardinal.{w}) (T : Type w) [PartialOrder T] [IsTree T] : P
   height T = κ.ord ∧ ∀ α : Ordinal.{w}, α < κ.ord → #(Lev T α) < κ
 ```
 
-#### `histFun` (def, line 257)
+#### `histFun` (def)
 
 ```lean
 /-- **Definition 4.1** (Section 4). `f_t : ht(t,T) → T`, where `f_t(α)` is the unique
@@ -609,21 +607,21 @@ def IsKappaTree (κ : Cardinal.{w}) (T : Type w) [PartialOrder T] [IsTree T] : P
 def histFun (t : T) : Set (Ordinal.{w} × T) := {p | p.2 < t ∧ ht p.2 = p.1}
 ```
 
-#### `HistoryTree` (def, line 286)
+#### `HistoryTree` (def)
 
 ```lean
 /-- **Definition 4.1** (Section 4). The history tree of `T`: `F_T = ({f_t : t ∈ T}, ⊆)`. -/
 def HistoryTree : Set (Set (Ordinal.{w} × T)) := Set.range histFun
 ```
 
-#### `historyTree_isTree` (theorem, line 290)
+#### `historyTree_isTree` (theorem)
 
 ```lean
 /-- **Definition 4.1** (Section 4), implicit claim: the history tree `F_T` is a tree. -/
 theorem historyTree_isTree : IsTree (HistoryTree T) := sorry
 ```
 
-#### `succPart` (def, line 311)
+#### `succPart` (def)
 
 ```lean
 /-- **Definition 4.2** (Section 4). `T^succ`: the subtree of `T` induced by
@@ -631,7 +629,7 @@ theorem historyTree_isTree : IsTree (HistoryTree T) := sorry
 def succPart : Set T := {t | ∃ β : Ordinal.{w}, ht t = Order.succ β}
 ```
 
-#### `ht_histFun` (theorem, line 316)
+#### `ht_histFun` (theorem)
 
 ```lean
 /-- **After Definition 4.2** (Section 4, unnumbered, "as `ht(f_t,F_T) = ht(t,T)`"). The height
@@ -641,7 +639,7 @@ theorem ht_histFun (t : T) :
     ht (⟨histFun t, t, rfl⟩ : HistoryTree T) = Ordinal.lift.{w + 1} (ht t) := sorry
 ```
 
-#### `mem_succPart_historyTree` (theorem, line 340)
+#### `mem_succPart_historyTree` (theorem)
 
 ```lean
 /-- **After Definition 4.2** (Section 4, unnumbered, "Clearly"). `(F_T)^succ = ({f_t : t ∈
@@ -650,7 +648,7 @@ theorem mem_succPart_historyTree (g : HistoryTree T) :
     g ∈ succPart (HistoryTree T) ↔ ∃ t ∈ succPart T, g.1 = histFun t := sorry
 ```
 
-#### `historyTree_iso_restrict_succPart` (theorem, line 421)
+#### `historyTree_iso_restrict_succPart` (theorem)
 
 ```lean
 /-- **Remark 4.3** (Section 4, `\label{remark 3.3}`). If `g : F_T → F_S` is an isomorphism,
@@ -661,7 +659,7 @@ theorem historyTree_iso_restrict_succPart {S : Type w} [PartialOrder S] [IsTree 
       ∀ x : succPart (HistoryTree T), (g' x : HistoryTree S) = g x := sorry
 ```
 
-#### `nonempty_iso_succPart_historyTree` (theorem, line 433)
+#### `nonempty_iso_succPart_historyTree` (theorem)
 
 ```lean
 /-- **Proposition 4.4** (Section 4, `\label{proposition without leaves}`). A tree without
@@ -670,7 +668,7 @@ theorem nonempty_iso_succPart_historyTree (hT : ∀ t : T, ¬ IsLeaf t) :
     Nonempty (T ≃o succPart (HistoryTree T)) := sorry
 ```
 
-#### `nonempty_iso_iff_historyTree` (theorem, line 473)
+#### `nonempty_iso_iff_historyTree` (theorem)
 
 ```lean
 /-- **Corollary 4.5** (Section 4, `\label{corollary reconstruction a tree from its history}`).
@@ -680,7 +678,7 @@ theorem nonempty_iso_iff_historyTree {S : Type w} [PartialOrder S] [IsTree S]
     Nonempty (T ≃o S) ↔ Nonempty (HistoryTree T ≃o HistoryTree S) := sorry
 ```
 
-#### `fiberRestr` (def, line 550)
+#### `fiberRestr` (def)
 
 ```lean
 /-- `C(·,δ) ↾ β` for `β ≤ δ < κ` (Definition 4.6): the function `α ↦ C(α,δ)` on `{α : α < β}`,
@@ -690,7 +688,7 @@ def fiberRestr (C : Coloring (Kappa κ) D) (δ β : Kappa κ) (hβ : β ≤ δ) 
   {p | ∃ h : p.1 < β, p.2 = C.color p.1 δ (h.trans_le hβ)}
 ```
 
-#### `treeOfColoring` (def, line 592)
+#### `treeOfColoring` (def)
 
 ```lean
 /-- **Definition 4.6** (Section 4, `\label{definition T(C)}`, after [ri:chain, p. 7]). For
@@ -699,14 +697,14 @@ def treeOfColoring (C : Coloring (Kappa κ) D) : Set (Set (Kappa κ × D)) :=
   {g | ∃ (δ β : Kappa κ) (hβ : β ≤ δ), g = fiberRestr C δ β hβ}
 ```
 
-#### `treeOfColoring_isTree` (theorem, line 596)
+#### `treeOfColoring_isTree` (theorem)
 
 ```lean
 /-- **Definition 4.6** (Section 4), implicit claim: `T(C)` is a tree. -/
 theorem treeOfColoring_isTree (C : Coloring (Kappa κ) D) : IsTree (treeOfColoring C) := sorry
 ```
 
-#### `treeOfColoring_downwardClosed` (theorem, line 633)
+#### `treeOfColoring_downwardClosed` (theorem)
 
 ```lean
 /-- **Definition 4.6** (Section 4), implicit claim: `T(C)` is downward closed in
@@ -715,14 +713,14 @@ theorem treeOfColoring_downwardClosed (C : Coloring (Kappa κ) D) :
     ∀ g ∈ treeOfColoring C, ∀ γ : Kappa κ, {p ∈ g | p.1 < γ} ∈ treeOfColoring C := sorry
 ```
 
-#### `colorMinOf` (def, line 646)
+#### `colorMinOf` (def)
 
 ```lean
 /-- **Remark 4.7** (Section 4). For `f : κ → 2`, the coloring `C_f(α,β) = f(α)` (`α < β`). -/
 def colorMinOf (f : Kappa κ → Fin 2) : Coloring (Kappa κ) (Fin 2) := fun p => f p.1.inf
 ```
 
-#### `colorMinOf_spec` (theorem, line 669)
+#### `colorMinOf_spec` (theorem)
 
 ```lean
 /-- **Remark 4.7** (Section 4). Each `C_f` (`C_f(α,β) = f(α)`) is locally additive and
@@ -732,14 +730,14 @@ theorem colorMinOf_spec (f : Kappa κ → Fin 2) :
       Nonempty (treeOfColoring (colorMinOf f) ≃o Kappa κ) := sorry
 ```
 
-#### `colorMaxOf` (def, line 693)
+#### `colorMaxOf` (def)
 
 ```lean
 /-- **Remark 4.8** (Section 4). For `f : κ → 2`, the coloring `C_f(α,β) = f(β)` (`α < β`). -/
 def colorMaxOf (f : Kappa κ → Fin 2) : Coloring (Kappa κ) (Fin 2) := fun p => f p.1.sup
 ```
 
-#### `colorMaxOf_spec` (theorem, line 710)
+#### `colorMaxOf_spec` (theorem)
 
 ```lean
 /-- **Remark 4.8** (Section 4). If `f : κ → 2` is not eventually constant, then `C_f`
@@ -752,7 +750,7 @@ theorem colorMaxOf_spec (f : Kappa κ → Fin 2)
         {g | ∃ (β : Kappa κ) (i : Fin 2), g = {p | p.1 < β ∧ p.2 = i}} := sorry
 ```
 
-#### `Enumeration` (structure, line 753)
+#### `Enumeration` (structure)
 
 ```lean
 /-- **Definition 4.10** (Section 4, `\label{definition enumeration}`). An enumeration of a
@@ -764,14 +762,14 @@ structure Enumeration where
   bijOn : ∀ α < κ.ord, Set.BijOn (t α) (Set.Iio (#(Lev T α)).ord) (Lev T α)
 ```
 
-#### `levelSup` (def, line 760)
+#### `levelSup` (def)
 
 ```lean
 /-- **Definition 4.11** (Section 4): `μ = sup {μ_α : α < κ}`, `μ_α = |Lev_α(T)|`. -/
 def levelSup : Cardinal.{w} := ⨆ α : Kappa κ, #(Lev T (α : Ordinal.{w}))
 ```
 
-#### `IsTreeColoring` (def, line 803)
+#### `IsTreeColoring` (def)
 
 ```lean
 /-- **Definition 4.11** (Section 4, `\label{definition C(T,e)}`). `C = C(T,e)`, where
@@ -785,7 +783,7 @@ def IsTreeColoring (e : Enumeration κ T) (C : Coloring (Kappa κ) (Kappa (level
       e.t α (C.color α δ h) ≤ e.t δ 0
 ```
 
-#### `existsUnique_isTreeColoring` (theorem, line 826)
+#### `existsUnique_isTreeColoring` (theorem)
 
 ```lean
 /-- **Definition 4.11** (Section 4), implicit claim: for a `κ`-tree `T` and an enumeration `e`,
@@ -794,17 +792,18 @@ theorem existsUnique_isTreeColoring (hT : IsKappaTree κ T) (e : Enumeration κ 
     ∃! C, IsTreeColoring e C := sorry
 ```
 
-#### `isLocallyAdditive_of_isTreeColoring` (theorem, line 858)
+#### `isLocallyAdditive_of_isTreeColoring` (theorem)
 
 ```lean
-/-- **Claim 4.12** (Section 4, `\label{claim C(T,e) is locally additive}`). For a `κ`-tree `T`
-and an enumeration `e` of `T`, the coloring `C(T,e)` is locally additive. -/
-theorem isLocallyAdditive_of_isTreeColoring (hT : IsKappaTree κ T) (e : Enumeration κ T)
+/-- **Claim 4.12** (Section 4, `\label{claim C(T,e) is locally additive}`). For a tree `T`
+and an enumeration `e` of `T`, the coloring `C(T,e)` is locally additive. (The paper assumes
+that `T` is a `κ`-tree; this hypothesis is not needed and is not assumed here.) -/
+theorem isLocallyAdditive_of_isTreeColoring (e : Enumeration κ T)
     {C : Coloring (Kappa κ) (Kappa (levelSup κ T))} (hC : IsTreeColoring e C) :
     IsLocallyAdditive C := sorry
 ```
 
-#### `Enumeration.Covers` (def, line 876)
+#### `Enumeration.Covers` (def)
 
 ```lean
 /-- **Definition 4.13** (Section 4). The enumeration `e` covers `T` if for every `t ∈ T` there
@@ -813,7 +812,7 @@ def Enumeration.Covers (e : Enumeration κ T) : Prop :=
   ∀ t : T, ∃ δ < κ.ord, t < e.t δ 0
 ```
 
-#### `exists_covers` (theorem, line 919)
+#### `exists_covers` (theorem)
 
 ```lean
 /-- **Remark 4.14** (Section 4). For every cardinal `κ` and a well-pruned `κ`-tree `T`, there is
@@ -825,7 +824,7 @@ theorem exists_covers (hκ : ℵ₀ ≤ κ) (hT : IsKappaTree κ T) (hwp : WellP
     ∃ e : Enumeration κ T, e.Covers := sorry
 ```
 
-#### `Enumeration.node` (def, line 1007)
+#### `Enumeration.node` (def)
 
 ```lean
 /-- Notation in the proof of Theorem 4.15: `t_β^{C(β,δ)}` for `β ≤ δ < κ`, with the stipulation
@@ -835,7 +834,7 @@ def Enumeration.node (e : Enumeration κ T) (C : Coloring (Kappa κ) (Kappa (lev
   if hβ : β < δ then e.t β (C.color β δ hβ) else e.t δ 0
 ```
 
-#### `treeColoring_eq_iff_mem_histFun` (theorem, line 1029)
+#### `treeColoring_eq_iff_mem_histFun` (theorem)
 
 ```lean
 /-- **Claim 4.16** (Section 4, inside the proof of Theorem 4.15,
@@ -852,7 +851,7 @@ theorem treeColoring_eq_iff_mem_histFun (hT : IsKappaTree κ T) (e : Enumeration
       ((α : Ordinal.{w}), e.t α i) ∈ histFun (e.node C β δ hβδ) := sorry
 ```
 
-#### `fiberRestr_subset_iff_histFun_subset` (theorem, line 1052)
+#### `fiberRestr_subset_iff_histFun_subset` (theorem)
 
 ```lean
 /-- **Claim 4.18** (Section 4, inside the proof of Theorem 4.15). The map
@@ -866,7 +865,7 @@ theorem fiberRestr_subset_iff_histFun_subset (hT : IsKappaTree κ T) (e : Enumer
       histFun (e.node C β₁ δ₁ h₁) ⊆ histFun (e.node C β₂ δ₂ h₂) := sorry
 ```
 
-#### `fiberRestr_eq_iff_histFun_eq` (theorem, line 1088)
+#### `fiberRestr_eq_iff_histFun_eq` (theorem)
 
 ```lean
 /-- **Claim 4.17** (Section 4, inside the proof of Theorem 4.15,
@@ -879,7 +878,7 @@ theorem fiberRestr_eq_iff_histFun_eq (hT : IsKappaTree κ T) (e : Enumeration κ
       histFun (e.node C β₁ δ₁ h₁) = histFun (e.node C β₂ δ₂ h₂) := sorry
 ```
 
-#### `exists_histFun_node_eq` (theorem, line 1098)
+#### `exists_histFun_node_eq` (theorem)
 
 ```lean
 /-- **Claim 4.19** (Section 4, inside the proof of Theorem 4.15). The map
@@ -889,7 +888,7 @@ theorem exists_histFun_node_eq (hT : IsKappaTree κ T) (e : Enumeration κ T) (h
     ∃ (β δ : Kappa κ) (h : β ≤ δ), histFun (e.node C β δ h) = histFun t := sorry
 ```
 
-#### `nonempty_iso_treeOfColoring_historyTree` (theorem, line 1119)
+#### `nonempty_iso_treeOfColoring_historyTree` (theorem)
 
 ```lean
 /-- **Theorem 4.15** (Section 4, `\label{T isomorphic to T(C(T,e))}`). Let `T` be a `κ`-tree and
@@ -900,7 +899,7 @@ theorem nonempty_iso_treeOfColoring_historyTree (hT : IsKappaTree κ T) (e : Enu
     Nonempty (treeOfColoring C ≃o HistoryTree T) := sorry
 ```
 
-#### `nonempty_iso_iff_treeOfColoring` (theorem, line 1149)
+#### `nonempty_iso_iff_treeOfColoring` (theorem)
 
 ```lean
 /-- **Corollary 4.20** (Section 4). Let `T₁, T₂` be `κ`-trees without leaves and `e_i` an
@@ -917,21 +916,21 @@ theorem nonempty_iso_iff_treeOfColoring {κ : Cardinal.{w}}
 
 ### B. Auxiliary lemmas (AUX: not in paper)
 
-#### `lt_trichotomy_of_lt` (theorem, line 91)
+#### `lt_trichotomy_of_lt` (theorem)
 
 ```lean
 /-- AUX: not in paper. Two predecessors of the same node are comparable. -/
 theorem lt_trichotomy_of_lt {x y t : T} (hx : x < t) (hy : y < t) : x < y ∨ x = y ∨ y < x := sorry
 ```
 
-#### `le_total_of_lt` (theorem, line 101)
+#### `le_total_of_lt` (theorem)
 
 ```lean
 /-- AUX: not in paper. Two predecessors of the same node are comparable. -/
 theorem le_total_of_lt {x y t : T} (hx : x < t) (hy : y < t) : x ≤ y ∨ y ≤ x := sorry
 ```
 
-#### `ht_eq_typein` (theorem, line 108)
+#### `ht_eq_typein` (theorem)
 
 ```lean
 /-- AUX: not in paper. For `s < t`, `ht s` is the position of `s` in `{x : x < t}`. -/
@@ -939,21 +938,21 @@ theorem ht_eq_typein {s t : T} (h : s < t) :
     ht s = Ordinal.typein (fun x y : Set.Iio t => (x : T) < y) ⟨s, h⟩ := sorry
 ```
 
-#### `ht_lt_ht` (theorem, line 120)
+#### `ht_lt_ht` (theorem)
 
 ```lean
 /-- AUX: not in paper. Heights are strictly monotone. -/
 theorem ht_lt_ht {s t : T} (h : s < t) : ht s < ht t := sorry
 ```
 
-#### `exists_lt_ht_eq` (theorem, line 125)
+#### `exists_lt_ht_eq` (theorem)
 
 ```lean
 /-- AUX: not in paper. Every ordinal below `ht t` is the height of a predecessor of `t`. -/
 theorem exists_lt_ht_eq {t : T} {α : Ordinal.{w}} (h : α < ht t) : ∃ s < t, ht s = α := sorry
 ```
 
-#### `eq_of_le_of_le_of_ht_eq` (theorem, line 130)
+#### `eq_of_le_of_le_of_ht_eq` (theorem)
 
 ```lean
 /-- AUX: not in paper. Two nodes below the same node and of the same height are equal. -/
@@ -961,28 +960,28 @@ theorem eq_of_le_of_le_of_ht_eq {x y z : T} (hx : x ≤ z) (hy : y ≤ z) (h : h
     x = y := sorry
 ```
 
-#### `ht_le_ht_of_le` (theorem, line 144)
+#### `ht_le_ht_of_le` (theorem)
 
 ```lean
 /-- AUX: not in paper. Heights are monotone. -/
 theorem ht_le_ht_of_le {s t : T} (h : s ≤ t) : ht s ≤ ht t := sorry
 ```
 
-#### `ht_le_ht_of_Iio_subset` (theorem, line 148)
+#### `ht_le_ht_of_Iio_subset` (theorem)
 
 ```lean
 /-- AUX: not in paper. `Iio s ⊆ Iio t` implies `ht s ≤ ht t`. -/
 theorem ht_le_ht_of_Iio_subset {s t : T} (h : Set.Iio s ⊆ Set.Iio t) : ht s ≤ ht t := sorry
 ```
 
-#### `ht_lt_ht_of_Iio_ssubset` (theorem, line 154)
+#### `ht_lt_ht_of_Iio_ssubset` (theorem)
 
 ```lean
 /-- AUX: not in paper. `Iio s ⊂ Iio t` implies `ht s < ht t`. -/
 theorem ht_lt_ht_of_Iio_ssubset {s t : T} (h : Set.Iio s ⊂ Set.Iio t) : ht s < ht t := sorry
 ```
 
-#### `exists_Iio_eq_of_ssubset` (theorem, line 165)
+#### `exists_Iio_eq_of_ssubset` (theorem)
 
 ```lean
 /-- AUX: not in paper. If `Iio s ⊂ Iio t` then `Iio s = Iio u` for some `u < t`. -/
@@ -990,7 +989,7 @@ theorem exists_Iio_eq_of_ssubset {s t : T} (h : Set.Iio s ⊂ Set.Iio t) :
     ∃ u < t, Set.Iio s = Set.Iio u := sorry
 ```
 
-#### `Iio_subset_or_subset` (theorem, line 179)
+#### `Iio_subset_or_subset` (theorem)
 
 ```lean
 /-- AUX: not in paper. Two downward closed subsets of `Iio t` are comparable. -/
@@ -998,7 +997,7 @@ theorem Iio_subset_or_subset {s₁ s₂ t : T} (h₁ : Set.Iio s₁ ⊆ Set.Iio 
     (h₂ : Set.Iio s₂ ⊆ Set.Iio t) : Set.Iio s₁ ⊆ Set.Iio s₂ ∨ Set.Iio s₂ ⊆ Set.Iio s₁ := sorry
 ```
 
-#### `(anonymous instance)` (instance, line 189)
+#### `(anonymous instance)` (instance)
 
 ```lean
 /-- AUX: not in paper. The order of a tree is well founded. -/
@@ -1012,21 +1011,21 @@ instance : WellFoundedLT T := by
   exact key ⟨y, hy⟩
 ```
 
-#### `ht_lt_height` (theorem, line 199)
+#### `ht_lt_height` (theorem)
 
 ```lean
 /-- AUX: not in paper. Every node has height smaller than the height of the tree. -/
 theorem ht_lt_height (t : T) : ht t < height T := sorry
 ```
 
-#### `lev_nonempty` (theorem, line 213)
+#### `lev_nonempty` (theorem)
 
 ```lean
 /-- AUX: not in paper. Levels below the height are nonempty. -/
 theorem lev_nonempty {α : Ordinal.{w}} (h : α < height T) : (Lev T α).Nonempty := sorry
 ```
 
-#### `isTree_of_strictMono` (theorem, line 220)
+#### `isTree_of_strictMono` (theorem)
 
 ```lean
 /-- AUX: not in paper. A partial order is a tree if all predecessors of a node are comparable
@@ -1036,35 +1035,35 @@ theorem isTree_of_strictMono {P : Type*} [PartialOrder P] {β : Type*} [Preorder
     (hc : ∀ t x y : P, x < t → y < t → x ≤ y ∨ y ≤ x) : IsTree P := sorry
 ```
 
-#### `mem_histFun` (theorem, line 260)
+#### `mem_histFun` (theorem)
 
 ```lean
 /-- AUX: not in paper. Membership in the graph of `f_s`. -/
 theorem mem_histFun {s p : T} {α : Ordinal.{w}} : (α, p) ∈ histFun s ↔ p < s ∧ ht p = α := sorry
 ```
 
-#### `histFun_subset_iff` (theorem, line 264)
+#### `histFun_subset_iff` (theorem)
 
 ```lean
 /-- AUX: not in paper. `f_s ⊆ f_t` iff every predecessor of `s` is a predecessor of `t`. -/
 theorem histFun_subset_iff {s t : T} : histFun s ⊆ histFun t ↔ Set.Iio s ⊆ Set.Iio t := sorry
 ```
 
-#### `histFun_ssubset_iff` (theorem, line 272)
+#### `histFun_ssubset_iff` (theorem)
 
 ```lean
 /-- AUX: not in paper. -/
 theorem histFun_ssubset_iff {s t : T} : histFun s ⊂ histFun t ↔ Set.Iio s ⊂ Set.Iio t := sorry
 ```
 
-#### `histFun_eq_iff` (theorem, line 276)
+#### `histFun_eq_iff` (theorem)
 
 ```lean
 /-- AUX: not in paper. -/
 theorem histFun_eq_iff {s t : T} : histFun s = histFun t ↔ Set.Iio s = Set.Iio t := sorry
 ```
 
-#### `Iio_ssubset_Iio_of_lt` (theorem, line 281)
+#### `Iio_ssubset_Iio_of_lt` (theorem)
 
 ```lean
 omit [IsTree T] in
@@ -1072,7 +1071,7 @@ omit [IsTree T] in
 theorem Iio_ssubset_Iio_of_lt {u t : T} (h : u < t) : Set.Iio u ⊂ Set.Iio t := sorry
 ```
 
-#### `ht_orderIso` (theorem, line 365)
+#### `ht_orderIso` (theorem)
 
 ```lean
 /-- AUX: not in paper. Order isomorphisms of trees preserve heights. -/
@@ -1080,7 +1079,7 @@ theorem ht_orderIso {P Q : Type u} [PartialOrder P] [IsTree P] [PartialOrder Q] 
     (e : P ≃o Q) (t : P) : ht (e t) = ht t := sorry
 ```
 
-#### `succNode` (def, line 377)
+#### `succNode` (def)
 
 ```lean
 /-- AUX: not in paper. The node `m t`: the least node above `t` (for `t` not a leaf). -/
@@ -1088,21 +1087,21 @@ def succNode {t : T} (ht' : ¬ IsLeaf t) : T :=
   WellFounded.min wellFounded_lt {x | t < x} (not_isMax_iff.1 ht')
 ```
 
-#### `Iio_succNode` (theorem, line 381)
+#### `Iio_succNode` (theorem)
 
 ```lean
 /-- AUX: not in paper. The predecessors of `succNode t` are exactly the nodes `≤ t`. -/
 theorem Iio_succNode {t : T} (ht' : ¬ IsLeaf t) : Set.Iio (succNode ht') = Set.Iic t := sorry
 ```
 
-#### `ht_succNode` (theorem, line 394)
+#### `ht_succNode` (theorem)
 
 ```lean
 /-- AUX: not in paper. `ht (succNode t) = ht t + 1`. -/
 theorem ht_succNode {t : T} (ht' : ¬ IsLeaf t) : ht (succNode ht') = Order.succ (ht t) := sorry
 ```
 
-#### `histFun_orderIso` (theorem, line 406)
+#### `histFun_orderIso` (theorem)
 
 ```lean
 /-- AUX: not in paper. Order isomorphisms of trees induce isomorphisms of history trees. -/
@@ -1110,35 +1109,35 @@ theorem histFun_orderIso {S : Type w} [PartialOrder S] [IsTree S] (e : T ≃o S)
     histFun (e t) = Prod.map id e '' histFun t := sorry
 ```
 
-#### `Kappa.coe_lt_coe` (theorem, line 525)
+#### `Kappa.coe_lt_coe` (theorem)
 
 ```lean
 /-- AUX: not in paper. Elements of `Kappa κ` as ordinals: `<` is preserved. -/
 theorem Kappa.coe_lt_coe {x y : Kappa κ} : (x : Ordinal.{w}) < y ↔ x < y := sorry
 ```
 
-#### `Kappa.coe_le_coe` (theorem, line 529)
+#### `Kappa.coe_le_coe` (theorem)
 
 ```lean
 /-- AUX: not in paper. Elements of `Kappa κ` as ordinals: `≤` is preserved. -/
 theorem Kappa.coe_le_coe {x y : Kappa κ} : (x : Ordinal.{w}) ≤ y ↔ x ≤ y := sorry
 ```
 
-#### `Kappa.coe_lt_ord` (theorem, line 533)
+#### `Kappa.coe_lt_ord` (theorem)
 
 ```lean
 /-- AUX: not in paper. Elements of `Kappa κ` as ordinals are `< κ.ord`. -/
 theorem Kappa.coe_lt_ord (x : Kappa κ) : (x : Ordinal.{w}) < κ.ord := sorry
 ```
 
-#### `Kappa.mk` (def, line 537)
+#### `Kappa.mk` (def)
 
 ```lean
 /-- AUX: not in paper. The element of `Kappa κ` corresponding to an ordinal `α < κ.ord`. -/
 def Kappa.mk (α : Ordinal.{w}) (h : α < κ.ord) : Kappa κ := Ordinal.ToType.mk ⟨α, h⟩
 ```
 
-#### `Kappa.coe_mk` (theorem, line 540)
+#### `Kappa.coe_mk` (theorem)
 
 ```lean
 /-- AUX: not in paper. -/
@@ -1146,14 +1145,14 @@ def Kappa.mk (α : Ordinal.{w}) (h : α < κ.ord) : Kappa κ := Ordinal.ToType.m
     ((Kappa.mk α h : Kappa κ) : Ordinal.{w}) = α := sorry
 ```
 
-#### `Kappa.coe_inj` (theorem, line 545)
+#### `Kappa.coe_inj` (theorem)
 
 ```lean
 /-- AUX: not in paper. -/
 theorem Kappa.coe_inj {x y : Kappa κ} : (x : Ordinal.{w}) = y ↔ x = y := sorry
 ```
 
-#### `mem_fiberRestr` (theorem, line 555)
+#### `mem_fiberRestr` (theorem)
 
 ```lean
 /-- AUX: not in paper. Membership in the graph of `C(·,δ) ↾ β`. -/
@@ -1162,7 +1161,7 @@ theorem mem_fiberRestr {C : Coloring (Kappa κ) D} {δ β : Kappa κ} {hβ : β 
     (α, d) ∈ fiberRestr C δ β hβ ↔ ∃ h : α < β, d = C.color α δ (h.trans_le hβ) := sorry
 ```
 
-#### `fiberRestr_subset_iff` (theorem, line 561)
+#### `fiberRestr_subset_iff` (theorem)
 
 ```lean
 /-- AUX: not in paper. Inclusion between the graphs `C(·,δ) ↾ β`. -/
@@ -1173,7 +1172,7 @@ theorem fiberRestr_subset_iff {C : Coloring (Kappa κ) D} {δ₁ β₁ δ₂ β�
         C.color α δ₁ (hα₁.trans_le h₁) = C.color α δ₂ (hα₂.trans_le h₂) := sorry
 ```
 
-#### `fiberRestr_subset_of_subset` (theorem, line 582)
+#### `fiberRestr_subset_of_subset` (theorem)
 
 ```lean
 /-- AUX: not in paper. Two subgraphs of the same `C(·,δ) ↾ β` are comparable. -/
@@ -1183,7 +1182,7 @@ theorem fiberRestr_subset_of_subset {C : Coloring (Kappa κ) D} {δ₁ β₁ δ�
     fiberRestr C δ₁ β₁ h₁ ⊆ fiberRestr C δ₂ β₂ h₂ := sorry
 ```
 
-#### `colorMinOf_color` (theorem, line 649)
+#### `colorMinOf_color` (theorem)
 
 ```lean
 /-- AUX: not in paper. `C_f(a,b) = f(a)` for `a < b`. -/
@@ -1191,7 +1190,7 @@ theorem colorMinOf_color (f : Kappa κ → Fin 2) (a b : Kappa κ) (h : a < b) :
     (colorMinOf f).color a b h = f a := sorry
 ```
 
-#### `colorMinOf_color_dual` (theorem, line 655)
+#### `colorMinOf_color_dual` (theorem)
 
 ```lean
 /-- AUX: not in paper. For the reverse order: `C_f(a,b) = f(b)` for `b < a`. -/
@@ -1199,7 +1198,7 @@ theorem colorMinOf_color_dual (f : Kappa κ → Fin 2) (a b : (Kappa κ)ᵒᵈ) 
     Coloring.color (A := (Kappa κ)ᵒᵈ) (colorMinOf f) a b h = f (OrderDual.ofDual b) := sorry
 ```
 
-#### `fiberRestr_colorMinOf` (theorem, line 661)
+#### `fiberRestr_colorMinOf` (theorem)
 
 ```lean
 /-- AUX: not in paper. `T(C_f)` for `C_f(α,β) = f(α)`: the graphs of `f ↾ β`. -/
@@ -1207,7 +1206,7 @@ theorem fiberRestr_colorMinOf (f : Kappa κ → Fin 2) (δ β : Kappa κ) (hβ :
     fiberRestr (colorMinOf f) δ β hβ = {p | p.1 < β ∧ p.2 = f p.1} := sorry
 ```
 
-#### `colorMaxOf_color` (theorem, line 696)
+#### `colorMaxOf_color` (theorem)
 
 ```lean
 /-- AUX: not in paper. `C_f(a,b) = f(b)` for `a < b`. -/
@@ -1215,7 +1214,7 @@ theorem colorMaxOf_color (f : Kappa κ → Fin 2) (a b : Kappa κ) (h : a < b) :
     (colorMaxOf f).color a b h = f b := sorry
 ```
 
-#### `colorMaxOf_color_dual` (theorem, line 702)
+#### `colorMaxOf_color_dual` (theorem)
 
 ```lean
 /-- AUX: not in paper. For the reverse order: `C_f(a,b) = f(a)` for `b < a`. -/
@@ -1223,7 +1222,7 @@ theorem colorMaxOf_color_dual (f : Kappa κ → Fin 2) (a b : (Kappa κ)ᵒᵈ) 
     Coloring.color (A := (Kappa κ)ᵒᵈ) (colorMaxOf f) a b h = f (OrderDual.ofDual a) := sorry
 ```
 
-#### `Enumeration.mem_lev` (theorem, line 763)
+#### `Enumeration.mem_lev` (theorem)
 
 ```lean
 /-- AUX: not in paper. `t^i_α ∈ Lev_α(T)`. -/
@@ -1231,7 +1230,7 @@ theorem Enumeration.mem_lev (e : Enumeration κ T) {α i : Ordinal.{w}} (hα : �
     (hi : i < (#(Lev T α)).ord) : e.t α i ∈ Lev T α := sorry
 ```
 
-#### `Enumeration.ht_t` (theorem, line 768)
+#### `Enumeration.ht_t` (theorem)
 
 ```lean
 /-- AUX: not in paper. `ht(t^i_α) = α`. -/
@@ -1239,7 +1238,7 @@ theorem Enumeration.ht_t (e : Enumeration κ T) {α i : Ordinal.{w}} (hα : α <
     (hi : i < (#(Lev T α)).ord) : ht (e.t α i) = α := sorry
 ```
 
-#### `zero_lt_ord_lev` (theorem, line 773)
+#### `zero_lt_ord_lev` (theorem)
 
 ```lean
 /-- AUX: not in paper. In a `κ`-tree, `0 < μ_α` for `α < κ`. -/
@@ -1247,7 +1246,7 @@ theorem zero_lt_ord_lev (hT : IsKappaTree κ T) {α : Ordinal.{w}} (hα : α < �
     0 < (#(Lev T α)).ord := sorry
 ```
 
-#### `Enumeration.exists_eq` (theorem, line 779)
+#### `Enumeration.exists_eq` (theorem)
 
 ```lean
 /-- AUX: not in paper. Every node of `Lev_α(T)` is some `t^i_α`. -/
@@ -1255,14 +1254,14 @@ theorem Enumeration.exists_eq (e : Enumeration κ T) {α : Ordinal.{w}} (hα : �
     (hx : x ∈ Lev T α) : ∃ i < (#(Lev T α)).ord, e.t α i = x := sorry
 ```
 
-#### `le_total_of_le` (theorem, line 784)
+#### `le_total_of_le` (theorem)
 
 ```lean
 /-- AUX: not in paper. Two nodes below a common node are comparable. -/
 theorem le_total_of_le {x y z : T} (hx : x ≤ z) (hy : y ≤ z) : x ≤ y ∨ y ≤ x := sorry
 ```
 
-#### `lt_of_le_of_le_of_ht_lt` (theorem, line 793)
+#### `lt_of_le_of_le_of_ht_lt` (theorem)
 
 ```lean
 /-- AUX: not in paper. A node of height `α` and a node of height `β > α` below a common node:
@@ -1271,7 +1270,7 @@ theorem lt_of_le_of_le_of_ht_lt {x y z : T} (hx : x ≤ z) (hy : y ≤ z) (h : h
     x < y := sorry
 ```
 
-#### `IsTreeColoring.color_eq` (theorem, line 811)
+#### `IsTreeColoring.color_eq` (theorem)
 
 ```lean
 /-- AUX: not in paper. Uniqueness in Definition 4.11: if `i < μ_α` and `t^i_α ≤ t^0_δ` then
@@ -1282,14 +1281,14 @@ theorem IsTreeColoring.color_eq {e : Enumeration κ T}
     (hle : e.t α i ≤ e.t δ 0) : (C.color α δ h : Ordinal.{w}) = i := sorry
 ```
 
-#### `card_lev_le_levelSup` (theorem, line 821)
+#### `card_lev_le_levelSup` (theorem)
 
 ```lean
 /-- AUX: not in paper. `μ_α ≤ μ`. -/
 theorem card_lev_le_levelSup (α : Kappa κ) : #(Lev T (α : Ordinal.{w})) ≤ levelSup κ T := sorry
 ```
 
-#### `Kappa.mk_coe` (theorem, line 880)
+#### `Kappa.mk_coe` (theorem)
 
 ```lean
 /-- AUX: not in paper. -/
@@ -1297,7 +1296,7 @@ theorem card_lev_le_levelSup (α : Kappa κ) : #(Lev T (α : Ordinal.{w})) ≤ l
     Kappa.mk (x : Ordinal.{w}) (Kappa.coe_lt_ord x) = x := sorry
 ```
 
-#### `exists_bijOn_ord` (theorem, line 887)
+#### `exists_bijOn_ord` (theorem)
 
 ```lean
 omit [PartialOrder T] [IsTree T] in
@@ -1307,7 +1306,7 @@ theorem exists_bijOn_ord {L : Set T} {c : T} (hc : c ∈ L) :
     ∃ f : Ordinal.{w} → T, Set.BijOn f (Set.Iio (#L).ord) L ∧ f 0 = c := sorry
 ```
 
-#### `Enumeration.node_spec` (theorem, line 1012)
+#### `Enumeration.node_spec` (theorem)
 
 ```lean
 /-- AUX: not in paper. `t_β^{C(β,δ)} ∈ Lev_β(T)` and `t_β^{C(β,δ)} ≤ t^0_δ`. -/
@@ -1319,19 +1318,19 @@ theorem Enumeration.node_spec (hT : IsKappaTree κ T) (e : Enumeration κ T)
 
 ### C. Declarations without a docstring
 
-#### `(anonymous instance)` (instance, line 88)
+#### `(anonymous instance)` (instance)
 
 ```lean
 instance (t : T) : IsWellOrder (Set.Iio t) (fun x y => (x : T) < y) := IsTree.wellOrder_Iio t
 ```
 
-#### `(anonymous instance)` (instance, line 306)
+#### `(anonymous instance)` (instance)
 
 ```lean
 instance : IsTree (HistoryTree T) := historyTree_isTree T
 ```
 
-#### `(anonymous instance)` (instance, line 629)
+#### `(anonymous instance)` (instance)
 
 ```lean
 instance (C : Coloring (Kappa κ) D) : IsTree (treeOfColoring C) := treeOfColoring_isTree C
@@ -1342,27 +1341,26 @@ instance (C : Coloring (Kappa κ) D) : IsTree (treeOfColoring C) := treeOfColori
 ### Context
 
 ```lean
-open Cardinal  -- line 20
-universe w  -- line 22
-noncomputable section  -- line 24
-namespace JardenShami  -- line 26
-open Tree  -- line 28
-universe of `κ`. -/  -- line 36
-section Aux  -- line 60
-variable {κ : Cardinal.{w}}  -- line 66
-end Aux  -- line 158
-namespace Tree  -- line 160
-variable {T : Type w} [PartialOrder T] [IsTree T]  -- line 162
-end Tree  -- line 222
-section TreeOfColoringAux  -- line 224
-variable {κ : Cardinal.{w}} {D : Type w}  -- line 226
-end TreeOfColoringAux  -- line 314
-end JardenShami  -- line 652
+open Cardinal
+universe w
+noncomputable section
+namespace JardenShami
+open Tree
+section Aux
+variable {κ : Cardinal.{w}}
+end Aux
+namespace Tree
+variable {T : Type w} [PartialOrder T] [IsTree T]
+end Tree
+section TreeOfColoringAux
+variable {κ : Cardinal.{w}} {D : Type w}
+end TreeOfColoringAux
+end JardenShami
 ```
 
 ### A. Paper definitions and statements
 
-#### `IsAronszajn` (def, line 32)
+#### `IsAronszajn` (def)
 
 ```lean
 /-- `κ`-Aronszajn tree (used in Fact 5.1 and Theorem 5.2; not defined in the paper, standard
@@ -1371,7 +1369,7 @@ def IsAronszajn (κ : Cardinal.{w}) (T : Type w) [PartialOrder T] [IsTree T] : P
   IsKappaTree κ T ∧ ¬ ∃ b : Set T, IsCofinalBranch b
 ```
 
-#### `NoAronszajn` (def, line 37)
+#### `NoAronszajn` (def)
 
 ```lean
 /-- "There exists no `κ`-Aronszajn tree" (Fact 5.1 (1), Theorem 5.2 (1)), for trees in the
@@ -1380,7 +1378,7 @@ def NoAronszajn (κ : Cardinal.{w}) : Prop :=
   ∀ (T : Type w) [PartialOrder T] [IsTree T], ¬ IsAronszajn κ T
 ```
 
-#### `LaArrowKappa` (def, line 42)
+#### `LaArrowKappa` (def)
 
 ```lean
 /-- `κ → (κ)_{la_μ}` in the sense spelled out in Theorem 5.2 (2) and Lemma 5.3 (2) ("namely"):
@@ -1390,7 +1388,7 @@ def LaArrowKappa (κ μ : Cardinal.{w}) : Prop :=
     ∃ H : Set (Kappa κ), #H = κ ∧ IsHomogeneous C H
 ```
 
-#### FACT hypothesis (cited, not proved): `Fact_5_1` (line 52)
+#### FACT hypothesis (cited, not proved): `Fact_5_1`
 
 ```lean
 /-- FACT: cited, not proved in the paper. **Fact 5.1** (Section 5, unlabelled, "Recall two
@@ -1406,18 +1404,19 @@ def Fact_5_1 : Prop :=
         ∃ H : Set (Kappa κ), #H = κ ∧ IsHomogeneous C H)
 ```
 
-#### `card_lev_treeOfColoring_le` (theorem, line 430)
+#### `card_lev_treeOfColoring_le` (theorem)
 
 ```lean
-/-- **Claim 5.4** (Section 5, inside the proof of Lemma 5.3, direction (1) ⇒ (2)). Under the
-hypotheses of Lemma 5.3, for a locally additive `C : [κ]^2 → μ`, all the levels of `T(C)` have
-size `≤ μ`. -/
-theorem card_lev_treeOfColoring_le (κ μ : Cardinal.{w}) (hκ : κ.IsRegular) (hunc : ℵ₀ < κ)
-    (hμ : μ < κ) (C : Coloring (Kappa κ) (Kappa μ)) (hC : IsLocallyAdditive C) :
+/-- **Claim 5.4** (Section 5, inside the proof of Lemma 5.3, direction (1) ⇒ (2)). For an
+uncountable cardinal `κ` and a locally additive `C : [κ]^2 → μ`, all the levels of `T(C)` have
+size `≤ μ`. (The paper works under the hypotheses of Lemma 5.3; of these, `κ` regular and
+`μ < κ` are not needed and are not assumed here.) -/
+theorem card_lev_treeOfColoring_le (κ μ : Cardinal.{w}) (hunc : ℵ₀ < κ)
+    (C : Coloring (Kappa κ) (Kappa μ)) (hC : IsLocallyAdditive C) :
     ∀ β : Ordinal.{w}, #(Lev (treeOfColoring C) β) ≤ μ := sorry
 ```
 
-#### `branch_iff_laArrowKappa` (theorem, line 542)
+#### `branch_iff_laArrowKappa` (theorem)
 
 ```lean
 /-- **Lemma 5.3** (Section 5, `\label{lemma 6}`, `\label{the main lemma}`). Suppose `κ` is a
@@ -1431,7 +1430,7 @@ theorem branch_iff_laArrowKappa (κ μ : Cardinal.{w}) (hκ : κ.IsRegular) (hun
       LaArrowKappa κ μ := sorry
 ```
 
-#### `noAronszajn_succ_iff_laArrowKappa` (theorem, line 627)
+#### `noAronszajn_succ_iff_laArrowKappa` (theorem)
 
 ```lean
 /-- **Theorem 5.2** (Section 5, `\label{theorem 4.2}`). For every infinite cardinal `μ` the
@@ -1443,14 +1442,14 @@ theorem noAronszajn_succ_iff_laArrowKappa (μ : Cardinal.{w}) (hμ : ℵ₀ ≤ 
 
 ### B. Auxiliary lemmas (AUX: not in paper)
 
-#### `Kappa.mk_eq` (theorem, line 63)
+#### `Kappa.mk_eq` (theorem)
 
 ```lean
 /-- AUX: not in paper. `#κ = κ`. -/
 theorem Kappa.mk_eq (κ : Cardinal.{w}) : #(Kappa κ) = κ := sorry
 ```
 
-#### `Kappa.mk_Iic_lt` (theorem, line 70)
+#### `Kappa.mk_Iic_lt` (theorem)
 
 ```lean
 /-- AUX: not in paper. For infinite `κ`, every initial segment `{y : y ≤ x}` of `κ` has size
@@ -1458,7 +1457,7 @@ theorem Kappa.mk_eq (κ : Cardinal.{w}) : #(Kappa κ) = κ := sorry
 theorem Kappa.mk_Iic_lt (hκ : ℵ₀ ≤ κ) (x : Kappa κ) : #(Set.Iic x) < κ := sorry
 ```
 
-#### `Kappa.exists_gt_of_card_eq` (theorem, line 79)
+#### `Kappa.exists_gt_of_card_eq` (theorem)
 
 ```lean
 /-- AUX: not in paper. For infinite `κ`, a subset of `κ` of size `κ` is unbounded. -/
@@ -1466,7 +1465,7 @@ theorem Kappa.exists_gt_of_card_eq (hκ : ℵ₀ ≤ κ) {S : Set (Kappa κ)} (h
     (x : Kappa κ) : ∃ y ∈ S, x < y := sorry
 ```
 
-#### `Kappa.exists_gt_of_card_lt` (theorem, line 88)
+#### `Kappa.exists_gt_of_card_lt` (theorem)
 
 ```lean
 /-- AUX: not in paper. For regular `κ`, a subset of `κ` of size `< κ` is bounded. -/
@@ -1474,7 +1473,7 @@ theorem Kappa.exists_gt_of_card_lt (hκ : κ.IsRegular) {S : Set (Kappa κ)} (hS
     ∃ x, ∀ y ∈ S, y < x := sorry
 ```
 
-#### `Kappa.card_eq_of_forall_exists_gt` (theorem, line 99)
+#### `Kappa.card_eq_of_forall_exists_gt` (theorem)
 
 ```lean
 /-- AUX: not in paper. For regular `κ`, an unbounded subset of `κ` has size `κ`. -/
@@ -1482,7 +1481,7 @@ theorem Kappa.card_eq_of_forall_exists_gt (hκ : κ.IsRegular) {S : Set (Kappa �
     (h : ∀ x, ∃ y ∈ S, x < y) : #S = κ := sorry
 ```
 
-#### `Kappa.exists_sparse` (theorem, line 109)
+#### `Kappa.exists_sparse` (theorem)
 
 ```lean
 /-- AUX: not in paper. For regular `κ`, a `κ`-sized `Γ ⊆ κ` and `F : κ → κ`, there is a
@@ -1492,7 +1491,7 @@ theorem Kappa.exists_sparse (hκ : κ.IsRegular) {Γ : Set (Kappa κ)} (hΓ : #�
     ∃ Γ' ⊆ Γ, #Γ' = κ ∧ ∀ γ₀ ∈ Γ', ∀ γ ∈ Γ', γ₀ < γ → F γ₀ < γ := sorry
 ```
 
-#### `IsLocallyAdditive.color_eq_of_le` (theorem, line 133)
+#### `IsLocallyAdditive.color_eq_of_le` (theorem)
 
 ```lean
 /-- AUX: not in paper. For a locally additive `C`, `C(a,δ) = C(a,δ')` implies
@@ -1503,7 +1502,7 @@ theorem IsLocallyAdditive.color_eq_of_le {A : Type w} [LinearOrder A] {D : Type*
     C.color α δ (hα.trans_lt ha) = C.color α δ' (hα.trans_lt ha') := sorry
 ```
 
-#### `Coloring.color_congr` (theorem, line 145)
+#### `Coloring.color_congr` (theorem)
 
 ```lean
 /-- AUX: not in paper. `C(a,b)` depends only on `a` and `b`. -/
@@ -1512,7 +1511,7 @@ theorem Coloring.color_congr {A : Type w} [LinearOrder A] {D : Type*} (C : Color
     C.color a b h = C.color a' b' h' := sorry
 ```
 
-#### `IsLocallyAdditive.comp_injective` (theorem, line 153)
+#### `IsLocallyAdditive.comp_injective` (theorem)
 
 ```lean
 /-- AUX: not in paper. Composing a locally additive coloring with an injective map of colors
@@ -1522,7 +1521,7 @@ theorem IsLocallyAdditive.comp_injective {A : Type w} [LinearOrder A] {D E : Typ
     IsLocallyAdditive (ι ∘ C) := sorry
 ```
 
-#### `lt_iff_ht_lt_of_isChain` (theorem, line 165)
+#### `lt_iff_ht_lt_of_isChain` (theorem)
 
 ```lean
 /-- AUX: not in paper. On a chain, `x < y` iff `ht x < ht y`. -/
@@ -1530,14 +1529,14 @@ theorem lt_iff_ht_lt_of_isChain {b : Set T} (hb : IsChain (· ≤ ·) b) {x y : 
     (hy : y ∈ b) : x < y ↔ ht x < ht y := sorry
 ```
 
-#### `ht_injOn_of_isChain` (theorem, line 173)
+#### `ht_injOn_of_isChain` (theorem)
 
 ```lean
 /-- AUX: not in paper. On a chain, the height is injective. -/
 theorem ht_injOn_of_isChain {b : Set T} (hb : IsChain (· ≤ ·) b) : Set.InjOn ht b := sorry
 ```
 
-#### `isWellOrder_of_isChain` (theorem, line 180)
+#### `isWellOrder_of_isChain` (theorem)
 
 ```lean
 /-- AUX: not in paper. A chain of a tree is well-ordered. -/
@@ -1545,7 +1544,7 @@ theorem isWellOrder_of_isChain {b : Set T} (hb : IsChain (· ≤ ·) b) :
     IsWellOrder b (fun x y => (x : T) < y) := sorry
 ```
 
-#### `mk_le_of_isChain` (theorem, line 189)
+#### `mk_le_of_isChain` (theorem)
 
 ```lean
 /-- AUX: not in paper. In a tree of height `κ`, every chain has size `≤ κ`. -/
@@ -1553,7 +1552,7 @@ theorem mk_le_of_isChain {κ : Cardinal.{w}} (hT : height T = κ.ord) {b : Set T
     (hb : IsChain (· ≤ ·) b) : #b ≤ κ := sorry
 ```
 
-#### `isCofinalBranch_iff` (theorem, line 200)
+#### `isCofinalBranch_iff` (theorem)
 
 ```lean
 /-- AUX: not in paper. In a tree of height `κ`, a branch is cofinal iff it has size `κ`. -/
@@ -1561,7 +1560,7 @@ theorem isCofinalBranch_iff {κ : Cardinal.{w}} (hT : height T = κ.ord) {b : Se
     IsCofinalBranch b ↔ IsBranch b ∧ #b = κ := sorry
 ```
 
-#### `fiberRestr_eq_fiberRestr` (theorem, line 229)
+#### `fiberRestr_eq_fiberRestr` (theorem)
 
 ```lean
 /-- AUX: not in paper. Equality of the graphs `C(·,δ) ↾ β`. -/
@@ -1572,7 +1571,7 @@ theorem fiberRestr_eq_fiberRestr {C : Coloring (Kappa κ) D} {δ₁ β₁ δ₂ 
     fiberRestr C δ₁ β₁ h₁ = fiberRestr C δ₂ β₂ h₂ := sorry
 ```
 
-#### `fiberRestr_ssubset_iff` (theorem, line 238)
+#### `fiberRestr_ssubset_iff` (theorem)
 
 ```lean
 /-- AUX: not in paper. Strict inclusion between the graphs `C(·,δ) ↾ β`. -/
@@ -1583,7 +1582,7 @@ theorem fiberRestr_ssubset_iff {C : Coloring (Kappa κ) D} {δ₁ β₁ δ₂ β
         C.color α δ₁ (hα₁.trans_le h₁) = C.color α δ₂ (hα₂.trans_le h₂) := sorry
 ```
 
-#### `ht_fiberRestr` (theorem, line 253)
+#### `ht_fiberRestr` (theorem)
 
 ```lean
 /-- AUX: not in paper. The height of `C(·,δ) ↾ β` in `T(C)` is `β`. -/
@@ -1591,7 +1590,7 @@ theorem ht_fiberRestr (C : Coloring (Kappa κ) D) {δ β : Kappa κ} (h : β ≤
     ht (⟨fiberRestr C δ β h, δ, β, h, rfl⟩ : treeOfColoring C) = (β : Ordinal.{w}) := sorry
 ```
 
-#### `mem_lev_treeOfColoring` (theorem, line 283)
+#### `mem_lev_treeOfColoring` (theorem)
 
 ```lean
 /-- AUX: not in paper. The nodes of `Lev_α(T(C))` are the graphs `C(·,δ) ↾ β` with `β = α`. -/
@@ -1601,7 +1600,7 @@ theorem mem_lev_treeOfColoring {C : Coloring (Kappa κ) D} {g : treeOfColoring C
       ∃ (δ β : Kappa κ) (h : β ≤ δ), g.1 = fiberRestr C δ β h ∧ (β : Ordinal.{w}) = α := sorry
 ```
 
-#### `height_treeOfColoring` (theorem, line 298)
+#### `height_treeOfColoring` (theorem)
 
 ```lean
 /-- AUX: not in paper. The height of `T(C)` is `κ`. -/
@@ -1609,7 +1608,7 @@ theorem height_treeOfColoring (C : Coloring (Kappa κ) D) :
     height (treeOfColoring C) = κ.ord := sorry
 ```
 
-#### `card_lev_treeOfColoring_le_of_aleph0_le` (theorem, line 318)
+#### `card_lev_treeOfColoring_le_of_aleph0_le` (theorem)
 
 ```lean
 /-- AUX: not in paper. Claim 5.4 for every infinite `κ` (neither regularity nor uncountability
@@ -1619,7 +1618,7 @@ theorem card_lev_treeOfColoring_le_of_aleph0_le (κ μ : Cardinal.{w}) (hκ0 : �
     ∀ β : Ordinal.{w}, #(Lev (treeOfColoring C) β) ≤ μ := sorry
 ```
 
-#### `exists_enumeration` (theorem, line 436)
+#### `exists_enumeration` (theorem)
 
 ```lean
 /-- AUX: not in paper. Every `κ`-tree (`κ ≠ 0`) has an enumeration (Definition 4.10). -/
@@ -1627,7 +1626,7 @@ theorem exists_enumeration {κ : Cardinal.{w}} {T : Type w} [PartialOrder T] [Is
     (hκ : κ ≠ 0) (hT : IsKappaTree κ T) : Nonempty (Enumeration κ T) := sorry
 ```
 
-#### `laArrowKappa_of_forall_branch` (theorem, line 454)
+#### `laArrowKappa_of_forall_branch` (theorem)
 
 ```lean
 /-- AUX: not in paper. Direction (1) ⇒ (2) of Lemma 5.3 for every regular `κ` (also `κ = ℵ₀`;
@@ -1643,20 +1642,20 @@ theorem laArrowKappa_of_forall_branch (κ μ : Cardinal.{w}) (hκ : κ.IsRegular
 ### Context
 
 ```lean
-open Cardinal  -- line 29
-universe w  -- line 31
-noncomputable section  -- line 33
-namespace JardenShami  -- line 35
-open Tree  -- line 37
-section BinTree  -- line 144
-variable {ν : Cardinal.{w}}  -- line 146
-end BinTree  -- line 334
-end JardenShami  -- line 409
+open Cardinal
+universe w
+noncomputable section
+namespace JardenShami
+open Tree
+section BinTree
+variable {ν : Cardinal.{w}}
+end BinTree
+end JardenShami
 ```
 
 ### A. Paper definitions and statements
 
-#### `isTree_subtype` (theorem, line 42)
+#### `isTree_subtype` (theorem)
 
 ```lean
 /-- Implicit in the paper ("subtree", e.g. `Lev_{<α}(T)` in the proof of Theorem 6.4 and the
@@ -1665,7 +1664,7 @@ tree. -/
 theorem isTree_subtype {T : Type w} [PartialOrder T] [IsTree T] (S : Set T) : IsTree S := sorry
 ```
 
-#### `Lim` (def, line 53)
+#### `Lim` (def)
 
 ```lean
 /-- **Definition 6.1** (Section 6, after [Sh589]). `Lim(T)`: the set of cofinal branches of the
@@ -1673,7 +1672,7 @@ tree `T`. -/
 def Lim (T : Type w) [PartialOrder T] [IsTree T] : Set (Set T) := {b | IsCofinalBranch b}
 ```
 
-#### `treeExp` (def, line 60)
+#### `treeExp` (def)
 
 ```lean
 /-- **Definition 6.1** (Section 6, after [Sh589]). For infinite cardinals `μ ≤ λ`, `𝔗_{λ,μ}` is
@@ -1686,16 +1685,17 @@ def treeExp (lam μ : Cardinal.{w}) : Cardinal.{w} :=
     height T = μ.ord ∧ #T ≤ lam ∧ c = #(Lim T)}
 ```
 
-#### `treeExp_le_power` (theorem, line 98)
+#### `treeExp_le_power` (theorem)
 
 ```lean
-/-- **Remark 6.2** (Section 6, `\label{remark tree exponent leq exponent}`). For every two infinite
-cardinals `λ` and `μ`: `λ^{μ,tr} ≤ λ^μ`. -/
-theorem treeExp_le_power (lam μ : Cardinal.{w}) (hlam : ℵ₀ ≤ lam) (hμ : ℵ₀ ≤ μ) :
+/-- **Remark 6.2** (Section 6, `\label{remark tree exponent leq exponent}`). For every infinite
+cardinal `λ` and every cardinal `μ`: `λ^{μ,tr} ≤ λ^μ`. (The paper assumes that `μ` is infinite
+too; this is not needed and is not assumed here.) -/
+theorem treeExp_le_power (lam μ : Cardinal.{w}) (hlam : ℵ₀ ≤ lam) :
     treeExp lam μ ≤ lam ^ μ := sorry
 ```
 
-#### `IsWeaklyCompact` (def, line 107)
+#### `IsWeaklyCompact` (def)
 
 ```lean
 /-- **Section 6, between Remark 6.2 and Fact 6.3** ("Recall, that a weakly compact cardinal is a
@@ -1703,7 +1703,7 @@ strongly inaccessible cardinal that satisfies the tree property"). -/
 def IsWeaklyCompact (κ : Cardinal.{w}) : Prop := κ.IsInaccessible ∧ NoAronszajn κ
 ```
 
-#### FACT hypothesis (cited, not proved): `Fact_6_3` (line 114)
+#### FACT hypothesis (cited, not proved): `Fact_6_3`
 
 ```lean
 /-- FACT: cited, not proved in the paper. **Fact 6.3** (Section 6, `\label{fact 6.3}`, no
@@ -1717,31 +1717,33 @@ def Fact_6_3 : Prop :=
       IsWeaklyCompact κ)
 ```
 
-#### `treeExp_lt_iff_isInaccessible` (theorem, line 388)
+#### `treeExp_lt_iff_isInaccessible` (theorem)
 
 ```lean
-/-- **Theorem 6.4** (Section 6, `\label{theorem 5.4}`). Let `κ` be an uncountable regular cardinal
-that satisfies the tree property. The following are equivalent: (1) `λ^{μ,tr} < κ` for each
-`λ, μ < κ`; (2) `κ` is strongly inaccessible.
+/-- **Theorem 6.4** (Section 6, `\label{theorem 5.4}`). Let `κ` be an uncountable regular cardinal.
+The following are equivalent: (1) `λ^{μ,tr} < κ` for each `λ, μ < κ`; (2) `κ` is strongly
+inaccessible.
 In (1), `λ^{μ,tr}` is taken only where Definition 6.1 defines it: infinite `μ ≤ λ`.
-Fact 6.3 (used in the paper's proof of (1) ⇒ (2)) is an explicit hypothesis.
-Phase 1: proved from the stronger AUX statement `treeExp_lt_iff_isInaccessible_of_isRegular`, not
-along the paper's proof; the hypotheses `hF` (Fact 6.3) and `htp` (the tree property) are not
-used. -/
-theorem treeExp_lt_iff_isInaccessible (hF : Fact_6_3.{w}) (κ : Cardinal.{w}) (hunc : ℵ₀ < κ)
-    (hreg : κ.IsRegular) (htp : NoAronszajn κ) :
+The paper also assumes that `κ` satisfies the tree property, and its proof of (1) ⇒ (2) uses
+Fact 6.3. Neither is needed, so this statement is stronger than Theorem 6.4 of the paper.
+It is a thin wrapper around the AUX statement `treeExp_lt_iff_isInaccessible_of_isRegular`; the
+proof does not follow the paper's proof. -/
+theorem treeExp_lt_iff_isInaccessible (κ : Cardinal.{w}) (hunc : ℵ₀ < κ)
+    (hreg : κ.IsRegular) :
     (∀ lam μ : Cardinal.{w}, ℵ₀ ≤ μ → μ ≤ lam → lam < κ → treeExp lam μ < κ) ↔
       κ.IsInaccessible := sorry
 ```
 
-#### `isWeaklyCompact_iff` (theorem, line 398)
+#### `isWeaklyCompact_iff` (theorem)
 
 ```lean
 /-- **Corollary 6.5** (Section 6). Let `κ` be an uncountable cardinal. Then `κ` is weakly compact
 if and only if (1) `κ` is regular, (2) `κ` satisfies the tree property and (3) `λ^{μ,tr} < κ` for
 each `λ, μ < κ` (as in Theorem 6.4: infinite `μ ≤ λ`).
-Fact 6.3 (used through Theorem 6.4) is an explicit hypothesis. -/
-theorem isWeaklyCompact_iff (hF : Fact_6_3.{w}) (κ : Cardinal.{w}) (hunc : ℵ₀ < κ) :
+In the paper this goes through Theorem 6.4, whose proof uses Fact 6.3. Fact 6.3 is not needed
+(see `treeExp_lt_iff_isInaccessible`), so this statement, which has no Fact 6.3 hypothesis, is
+stronger than Corollary 6.5 of the paper. -/
+theorem isWeaklyCompact_iff (κ : Cardinal.{w}) (hunc : ℵ₀ < κ) :
     IsWeaklyCompact κ ↔
       κ.IsRegular ∧ NoAronszajn κ ∧
         ∀ lam μ : Cardinal.{w}, ℵ₀ ≤ μ → μ ≤ lam → lam < κ → treeExp lam μ < κ := sorry
@@ -1749,7 +1751,7 @@ theorem isWeaklyCompact_iff (hF : Fact_6_3.{w}) (κ : Cardinal.{w}) (hunc : ℵ�
 
 ### B. Auxiliary lemmas (AUX: not in paper)
 
-#### `mk_lim_le` (theorem, line 66)
+#### `mk_lim_le` (theorem)
 
 ```lean
 /-- AUX: not in paper. In a tree of height `μ`, a chain `b` is determined by the function
@@ -1758,14 +1760,14 @@ theorem mk_lim_le {T : Type w} [PartialOrder T] [IsTree T] {μ : Cardinal.{w}}
     (hT : height T = μ.ord) : #(Lim T) ≤ (#T + 1) ^ μ := sorry
 ```
 
-#### `treeExp_le_add_one_power` (theorem, line 91)
+#### `treeExp_le_add_one_power` (theorem)
 
 ```lean
 /-- AUX: not in paper. Every member of the set defining `λ^{μ,tr}` is `≤ (λ + 1)^μ`. -/
 theorem treeExp_le_add_one_power (lam μ : Cardinal.{w}) : treeExp lam μ ≤ (lam + 1) ^ μ := sorry
 ```
 
-#### `mk_lim_le_treeExp` (theorem, line 122)
+#### `mk_lim_le_treeExp` (theorem)
 
 ```lean
 /-- AUX: not in paper. If `T` has height `μ` and at most `λ` nodes, then `|Lim(T)| ≤ λ^{μ,tr}`. -/
@@ -1773,7 +1775,7 @@ theorem mk_lim_le_treeExp {T : Type w} [PartialOrder T] [IsTree T] {lam μ : Car
     (hT : height T = μ.ord) (hcard : #T ≤ lam) : #(Lim T) ≤ treeExp lam μ := sorry
 ```
 
-#### `power_lt_of_isInaccessible` (theorem, line 129)
+#### `power_lt_of_isInaccessible` (theorem)
 
 ```lean
 /-- AUX: not in paper. For an inaccessible `κ` and `λ, μ < κ`: `λ^μ < κ`. -/
@@ -1781,7 +1783,7 @@ theorem power_lt_of_isInaccessible {κ lam μ : Cardinal.{w}} (hκ : κ.IsInacce
     (hlam : lam < κ) (hμ : μ < κ) : lam ^ μ < κ := sorry
 ```
 
-#### `binRestr` (def, line 136)
+#### `binRestr` (def)
 
 ```lean
 /-- AUX: not in paper. A node of the full binary tree `2^{<ν}`: the graph of `f ↾ β`. -/
@@ -1789,7 +1791,7 @@ def binRestr {ν : Cardinal.{w}} (f : Kappa ν → Fin 2) (β : Kappa ν) : Set 
   {p | p.1 < β ∧ p.2 = f p.1}
 ```
 
-#### `binTree` (def, line 141)
+#### `binTree` (def)
 
 ```lean
 /-- AUX: not in paper. The full binary tree `2^{<ν} = {f ↾ β : f : ν → 2, β < ν}`, ordered
@@ -1798,7 +1800,7 @@ def binTree (ν : Cardinal.{w}) : Set (Set (Kappa ν × Fin 2)) :=
   {g | ∃ (f : Kappa ν → Fin 2) (β : Kappa ν), g = binRestr f β}
 ```
 
-#### `binRestr_subset_iff` (theorem, line 149)
+#### `binRestr_subset_iff` (theorem)
 
 ```lean
 /-- AUX: not in paper. Inclusion between nodes of `2^{<ν}`. -/
@@ -1806,7 +1808,7 @@ theorem binRestr_subset_iff {f f' : Kappa ν → Fin 2} {β β' : Kappa ν} :
     binRestr f β ⊆ binRestr f' β' ↔ β ≤ β' ∧ ∀ α < β, f α = f' α := sorry
 ```
 
-#### `binRestr_eq_iff` (theorem, line 161)
+#### `binRestr_eq_iff` (theorem)
 
 ```lean
 /-- AUX: not in paper. Equality of nodes of `2^{<ν}`. -/
@@ -1814,14 +1816,14 @@ theorem binRestr_eq_iff {f f' : Kappa ν → Fin 2} {β β' : Kappa ν} :
     binRestr f β = binRestr f' β' ↔ β = β' ∧ ∀ α < β, f α = f' α := sorry
 ```
 
-#### `binTree_isTree` (theorem, line 171)
+#### `binTree_isTree` (theorem)
 
 ```lean
 /-- AUX: not in paper. `2^{<ν}` is a tree. -/
 theorem binTree_isTree : IsTree (binTree ν) := sorry
 ```
 
-#### `ht_binRestr` (theorem, line 205)
+#### `ht_binRestr` (theorem)
 
 ```lean
 /-- AUX: not in paper. The height of `f ↾ β` in `2^{<ν}` is `β`. -/
@@ -1829,14 +1831,14 @@ theorem ht_binRestr (f : Kappa ν → Fin 2) (β : Kappa ν) :
     ht (⟨binRestr f β, f, β, rfl⟩ : binTree ν) = (β : Ordinal.{w}) := sorry
 ```
 
-#### `height_binTree` (theorem, line 237)
+#### `height_binTree` (theorem)
 
 ```lean
 /-- AUX: not in paper. The height of `2^{<ν}` is `ν`. -/
 theorem height_binTree : height (binTree ν) = ν.ord := sorry
 ```
 
-#### `mk_binTree_le` (theorem, line 255)
+#### `mk_binTree_le` (theorem)
 
 ```lean
 /-- AUX: not in paper. `|2^{<ν}| ≤ Σ_{β<ν} 2^{|β|}`. -/
@@ -1844,14 +1846,14 @@ theorem mk_binTree_le :
     #(binTree ν) ≤ Cardinal.sum fun β : Kappa ν => (2 : Cardinal.{w}) ^ #(Set.Iio β) := sorry
 ```
 
-#### `two_power_le_mk_lim_binTree` (theorem, line 283)
+#### `two_power_le_mk_lim_binTree` (theorem)
 
 ```lean
 /-- AUX: not in paper. For infinite `ν`, `2^{<ν}` has at least `2^ν` cofinal branches. -/
 theorem two_power_le_mk_lim_binTree (hν : ℵ₀ ≤ ν) : 2 ^ ν ≤ #(Lim (binTree ν)) := sorry
 ```
 
-#### `two_power_lt_of_treeExp_lt` (theorem, line 339)
+#### `two_power_lt_of_treeExp_lt` (theorem)
 
 ```lean
 /-- AUX: not in paper. Direction (1) ⇒ (2) of Theorem 6.4 without Fact 6.3 and without the tree
@@ -1862,7 +1864,7 @@ theorem two_power_lt_of_treeExp_lt {κ : Cardinal.{w}} (hreg : κ.IsRegular)
     ∀ ν < κ, 2 ^ ν < κ := sorry
 ```
 
-#### `treeExp_lt_iff_isInaccessible_of_isRegular` (theorem, line 368)
+#### `treeExp_lt_iff_isInaccessible_of_isRegular` (theorem)
 
 ```lean
 /-- AUX: not in paper. A strengthening of Theorem 6.4: for every uncountable regular cardinal `κ`,
@@ -1881,13 +1883,13 @@ theorem treeExp_lt_iff_isInaccessible_of_isRegular (κ : Cardinal.{w}) (hunc : �
 
 ### C. Declarations without a docstring
 
-#### `(anonymous instance)` (instance, line 47)
+#### `(anonymous instance)` (instance)
 
 ```lean
 instance {T : Type w} [PartialOrder T] [IsTree T] (S : Set T) : IsTree S := isTree_subtype S
 ```
 
-#### `(anonymous instance)` (instance, line 202)
+#### `(anonymous instance)` (instance)
 
 ```lean
 instance : IsTree (binTree ν) := binTree_isTree
@@ -1898,20 +1900,20 @@ instance : IsTree (binTree ν) := binTree_isTree
 ### Context
 
 ```lean
-open Cardinal  -- line 33
-universe v w  -- line 35
-noncomputable section  -- line 37
-namespace JardenShami  -- line 39
-open Tree  -- line 41
-section TreeAux  -- line 322
-variable {T : Type w} [PartialOrder T] [IsTree T]  -- line 324
-end TreeAux  -- line 475
-end JardenShami  -- line 924
+open Cardinal
+universe v w
+noncomputable section
+namespace JardenShami
+open Tree
+section TreeAux
+variable {T : Type w} [PartialOrder T] [IsTree T]
+end TreeAux
+end JardenShami
 ```
 
 ### A. Paper definitions and statements
 
-#### `Sim` (def, line 48)
+#### `Sim` (def)
 
 ```lean
 /-- **Definition 7.1** (Section 7). `β ∼ γ` if for some `α` with `β, γ < α` we have
@@ -1921,13 +1923,14 @@ def Sim {A : Type w} [LinearOrder A] {D : Type v} (C : Coloring A D) (β γ : A)
   ∃ (α : A) (hβ : β < α) (hγ : γ < α), C.color β α hβ = C.color γ α hγ
 ```
 
-#### `sim_witness_mono_and_equivalence` (theorem, line 91)
+#### `sim_witness_mono_and_equivalence` (theorem)
 
 ```lean
 /-- **Remark 7.2** (Section 7, `\label{remark 7.2}`). Under the standing assumption of Subsection
-7.1: if `β ≠ γ`, `α₁` witnesses `β ∼ γ` and `α₁ < α₂`, then `α₂` witnesses `β ∼ γ` as well.
-Hence `∼` is an equivalence relation. -/
-theorem sim_witness_mono_and_equivalence (κ μ : Cardinal.{w}) (hκ : κ.IsRegular) (hμ : μ < κ)
+7.1, except `μ < κ`, which is not needed and is not assumed here (`κ` regular,
+`C : [κ]^2 → μ` *-locally additive): if `β ≠ γ`, `α₁` witnesses `β ∼ γ` and `α₁ < α₂`, then
+`α₂` witnesses `β ∼ γ` as well. Hence `∼` is an equivalence relation. -/
+theorem sim_witness_mono_and_equivalence (κ μ : Cardinal.{w}) (hκ : κ.IsRegular)
     (C : Coloring (Kappa κ) (Kappa μ)) (hC : IsStarLocallyAdditive C) :
     (∀ (β γ α₁ α₂ : Kappa κ) (hβ : β < α₁) (hγ : γ < α₁) (h₁₂ : α₁ < α₂), β ≠ γ →
         C.color β α₁ hβ = C.color γ α₁ hγ →
@@ -1935,19 +1938,20 @@ theorem sim_witness_mono_and_equivalence (κ μ : Cardinal.{w}) (hκ : κ.IsRegu
       Equivalence (Sim C) := sorry
 ```
 
-#### `card_simClasses_le` (theorem, line 126)
+#### `card_simClasses_le` (theorem)
 
 ```lean
 /-- **Lemma 7.3** (Section 7, `\label{lemma number of equivalence classes}`). Under the standing
 assumption of Subsection 7.1: if `μ⁺ < κ` then the number of `∼`-equivalence classes is at most
-`μ`. The classes are counted as the sets `{γ : β ∼ γ}`, `β < κ`. -/
-theorem card_simClasses_le (κ μ : Cardinal.{w}) (hκ : κ.IsRegular) (hμ : μ < κ)
+`μ`. The classes are counted as the sets `{γ : β ∼ γ}`, `β < κ`. The part `μ < κ` of the standing
+assumption is not a hypothesis here (it follows from `μ⁺ < κ`). -/
+theorem card_simClasses_le (κ μ : Cardinal.{w}) (hκ : κ.IsRegular)
     (C : Coloring (Kappa κ) (Kappa μ)) (hC : IsStarLocallyAdditive C)
     (h : Order.succ μ < κ) :
     #(Set.range fun β : Kappa κ => {γ : Kappa κ | Sim C β γ}) ≤ μ := sorry
 ```
 
-#### `StarLaArrowKappa` (def, line 159)
+#### `StarLaArrowKappa` (def)
 
 ```lean
 /-- `κ → (κ)_{*-la_μ}` (Theorem 7.4, Proposition 7.5; written `κ →_{*-la} (κ)_μ` in the summary
@@ -1958,7 +1962,7 @@ def StarLaArrowKappa (κ μ : Cardinal.{w}) : Prop :=
     ∃ H : Set (Kappa κ), #H = κ ∧ IsHomogeneous C H
 ```
 
-#### `starLaArrowKappa_of_succ_lt` (theorem, line 165)
+#### `starLaArrowKappa_of_succ_lt` (theorem)
 
 ```lean
 /-- **Theorem 7.4** (Section 7, `\label{theorem shelah *-locally-additive}`, after
@@ -1967,7 +1971,7 @@ theorem starLaArrowKappa_of_succ_lt (κ μ : Cardinal.{w}) (hκ : κ.IsRegular)
     (h : Order.succ μ < κ) : StarLaArrowKappa κ μ := sorry
 ```
 
-#### `not_starLaArrowKappa_of_succ_eq` (theorem, line 256)
+#### `not_starLaArrowKappa_of_succ_eq` (theorem)
 
 ```lean
 /-- **Proposition 7.5** (Section 7, `\label{proposition mu^+<kappa can's be omitted}`).
@@ -1978,23 +1982,24 @@ theorem not_starLaArrowKappa_of_succ_eq (κ μ : Cardinal.{w}) (hκ : κ.IsRegul
     (h : Order.succ μ = κ) : ¬ StarLaArrowKappa κ μ := sorry
 ```
 
-#### `exists_unique_extension_level` (theorem, line 613)
+#### `exists_unique_extension_level` (theorem)
 
 ```lean
 /-- **Claim 7.9** (Section 7, `\label{argue}`, inside Case A of the proof of Claim 7.8). Let
-`κ` be regular, `λ < κ` regular, and `T` a well-pruned `κ`-tree whose levels have size `< λ`.
+`λ` be regular and `T` a well-pruned `κ`-tree whose levels have size `< λ`.
 For every ordinal `α < κ` with `cf(α) = λ` there is an ordinal `q(α) < α` such that for every
 ordinal `β` with `q(α) < β < α` and any `a ∈ Lev_{q(α)}(T)` there are no two distinct
-`b, c ∈ Lev_β(T)` with `a < b` and `a < c`. -/
-theorem exists_unique_extension_level (κ lam : Cardinal.{w}) (hκ : κ.IsRegular)
-    (hlamreg : lam.IsRegular) (hlam : lam < κ) (T : Type w) [PartialOrder T] [IsTree T]
+`b, c ∈ Lev_β(T)` with `a < b` and `a < c`. (In the paper `κ` is regular and `λ < κ`; these
+hypotheses are not needed and are not assumed here.) -/
+theorem exists_unique_extension_level (κ lam : Cardinal.{w})
+    (hlamreg : lam.IsRegular) (T : Type w) [PartialOrder T] [IsTree T]
     (hT : IsKappaTree κ T) (hwp : WellPruned T) (hlev : ∀ α : Ordinal.{w}, #(Lev T α) < lam) :
     ∀ α : Ordinal.{w}, α < κ.ord → α.cof = lam →
       ∃ q < α, ∀ β : Ordinal.{w}, q < β → β < α →
         ∀ a ∈ Lev T q, ∀ b ∈ Lev T β, ∀ c ∈ Lev T β, a < b → a < c → b = c := sorry
 ```
 
-#### `not_isAronszajn_of_card_lev_lt` (theorem, line 856)
+#### `not_isAronszajn_of_card_lev_lt` (theorem)
 
 ```lean
 /-- **Claim 7.8** (Section 7, `\label{the exercise of kunen}`; recalled from
@@ -2007,7 +2012,7 @@ theorem not_isAronszajn_of_card_lev_lt (κ lam : Cardinal.{w})
     ¬ IsAronszajn κ T := sorry
 ```
 
-#### `laArrowKappa_of_succ_lt` (theorem, line 911)
+#### `laArrowKappa_of_succ_lt` (theorem)
 
 ```lean
 /-- **Theorem 7.7** (Section 7, `\label{the only theorem}`). Let `κ` be a regular cardinal and
@@ -2019,7 +2024,7 @@ theorem laArrowKappa_of_succ_lt (κ μ : Cardinal.{w})
 
 ### B. Auxiliary lemmas (AUX: not in paper)
 
-#### `Coloring.color_dual` (theorem, line 54)
+#### `Coloring.color_dual` (theorem)
 
 ```lean
 /-- AUX: not in paper. A pair read in the reverse order. -/
@@ -2029,7 +2034,7 @@ theorem Coloring.color_dual {A : Type w} [LinearOrder A] {D : Type v} (C : Color
       C.color (OrderDual.ofDual b) (OrderDual.ofDual a) h := sorry
 ```
 
-#### `isStarLocallyAdditive_iff` (theorem, line 62)
+#### `isStarLocallyAdditive_iff` (theorem)
 
 ```lean
 /-- AUX: not in paper. *-local additivity spelled out in the original order: for
@@ -2041,14 +2046,14 @@ theorem isStarLocallyAdditive_iff {A : Type w} [LinearOrder A] {D : Type v} (C :
           C.color y w (hyz.trans hzw) = C.color x w ((hxy.trans hyz).trans hzw) := sorry
 ```
 
-#### `Kappa.exists_gt` (theorem, line 83)
+#### `Kappa.exists_gt` (theorem)
 
 ```lean
 /-- AUX: not in paper. For infinite `κ`, `κ` has no largest element. -/
 theorem Kappa.exists_gt {κ : Cardinal.{w}} (hκ : ℵ₀ ≤ κ) (x : Kappa κ) : ∃ y, x < y := sorry
 ```
 
-#### `ht_subtype_of_downward` (theorem, line 328)
+#### `ht_subtype_of_downward` (theorem)
 
 ```lean
 /-- AUX: not in paper. In a downward closed subset `S` of a tree, heights computed in `S` and
@@ -2057,14 +2062,14 @@ theorem ht_subtype_of_downward {S : Set T} (hS : ∀ s ∈ S, ∀ t < s, t ∈ S
     ht x = ht (x : T) := sorry
 ```
 
-#### `exists_le_ht_eq` (theorem, line 340)
+#### `exists_le_ht_eq` (theorem)
 
 ```lean
 /-- AUX: not in paper. Every node lies above a node of each smaller level. -/
 theorem exists_le_ht_eq {t : T} {α : Ordinal.{w}} (h : α ≤ ht t) : ∃ s ≤ t, ht s = α := sorry
 ```
 
-#### `exists_big_cone` (theorem, line 349)
+#### `exists_big_cone` (theorem)
 
 ```lean
 omit [IsTree T] in
@@ -2074,7 +2079,7 @@ theorem exists_big_cone {κ : Cardinal.{w}} (hκ : κ.IsRegular) {U L : Set T} (
     (hL : #L < κ) (hcov : ∀ s ∈ U, ∃ y ∈ L, y ≤ s) : ∃ y ∈ L, κ ≤ #(Set.Ici y) := sorry
 ```
 
-#### `mk_levLt_lt` (theorem, line 362)
+#### `mk_levLt_lt` (theorem)
 
 ```lean
 /-- AUX: not in paper. In a `κ`-tree (`κ` regular), the nodes of height `< α` (`α < κ`) are
@@ -2083,7 +2088,7 @@ theorem mk_levLt_lt {κ : Cardinal.{w}} (hκ : κ.IsRegular) (hT : IsKappaTree �
     {α : Ordinal.{w}} (hα : α < κ.ord) : #{s : T | ht s < α} < κ := sorry
 ```
 
-#### `exists_big_above` (theorem, line 382)
+#### `exists_big_above` (theorem)
 
 ```lean
 /-- AUX: not in paper. In a `κ`-tree (`κ` regular): if `x` has `≥ κ` nodes above it and
@@ -2093,7 +2098,7 @@ theorem exists_big_above {κ : Cardinal.{w}} (hκ : κ.IsRegular) (hT : IsKappaT
     ∃ y ∈ Lev T α, x < y ∧ κ ≤ #(Set.Ici y) := sorry
 ```
 
-#### `exists_wellPruned_subtree_downward` (theorem, line 407)
+#### `exists_wellPruned_subtree_downward` (theorem)
 
 ```lean
 /-- AUX: not in paper. Strong form of `exists_wellPruned_subtree`: for regular `κ`, every
@@ -2104,7 +2109,7 @@ theorem exists_wellPruned_subtree_downward (κ : Cardinal.{w}) (hκ : κ.IsRegul
     ∃ S : Set T, (∀ s ∈ S, ∀ t < s, t ∈ S) ∧ IsKappaTree κ S ∧ WellPruned S := sorry
 ```
 
-#### `exists_wellPruned_subtree` (theorem, line 481)
+#### `exists_wellPruned_subtree` (theorem)
 
 ```lean
 /-- AUX: not in paper. In the proof of Claim 7.8, Case A, the paper calls this a well-known fact
@@ -2116,7 +2121,7 @@ theorem exists_wellPruned_subtree (κ : Cardinal.{w}) (hκ : κ.IsRegular)
     ∃ S : Set T, IsKappaTree κ S ∧ WellPruned S := sorry
 ```
 
-#### `le_of_le_of_le_of_ht_le` (theorem, line 488)
+#### `le_of_le_of_le_of_ht_le` (theorem)
 
 ```lean
 /-- AUX: not in paper. Two nodes below a common node: the lower one is below the other. -/
@@ -2124,7 +2129,7 @@ theorem le_of_le_of_le_of_ht_le {T : Type w} [PartialOrder T] [IsTree T] {u v z 
     (hu : u ≤ z) (hv : v ≤ z) (h : ht u ≤ ht v) : u ≤ v := sorry
 ```
 
-#### `le_mk_lev_of_splitting` (theorem, line 499)
+#### `le_mk_lev_of_splitting` (theorem)
 
 ```lean
 /-- AUX: not in paper. The diagonal construction in the proof of Claim 7.9, in a general form.
@@ -2142,7 +2147,7 @@ theorem le_mk_lev_of_splitting {T : Type w} [PartialOrder T] [IsTree T] {ρ : Ca
     ρ ≤ #(Lev T α) := sorry
 ```
 
-#### `mk_lev_mono` (theorem, line 640)
+#### `mk_lev_mono` (theorem)
 
 ```lean
 /-- AUX: not in paper. In a well-pruned tree, the sizes of the levels are non-decreasing (the
@@ -2151,7 +2156,7 @@ theorem mk_lev_mono {T : Type w} [PartialOrder T] [IsTree T] (hwp : WellPruned T
     {α β : Ordinal.{w}} (hαβ : α ≤ β) (hβ : β < height T) : #(Lev T α) ≤ #(Lev T β) := sorry
 ```
 
-#### `exists_mk_lev_const` (theorem, line 657)
+#### `exists_mk_lev_const` (theorem)
 
 ```lean
 /-- AUX: not in paper. In a well-pruned `κ`-tree (`κ` regular) whose levels have size `< λ`,
@@ -2162,7 +2167,7 @@ theorem exists_mk_lev_const {κ lam : Cardinal.{w}} (hκ : κ.IsRegular) (hlam :
     ∃ α₀ < κ.ord, ∀ β : Ordinal.{w}, α₀ ≤ β → β < κ.ord → #(Lev T β) = #(Lev T α₀) := sorry
 ```
 
-#### `exists_closed_level` (theorem, line 706)
+#### `exists_closed_level` (theorem)
 
 ```lean
 /-- AUX: not in paper. For regular `ρ < κ` (`κ` regular) and any `σ` mapping `κ` to `κ`, there
@@ -2175,7 +2180,7 @@ theorem exists_closed_level {κ ρ : Cardinal.{w}} (hκ : κ.IsRegular) (hρ : �
       ∀ (ι : Type w) (f : ι → Ordinal.{w}), #ι < ρ → (∀ i, f i < α) → ∃ q < α, ∀ i, f i ≤ q := sorry
 ```
 
-#### `exists_nonsplitting` (theorem, line 782)
+#### `exists_nonsplitting` (theorem)
 
 ```lean
 /-- AUX: not in paper. In a well-pruned `κ`-tree (`κ` regular) whose levels have size `< λ`,
@@ -2190,7 +2195,7 @@ theorem exists_nonsplitting {κ lam : Cardinal.{w}} (hκ : κ.IsRegular) (hlam :
     ∃ a : T, ∀ b c : T, a < b → a < c → ht b = ht c → b = c := sorry
 ```
 
-#### `exists_isCofinalBranch_of_isChain` (theorem, line 845)
+#### `exists_isCofinalBranch_of_isChain` (theorem)
 
 ```lean
 /-- AUX: not in paper. In a `κ`-tree, a chain of size `≥ κ` yields a cofinal branch. -/

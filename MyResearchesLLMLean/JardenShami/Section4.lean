@@ -853,9 +853,10 @@ theorem existsUnique_isTreeColoring (hT : IsKappaTree κ T) (e : Enumeration κ 
   obtain ⟨hi, hle⟩ := hC _ α δ h rfl
   exact Kappa.coe_inj.1 (hC'.color_eq h hi hle)
 
-/-- **Claim 4.12** (Section 4, `\label{claim C(T,e) is locally additive}`). For a `κ`-tree `T`
-and an enumeration `e` of `T`, the coloring `C(T,e)` is locally additive. -/
-theorem isLocallyAdditive_of_isTreeColoring (hT : IsKappaTree κ T) (e : Enumeration κ T)
+/-- **Claim 4.12** (Section 4, `\label{claim C(T,e) is locally additive}`). For a tree `T`
+and an enumeration `e` of `T`, the coloring `C(T,e)` is locally additive. (The paper assumes
+that `T` is a `κ`-tree; this hypothesis is not needed and is not assumed here.) -/
+theorem isLocallyAdditive_of_isTreeColoring (e : Enumeration κ T)
     {C : Coloring (Kappa κ) (Kappa (levelSup κ T))} (hC : IsTreeColoring e C) :
     IsLocallyAdditive C := by
   intro a b c d hab hbc hcd h

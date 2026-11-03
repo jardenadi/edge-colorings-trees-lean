@@ -424,11 +424,12 @@ theorem card_lev_treeOfColoring_le_of_aleph0_le (κ μ : Cardinal.{w}) (hκ0 : �
     rw [hpc, hKμ, Nat.cast_le] at this
     omega
 
-/-- **Claim 5.4** (Section 5, inside the proof of Lemma 5.3, direction (1) ⇒ (2)). Under the
-hypotheses of Lemma 5.3, for a locally additive `C : [κ]^2 → μ`, all the levels of `T(C)` have
-size `≤ μ`. -/
-theorem card_lev_treeOfColoring_le (κ μ : Cardinal.{w}) (hκ : κ.IsRegular) (hunc : ℵ₀ < κ)
-    (hμ : μ < κ) (C : Coloring (Kappa κ) (Kappa μ)) (hC : IsLocallyAdditive C) :
+/-- **Claim 5.4** (Section 5, inside the proof of Lemma 5.3, direction (1) ⇒ (2)). For an
+uncountable cardinal `κ` and a locally additive `C : [κ]^2 → μ`, all the levels of `T(C)` have
+size `≤ μ`. (The paper works under the hypotheses of Lemma 5.3; of these, `κ` regular and
+`μ < κ` are not needed and are not assumed here.) -/
+theorem card_lev_treeOfColoring_le (κ μ : Cardinal.{w}) (hunc : ℵ₀ < κ)
+    (C : Coloring (Kappa κ) (Kappa μ)) (hC : IsLocallyAdditive C) :
     ∀ β : Ordinal.{w}, #(Lev (treeOfColoring C) β) ≤ μ := by
   exact card_lev_treeOfColoring_le_of_aleph0_le κ μ hunc.le C hC
 
@@ -554,7 +555,7 @@ theorem branch_iff_laArrowKappa (κ μ : Cardinal.{w}) (hκ : κ.IsRegular) (hun
     have hTk : IsKappaTree κ T := ⟨hT, fun α _ => (hlev α).trans_lt hμ⟩
     obtain ⟨e⟩ := exists_enumeration (Cardinal.aleph0_pos.trans_le hκ0).ne' hTk
     obtain ⟨C, hCe, -⟩ := existsUnique_isTreeColoring hTk e
-    have hla := isLocallyAdditive_of_isTreeColoring hTk e hCe
+    have hla := isLocallyAdditive_of_isTreeColoring e hCe
     -- the colors of `C(T,e)` are `< levelSup ≤ μ`
     have hsup : (levelSup κ T).ord ≤ μ.ord :=
       Cardinal.ord_le_ord.2 (ciSup_le' fun α => hlev _)

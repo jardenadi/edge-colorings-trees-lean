@@ -94,9 +94,10 @@ theorem treeExp_le_add_one_power (lam μ : Cardinal.{w}) : treeExp lam μ ≤ (l
   rintro c ⟨T, _, _, hT, hcard, rfl⟩
   exact (mk_lim_le hT).trans (Cardinal.power_le_power_right (by gcongr))
 
-/-- **Remark 6.2** (Section 6, `\label{remark tree exponent leq exponent}`). For every two infinite
-cardinals `λ` and `μ`: `λ^{μ,tr} ≤ λ^μ`. -/
-theorem treeExp_le_power (lam μ : Cardinal.{w}) (hlam : ℵ₀ ≤ lam) (hμ : ℵ₀ ≤ μ) :
+/-- **Remark 6.2** (Section 6, `\label{remark tree exponent leq exponent}`). For every infinite
+cardinal `λ` and every cardinal `μ`: `λ^{μ,tr} ≤ λ^μ`. (The paper assumes that `μ` is infinite
+too; this is not needed and is not assumed here.) -/
+theorem treeExp_le_power (lam μ : Cardinal.{w}) (hlam : ℵ₀ ≤ lam) :
     treeExp lam μ ≤ lam ^ μ := by
   calc treeExp lam μ ≤ (lam + 1) ^ μ := treeExp_le_add_one_power lam μ
     _ = lam ^ μ := by rw [Cardinal.add_one_of_aleph0_le hlam]
@@ -376,7 +377,7 @@ theorem treeExp_lt_iff_isInaccessible_of_isRegular (κ : Cardinal.{w}) (hunc : �
     refine Cardinal.isInaccessible_def.2 ⟨hunc, hreg, ⟨(Cardinal.aleph0_pos.trans hunc).ne', ?_⟩⟩
     exact fun ν hν => two_power_lt_of_treeExp_lt hreg h ν hν
   · intro hκ lam μ hμ hμlam hlam
-    exact (treeExp_le_power lam μ (hμ.trans hμlam) hμ).trans_lt
+    exact (treeExp_le_power lam μ (hμ.trans hμlam)).trans_lt
       (power_lt_of_isInaccessible hκ hlam (hμlam.trans_lt hlam))
 
 /-- **Theorem 6.4** (Section 6, `\label{theorem 5.4}`). Let `κ` be an uncountable regular cardinal.
