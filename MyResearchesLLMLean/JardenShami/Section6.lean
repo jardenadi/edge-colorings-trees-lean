@@ -8,15 +8,16 @@ the tree exponent `λ^{μ,tr}` and a characterization of weakly compact cardinal
 
 Phase 1: all statements are proved. Theorem 6.4 is proved from a stronger AUX statement
 (`treeExp_lt_iff_isInaccessible_of_isRegular`, without the tree property and without Fact 6.3),
-not along the paper's proof.
+not along the paper's proof. Consequently Theorem 6.4 is stated without the tree property and
+without Fact 6.3, and Corollary 6.5 without Fact 6.3; both are stronger than in the paper.
 
 Numbering (active text only, one counter per section): 6.1 Def (tree exponent, after [Sh589]),
 6.2 Remark (`remark tree exponent leq exponent`), 6.3 Fact (`fact 6.3`, cited, no proof),
 6.4 Theorem (`theorem 5.4`, a stale label), 6.5 Corollary (unlabelled). Between 6.2 and 6.3 the
 paper recalls the definition of a weakly compact cardinal (`IsWeaklyCompact`).
 
-Fact 6.3 is the hypothesis-style `def Fact_6_3 : Prop`; Theorem 6.4 and Corollary 6.5 take it as
-an explicit hypothesis.
+Fact 6.3 is the hypothesis-style `def Fact_6_3 : Prop`. It is kept as documentation of the paper;
+no result of this formalization depends on it.
 
 ## Encoding conventions
 * Trees are as in Section 4 (`IsTree`); a tree of the paper ranges over trees `T : Type w` in the
@@ -360,8 +361,9 @@ theorem two_power_lt_of_treeExp_lt {κ : Cardinal.{w}} (hreg : κ.IsRegular)
 /-- AUX: not in paper. A strengthening of Theorem 6.4: for every uncountable regular cardinal `κ`,
 `λ^{μ,tr} < κ` for each `λ, μ < κ` (infinite `μ ≤ λ`, as in Theorem 6.4) iff `κ` is strongly
 inaccessible.
-The tree property, which is assumed in Theorem 6.4 of the paper, is omitted here; hence this
-statement is stronger than Theorem 6.4. Theorem 6.4 follows from it.
+Neither the tree property, which is assumed in Theorem 6.4 of the paper, nor Fact 6.3, which the
+paper's proof uses, is needed; hence this statement is stronger than Theorem 6.4 of the paper.
+`treeExp_lt_iff_isInaccessible` (Theorem 6.4) is a thin wrapper around it.
 Proof: (⇒) by induction on cardinals `ν < κ`, `2^ν < κ`, applying the hypothesis to the full
 binary tree `2^{<ν}` (`two_power_lt_of_treeExp_lt`); Fact 6.3 is not used. (⇐) from Remark 6.2
 and `λ^μ < κ` for strongly inaccessible `κ`. -/
@@ -377,16 +379,16 @@ theorem treeExp_lt_iff_isInaccessible_of_isRegular (κ : Cardinal.{w}) (hunc : �
     exact (treeExp_le_power lam μ (hμ.trans hμlam) hμ).trans_lt
       (power_lt_of_isInaccessible hκ hlam (hμlam.trans_lt hlam))
 
-/-- **Theorem 6.4** (Section 6, `\label{theorem 5.4}`). Let `κ` be an uncountable regular cardinal
-that satisfies the tree property. The following are equivalent: (1) `λ^{μ,tr} < κ` for each
-`λ, μ < κ`; (2) `κ` is strongly inaccessible.
+/-- **Theorem 6.4** (Section 6, `\label{theorem 5.4}`). Let `κ` be an uncountable regular cardinal.
+The following are equivalent: (1) `λ^{μ,tr} < κ` for each `λ, μ < κ`; (2) `κ` is strongly
+inaccessible.
 In (1), `λ^{μ,tr}` is taken only where Definition 6.1 defines it: infinite `μ ≤ λ`.
-Fact 6.3 (used in the paper's proof of (1) ⇒ (2)) is an explicit hypothesis.
-Phase 1: proved from the stronger AUX statement `treeExp_lt_iff_isInaccessible_of_isRegular`, not
-along the paper's proof; the hypotheses `hF` (Fact 6.3) and `htp` (the tree property) are not
-used. -/
-theorem treeExp_lt_iff_isInaccessible (hF : Fact_6_3.{w}) (κ : Cardinal.{w}) (hunc : ℵ₀ < κ)
-    (hreg : κ.IsRegular) (htp : NoAronszajn κ) :
+The paper also assumes that `κ` satisfies the tree property, and its proof of (1) ⇒ (2) uses
+Fact 6.3. Neither is needed, so this statement is stronger than Theorem 6.4 of the paper.
+It is a thin wrapper around the AUX statement `treeExp_lt_iff_isInaccessible_of_isRegular`; the
+proof does not follow the paper's proof. -/
+theorem treeExp_lt_iff_isInaccessible (κ : Cardinal.{w}) (hunc : ℵ₀ < κ)
+    (hreg : κ.IsRegular) :
     (∀ lam μ : Cardinal.{w}, ℵ₀ ≤ μ → μ ≤ lam → lam < κ → treeExp lam μ < κ) ↔
       κ.IsInaccessible := by
   exact treeExp_lt_iff_isInaccessible_of_isRegular κ hunc hreg
@@ -394,16 +396,18 @@ theorem treeExp_lt_iff_isInaccessible (hF : Fact_6_3.{w}) (κ : Cardinal.{w}) (h
 /-- **Corollary 6.5** (Section 6). Let `κ` be an uncountable cardinal. Then `κ` is weakly compact
 if and only if (1) `κ` is regular, (2) `κ` satisfies the tree property and (3) `λ^{μ,tr} < κ` for
 each `λ, μ < κ` (as in Theorem 6.4: infinite `μ ≤ λ`).
-Fact 6.3 (used through Theorem 6.4) is an explicit hypothesis. -/
-theorem isWeaklyCompact_iff (hF : Fact_6_3.{w}) (κ : Cardinal.{w}) (hunc : ℵ₀ < κ) :
+In the paper this goes through Theorem 6.4, whose proof uses Fact 6.3. Fact 6.3 is not needed
+(see `treeExp_lt_iff_isInaccessible`), so this statement, which has no Fact 6.3 hypothesis, is
+stronger than Corollary 6.5 of the paper. -/
+theorem isWeaklyCompact_iff (κ : Cardinal.{w}) (hunc : ℵ₀ < κ) :
     IsWeaklyCompact κ ↔
       κ.IsRegular ∧ NoAronszajn κ ∧
         ∀ lam μ : Cardinal.{w}, ℵ₀ ≤ μ → μ ≤ lam → lam < κ → treeExp lam μ < κ := by
   constructor
   · rintro ⟨hκ, htp⟩
     exact ⟨hκ.isRegular, htp,
-      (treeExp_lt_iff_isInaccessible hF κ hunc hκ.isRegular htp).2 hκ⟩
+      (treeExp_lt_iff_isInaccessible κ hunc hκ.isRegular).2 hκ⟩
   · rintro ⟨hreg, htp, h⟩
-    exact ⟨(treeExp_lt_iff_isInaccessible hF κ hunc hreg htp).1 h, htp⟩
+    exact ⟨(treeExp_lt_iff_isInaccessible κ hunc hreg).1 h, htp⟩
 
 end JardenShami
