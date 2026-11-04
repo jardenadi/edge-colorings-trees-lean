@@ -7,6 +7,7 @@ authors:
     given-names: Adi
 repository-code: "https://github.com/jardenadi/edge-colorings-trees-lean"
 license: Apache-2.0
+doi: 10.5281/zenodo.23964479
 version: 1.0.0
 date-released: 2026-11-03
 abstract: >-

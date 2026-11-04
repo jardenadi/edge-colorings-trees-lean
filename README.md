@@ -1,5 +1,7 @@
 # Lean 4 formalization of "A Note on Edge Colorings and Trees"
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23964479.svg)](https://doi.org/10.5281/zenodo.23964479)
+
 A formalization in Lean 4 and Mathlib of
 
 > Adi Jarden and Ziv Shami, *A Note on Edge Colorings and Trees*, arXiv:[2204.06874](https://arxiv.org/abs/2204.06874).
@@ -95,11 +97,12 @@ If you use this work, please cite the paper above and this repository:
   author = {Jarden, Adi},
   title  = {Lean 4 formalization of "A Note on Edge Colorings and Trees"},
   year   = {2026},
+  doi    = {10.5281/zenodo.23964479},
   url    = {https://github.com/jardenadi/edge-colorings-trees-lean}
 }
 ```
 
-If a Zenodo DOI is created for a release, please cite the DOI instead.
+The DOI above is the Zenodo concept DOI, which always resolves to the latest version. Version-specific DOIs are listed on the [Zenodo record](https://doi.org/10.5281/zenodo.23964479).
 
 ## License
 
