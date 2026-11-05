@@ -6,7 +6,7 @@ A formalization in Lean 4 and Mathlib of
 
 > Adi Jarden and Ziv Shami, *A Note on Edge Colorings and Trees*, arXiv:[2204.06874](https://arxiv.org/abs/2204.06874).
 
-The formalization covers Sections 2–7 of the paper. It was produced with an AI coding agent (Claude Code) under a workflow in which a mathematician reviews every formal statement for fidelity before any proof is written (see [Method](#method)).
+The formalization covers Sections 2–7 of the paper. It was produced with an AI coding agent (Claude Code) under a workflow in which a mathematician reviews every formal statement for fidelity, in all but three cases before its proof was written (see [Method](#method)).
 
 An earlier, hand-written formalization of a single theorem of Jarden and Shami is available at https://github.com/jardenadi/Jarden-Shami-Colorings.
 
@@ -68,9 +68,10 @@ The files import only the Mathlib modules they need. A blanket `import Mathlib` 
 
 A formalization is only as trustworthy as its statements, and checking only the conclusion of a statement is a sanity check, not a fidelity check. Therefore:
 
-1. All statements were written first, with `sorry`, and each was approved by a mathematician against the paper, line by line, before any proof was started. `FIDELITY.md` records the paper statement, the Lean statement and the decision for each. Where the paper leaves an assumption implicit (for example that a cardinal is infinite), the formal statement makes it explicit, and the change is recorded there.
+1. All statements were written first, with `sorry`, and each was approved by a mathematician against the paper, line by line, before its proof was started, with three exceptions: the statements of 7.2, 7.3 and 7.9 were approved after their proofs had been written. `FIDELITY.md` records the paper statement, the Lean statement and the decision for each. Where the paper leaves an assumption implicit (for example that a cardinal is infinite), the formal statement makes it explicit, and the change is recorded there.
 2. Git tags mark the approved statements (`statements-v1`, `statements-v1.1`), and the proof stage was checked against them by comparing the opening lines of every declaration.
 3. A **blind fidelity check** was run at the end of the statement stage. The 42 formal statements were stripped of comments and of the paper's names, and 8 were deliberately altered (for example a reversed implication, a dropped hypothesis, `∃` changed to `∀`, `≤` changed to `<`). Two independent language models (Gemini and ChatGPT) translated the stripped statements into natural language without any context. Both identified exactly the 8 altered statements. The other 34 were found faithful, with no false alarms. The check did not include the `AUX` statements. The de-identified statements are in `docs/blind/STATEMENTS_BLIND.md`, so the check can be repeated; the key listing the altered statements is available from the authors on request.
+
 
 ## Findings about the paper
 
